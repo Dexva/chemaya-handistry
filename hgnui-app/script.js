@@ -1,9 +1,9 @@
-// window.parent.postMessage(
-//     "THIS IS FROM HHGNUI!!",
-//     "http://localhost:3000/",
-// );
-
-
+// //imports
+// import {
+//     GestureRecognizer,
+//     FilesetResolver,
+//     DrawingUtils
+//   } from "https://cdn.skypack.dev/@mediapipe/tasks-vision@0.1.0-alpha-11";
 
 // //input video stuff
 // let gestureRecognizer;
@@ -132,21 +132,23 @@
 
 // //not used
 // async function predictWebcam() {
-//     console.log("gesture detecting");
+//     // console.log("gesture detecting");
 //     const webcamElement = document.getElementById("webcam");
 //     // Now let's start detecting the stream.
 //     if (runningMode === "IMAGE") {
 //       runningMode = "VIDEO";
-//       console.log("gesture recognizer: " + gestureRecognizer);
+//       // console.log("gesture recognizer: " + gestureRecognizer);
 //       await gestureRecognizer.setOptions({ runningMode: "VIDEO" });
 //     }
 //     let nowInMs = Date.now();
 //     let results = gestureRecognizer.recognizeForVideo(videoElement, nowInMs);
   
+//     // fs.writeFileSync('../data.json', JSON.stringify(results));
+
 //     canvasCtx.save();
 //     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
   
-//     console.log(results);
+//     // console.log(results);
 
 //     // canvasElement.style.height = videoHeight;
 //     // videoElement.style.height = videoHeight;
@@ -211,7 +213,7 @@
 //     // console.log(nodeDX);
 //     // console.log(nodeDY);
 //     let initialDegree = Math.asin(nodeDX/nodeDistance);
-//     console.log("initialDegree = " + initialDegree);
+//     // console.log("initialDegree = " + initialDegree);
 
 //     if (nodeDX <= 0 && nodeDY < 0) degrees = initialDegree; // quadrant 1 -- this is not following cartesian logic, check DX & DY values
 //     else if (nodeDX > 0 && nodeDY < 0) degrees = initialDegree; // quadrant 2

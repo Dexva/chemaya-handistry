@@ -12,13 +12,10 @@
 </head>
 
 <body>
-    <button onclick="
-        const otherWindow = window.open('http://localhost:3000');
-        otherWindow.postMessage('bruh', 'http://localhost:3000');
-        console.log('ok');
-    "> Click Me! </button>
-    
+    <button id="sendButton">Click Me!</button>
+
     <div class="site_interface">
+        <button onclick="enableCam()" class="debug-button">Enable Webcam</button>
         <div class="drawing_container">
             <canvas id="drawing_canvas"></canvas>
         </div>
@@ -34,6 +31,28 @@
             <!--<canvas></canvas>-->
         </div>
     </div>
+
+    <script>
+        document.getElementById('sendButton').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:3000/receive', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: 'Hello, world' }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                console.log('Message sent successfully');
+            } catch (error) {
+                console.error('Error sending message:', error);
+            }
+        });
+    </script>
 
     <script type="module" src="script.js"></script>
 </body>
