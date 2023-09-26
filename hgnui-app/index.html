@@ -15,7 +15,7 @@
     <button id="sendButton">Click Me!</button>
 
     <div class="site_interface">
-        <button onclick="enableCam()" class="debug-button">Enable Webcam</button>
+        <!-- <button onclick="enableCam()" class="debug-button">Enable Webcam</button> -->
         <div class="drawing_container">
             <canvas id="drawing_canvas"></canvas>
         </div>
@@ -35,7 +35,7 @@
     <script>
         document.getElementById('sendButton').addEventListener('click', async () => {
             try {
-                const response = await fetch('http://localhost:3000/receive', {
+                const response = await fetch('http://localhost:3000', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

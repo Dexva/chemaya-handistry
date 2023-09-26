@@ -1,3 +1,10 @@
+import { Server } from 'socket.io';
+
+const io = new Server(5500, { /* options */ });
+
+io.on("connection", (socket) => {
+// ...
+});
 // //imports
 // import {
 //     GestureRecognizer,

@@ -3,22 +3,14 @@ import './App.css';
 import ScreenContainer from './components/ScreenContainer';
 import GraduatedSideview from './components/GraduatedSideview';
 import Background from './components/Background';
+import { socket } from './socket.js';
 
 var hasNotChangedScreenInTheLast500Milliseconds : boolean = true;
 
 function App() {
-  window.addEventListener(
-    "message",
-    function (e) {
-      console.log(e.origin);
-      if (e.origin !== "http://localhost:8080/") {
-        console.log("wrong");
-        return;
-      }
-      window.alert(e);
-    },
-    false
-  );
+  socket.on('message', (msg) => {
+      console.log('message: ' + msg);
+  });
 
   const [screen, setScreen] = useState(0);
 
