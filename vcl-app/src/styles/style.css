@@ -1,0 +1,661 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+:root {
+    --color-EquipmentFill:rgba(230,230,230,0.6);
+    --color-EquipmentFill-Opaque:rgba(240,240,240);
+    --color-EquipmentOutline:#DBD9DF;
+    --color-EquipmentMarking:#898485;
+    --color-Shadow:#4e515a;
+    --color-Shadow-transparent:rgba(78, 81, 90, 0.4);
+    --color-Phenolic-Light:#737778;
+    --color-Phenolic-Shaded:#2D2C27;
+    --color-TextHighlight:#E12D78;
+    --color-debug:#ff6f6f;
+    /* this is a horrible line that hardcodes a noise image */
+    --img-noise: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c8TV1mAAAAG3RSTlNAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAvEOwtAAAFVklEQVR4XpWWB67c2BUFb3g557T/hRo9/WUMZHlgr4Bg8Z4qQgQJlHI4A8SzFVrapvmTF9O7dmYRFZ60YiBhJRCgh1FYhiLAmdvX0CzTOpNE77ME0Zty/nWWzchDtiqrmQDeuv3powQ5ta2eN0FY0InkqDD73lT9c9lEzwUNqgFHs9VQce3TVClFCQrSTfOiYkVJQBmpbq2L6iZavPnAPcoU0dSw0SUTqz/GtrGuXfbyyBniKykOWQWGqwwMA7QiYAxi+IlPdqo+hYHnUt5ZPfnsHJyNiDtnpJyayNBkF6cWoYGAMY92U2hXHF/C1M8uP/ZtYdiuj26UdAdQQSXQErwSOMzt/XWRWAz5GuSBIkwG1H3FabJ2OsUOUhGC6tK4EMtJO0ttC6IBD3kM0ve0tJwMdSfjZo+EEISaeTr9P3wYrGjXqyC1krcKdhMpxEnt5JetoulscpyzhXN5FRpuPHvbeQaKxFAEB6EN+cYN6xD7RYGpXpNndMmZgM5Dcs3YSNFDHUo2LGfZuukSWyUYirJAdYbF3MfqEKmjM+I2EfhA94iG3L7uKrR+GdWD73ydlIB+6hgref1QTlmgmbM3/LeX5GI1Ux1RWpgxpLuZ2+I+IjzZ8wqE4nilvQdkUdfhzI5QDWy+kw5Wgg2pGpeEVeCCA7b85BO3F9DzxB3cdqvBzWcmzbyMiqhzuYqtHRVG2y4x+KOlnyqla8AoWWpuBoYRxzXrfKuILl6SfiWCbjxoZJUaCBj1CjH7GIaDbc9kqBY3W/Rgjda1iqQcOJu2WW+76pZC9QG7M00dffe9hNnseupFL53r8F7YHSwJWUKP2q+k7RdsxyOB11n0xtOvnW4irMMFNV4H0uqwS5ExsmP9AxbDTc9JwgneAT5vTiUSm1E7BSflSt3bfa1tv8Di3R8n3Af7MNWzs49hmauE2wP+ttrq+AsWpFG2awvsuOqbipWHgtuvuaAE+A1Z/7gC9hesnr+7wqCwG8c5yAg3AL1fm8T9AZtp/bbJGwl1pNrE7RuOX7PeMRUERVaPpEs+yqeoSmuOlokqw49pgomjLeh7icHNlG19yjs6XXOMedYm5xH2YxpV2tc0Ro2jJfxC50ApuxGob7lMsxfTbeUv07TyYxpeLucEH1gNd4IKH2LAg5TdVhlCafZvpskfncCfx8pOhJzd76bJWeYFnFciwcYfubRc12Ip/ppIhA1/mSZ/RxjFDrJC5xifFjJpY2Xl5zXdguFqYyTR1zSp1Y9p+tktDYYSNflcxI0iyO4TPBdlRcpeqjK/piF5bklq77VSEaA+z8qmJTFzIWiitbnzR794USKBUaT0NTEsVjZqLaFVqJoPN9ODG70IPbfBHKK+/q/AWR0tJzYHRULOa4MP+W/HfGadZUbfw177G7j/OGbIs8TahLyynl4X4RinF793Oz+BU0saXtUHrVBFT/DnA3ctNPoGbs4hRIjTok8i+algT1lTHi4SxFvONKNrgQFAq2/gFnWMXgwffgYMJpiKYkmW3tTg3ZQ9Jq+f8XN+A5eeUKHWvJWJ2sgJ1Sop+wwhqFVijqWaJhwtD8MNlSBeWNNWTa5Z5kPZw5+LbVT99wqTdx29lMUH4OIG/D86ruKEauBjvH5xy6um/Sfj7ei6UUVk4AIl3MyD4MSSTOFgSwsH/QJWaQ5as7ZcmgBZkzjjU1UrQ74ci1gWBCSGHtuV1H2mhSnO3Wp/3fEV5a+4wz//6qy8JxjZsmxxy5+4w9CDNJY09T072iKG0EnOS0arEYgXqYnXcYHwjTtUNAcMelOd4xpkoqiTYICWFq0JSiPfPDQdnt+4/wuqcXY47QILbgAAAABJRU5ErkJggg==);
+}
+/* 
+------------
+GENERAL TAGS
+------------
+*/
+body {
+    margin:0;
+    padding:0;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+}
+p, button, span, div {
+    font-family:'Lato', sans-serif;
+    font-size:20px;
+    margin:0;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family:'Poppins', sans-serif;
+    font-weight:normal;
+    margin:0;
+    line-height:100%; 
+}
+.headerFont {
+    font-family:'Poppins', sans-serif;
+    font-weight:lighter;
+    margin:0;
+    line-height:100%; 
+}
+
+.flex-row {
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+}
+.flex-centered {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.styleGlassBox { /*https://hype4.academy/tools/glassmorphism-generator*/
+    background-color:rgba(255,255,255, 0.55);
+    box-shadow:0px 0px 5px rgba(255,255,255,0.5);
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
+    border: 1px solid rgba(220,220,220,0.9);
+    padding:10px;
+    color:black;
+    text-shadow:0px 0px 5px white;
+}
+.fillsEntireScreen {
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    top:0;
+    left:0;
+}
+.absoluteCentered {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+/*-----------
+ABOVE-SCREEN TAGS
+-----------*/
+.interactive .Tooltip {
+    position:absolute;
+    left:50%;
+    transform:translate(-50%,10px);
+    width:300px;
+    text-align:left;
+    padding:15px;
+    z-index:100;
+    pointer-events: none !important;
+    transition:0.2s;
+    opacity:0;
+}
+.interactive:hover .Tooltip {
+    opacity:1;
+}
+.Tooltip .extraInfo {
+    color:var(--color-TextHighlight)
+}
+/*-----------
+GRADUATION SIDEVIEW TAGS
+-----------*/
+.GraduatedSideview {
+    width:100px;
+    height:calc(100% - 60px);
+    position:fixed;
+    left:calc(-100% + 30px);
+    top:30px;
+    box-sizing:border-box;
+    border:7px solid var(--color-EquipmentOutline); 
+    border-radius:1000px;
+    display:flex;
+    flex-direction:column;
+    padding:30px 10px;
+    overflow:hidden;
+    background-color:var(--color-EquipmentFill);
+    box-shadow:0px 0px 5px rgba(0,0,0,0.5);
+    /* pointer-events: none; */
+}
+.GraduationLineGroup {
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+    justify-content: space-around;
+}
+.line {
+    height:5px;
+    background-color:var(--color-EquipmentMarking);
+}
+.line { 
+    width:50%;
+}
+.markedLine {
+    display:flex;
+    align-items:center;
+}
+.markedLine .line {
+    flex-grow:1;
+    width:100%;
+}
+.GraduatedSideview-fill {
+    --height:0;
+    height:calc(var(--height) * 1%);
+    width:100%;
+    position:absolute;
+    bottom:0;
+    left:0;
+    transition:0.3s;
+    z-index:-1;
+    background-color:orange;
+    padding-top:30px;
+}
+.GraduatedSideview-fill:before {
+    content:"";
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:30px;
+    background-color:var(--color-EquipmentFill-Opaque);
+    border-bottom-left-radius:1000%;
+    border-bottom-right-radius:1000%;
+}
+/*-----------
+GLASSWARE TAGS
+-----------*/
+.Glassware {
+    --glasswareWidth: calc(var(--glasswareHeight) * (116.7/200));
+    --glasswareHeight: 300px;
+    --color:orange;
+    width:var(--glasswareWidth);
+    height:var(--glasswareHeight);
+    background-color:var(--color-EquipmentFill);
+    position:relative;
+    /* overflow:hidden; */
+    transform:rotate(calc(var(--tilt) * 1deg));
+    -webkit-mask-image:url(../resources/img/erlenmeyerFlask-mask.png);
+    -webkit-mask-size:contain;
+}
+/* 
+    When two glassware enter a pouring state, 
+    they are both placed into a scaffold. 
+    This scaffold effectively "locks" them 
+    into place, preventing the glassware 
+    in question from moving around.
+    
+    The scaffold is responsible for positioning 
+    the two elements relative to each other, 
+    and for rotating the glassware that is 
+    performing the pouring onto the glassware 
+    that is receiving the pour.
+*/
+.GlasswarePouringStateScaffold {
+
+}
+.GlasswarePouringStateScaffold .Glassware.state-pouring-invoker {
+
+}
+.GlasswarePouringStateScaffold .Glassware.state-pouring-receiver {
+
+}
+.Glassware::before {
+    content: "";
+    display:block;
+    position:absolute;
+    bottom:0px;
+    left:0;
+    width:100%;
+    height:calc(var(--glasswareWidth) * 0.4);
+    border-radius:100%;
+    border-top:5px solid var(--color-EquipmentOutline);
+    box-sizing:border-box;
+    z-index:-100;
+}
+.glassware-image {
+    width:var(--glasswareWidth);
+    height:var(--glasswareHeight);
+    position:absolute;
+    left:0;
+    top:0;
+    background-image:url(../resources/img/erlenmeyerFlask.png);
+    background-size:contain;
+    filter:brightness(0.8)
+}
+.glassware-internalFillState {
+    --fillWidth: var(--glasswareWidth);
+    --fillHeight: calc(var(--glasswareHeight) * var(--fillLevel) / 100);
+    --curvature: calc(100% * (1.3 - var(--fillLevel) / 100));
+    /* --tiltAmplitude: calc(var(--tilt) / 90  );
+    --ratioOfWidthAndHeight: calc(var(--glasswareHeight) / var(--glasswareWidth));
+    --tiltAdjustment: calc(var(--glasswareHeight) * var(--fillOffset) / var(--ratioOfWidthAndHeight)); */
+    width:var(--fillWidth);
+    height:var(--fillHeight);
+    border-top:5px solid var(--color-EquipmentOutline);
+    border-top-right-radius:var(--curvature);
+    border-top-left-radius:var(--curvature);
+    bottom:0;
+    left:0;
+    /* transform:rotate(calc(-1 * var(--tilt) * 1deg)); */
+    background-color:var(--color);
+    position:absolute;
+    z-index:-1;
+}
+/*-----------
+CHEMICAL TAGS
+-----------*/
+
+/*-----------
+DRAGGABLE TAGS
+-----------*/
+.interactive {
+    transform:translate(calc((var(--x) * 1px) - 50%),calc((var(--y) * 1px) - 50%));
+    position:absolute;
+    z-index:0;
+}
+.interactive > .Glassware {
+    transform:scale(0.95);
+    transition:transform 0.2s;
+}
+.interactive:hover > .Glassware {
+    /* transform:scale(1); */
+}
+.interactive:active {
+    z-index:10;
+    filter:drop-shadow(0 0 0px rgb(255,255,255))
+           drop-shadow(0 0 5px rgba(180, 21, 87, 0.7));
+}
+.interactive::before {
+    content:"";
+    display:block;
+    position:absolute;
+    left:calc(50% - 3px);
+    bottom:-12px;
+    transform:translatex(-50%);
+    width:120%;
+    height:30%;
+    /* background-image: radial-gradient(var(--color-Shadow-transparent) 40%, transparent 70%); */
+    z-index:-1;
+}
+.passiveIntersector {
+    /* background-color:palevioletred; */
+}
+.activeIntersector {
+    /* background-color:palegreen; */
+}
+/*-----------
+SCREEN TAGS
+-----------*/
+.ScreenContainer {
+    --screen: 0;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    overflow-x:scroll;
+    overflow-y:hidden;
+    width:400vw;
+    position:absolute;
+    transition:1s;
+    transform:translatex(calc(var(--screen) * -100vw));
+    /* pointer-events: none; */
+}
+.screen {
+    width:100vw;
+    height:100vh;
+    display:inline-block;
+    position:relative;
+}
+.ToPreviousScreen, .ToNextScreen {
+    width:5vw;
+    height:60vh;
+    /* background-color:rgba(225,45,120,0.3); */
+    position:fixed;
+    top:50%;
+    transform:translatey(-50%);
+    transition:0;
+}
+.ToPreviousScreen {
+    left:0;
+}
+.ToNextScreen {
+    right:0;
+}
+.MenuScreen {
+    height: 100vh;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+.MenuScreen-info {
+    display: flex;
+    flex-direction: row;
+}
+.MenuScreen-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30px;
+    width: 33%;
+}
+.MenuScreen-box-title {
+    font-size: 3em;
+    color: #1f2051;
+}
+.MenuScreen-box-subtitle {
+    font-size: 1.5em;
+    color: #757070
+}
+.MenuScreen-logo {
+    width: 150px;
+    height: 200px;
+    background-image: url("../resources/img/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.MenuScreen-currentExp {
+    margin-left: 180px; /* change based on width of MenuScreen-logo and margin-left of MenuScreen-box*/
+    font-size: 1.5em;
+    margin-top: 30px;
+}
+.MenuScreen-currentExp-label {
+    font-size: inherit;
+    color: #aeabab
+}
+.MenuScreen-currentExp-name {
+    font-size: inherit;
+    padding-left: 30px;
+}
+.Tabletop {
+    /* width: 100vw; */
+    pointer-events: none;
+}
+.Tabletop * {
+    pointer-events: all;
+}
+.Stockroom {
+    width: 78vw;
+    height: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translatex(-50%);
+    pointer-events: none;
+    /* z-index: -1000000; */
+}
+
+.Stockroom * {
+    pointer-events: all;
+}
+
+.GestureDemoScreen {
+    height: 100vh;
+    width: 100vw;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+/* shelfInd refers to the index of the shelf it is on. 
+   the top shelf is shelf 1, the next shelf is shelf 2, 
+   and the bottom shelf is shelf 3. */
+.Stockroom-shelf {
+    width:65vw;
+    height:120px;
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    /* these shelves should appear to be vertically centered and equally distributed across the screen. */
+    /* shelves must be positioned so that they can have individual z-indexes. so vertical positioning
+       is hardcoded. */
+    top: calc((var(--shelfInd) - 1) * 250px); 
+    /* z-index of the shelves (from top to bottom) must be decreasing. */
+    /* z-index: calc((5 - var(--shelfInd)) * 10); */
+    perspective:300px;
+    perspective-origin:top; 
+    pointer-events: none;
+    justify-content: space-between;
+}
+
+.Stockroom-shelf * {
+    pointer-events: all;
+}
+
+.Stockroom-shelf-top {
+    --rotation:30deg;
+    width:100%;
+    height:120px;
+    transform:rotateX(var(--rotation)) translatey(-5%);
+    background: #e3e3e3;
+    /* TODO: add gradient later */
+    border-radius:5px;
+}
+
+/* eqpt. means equipment */
+.eqptRow {
+    position: relative;
+    transform: translatey(-66%);
+    left: 10%;
+    top: calc((var(--shelfInd) - 1) * 250px); 
+    z-index: calc(((5 - var(--shelfInd)) * 10) + 5);
+    display: flex;
+}
+
+.eqptRow-gen {
+    /* margin: 0px 20px; */
+}
+
+.GlasswareContainer {
+    width:100%;
+    height:100%;
+    position:absolute;
+    pointer-events: none;
+}
+
+.GlasswareContainer * {
+    pointer-events: all;
+}
+
+.reactionTable {
+    width:130vw;
+    height:200px;
+    position:absolute;
+    bottom:0;
+    left:53.8%;
+    transform:translatex(-100%);
+    perspective:500px;
+    perspective-origin:top;
+    z-index: -1000
+}
+.reactionTable-top {
+    --rotation:30deg;
+    width:100%;
+    height:100px;
+    transform:rotateX(var(--rotation)) translatey(-50%);
+    border-radius:15px;
+    background-image:var(--img-noise);
+    filter: contrast(170%) brightness(100%);  
+    background-color:var(--color-Phenolic-Light);
+}
+.reactionTable-top-border {
+    width:calc(100% - 20px);
+    height:30px;
+    background-color:var(--color-Phenolic-Shaded);
+    position:absolute;
+    left:50%;
+    transform:translatex(-50%);
+    border-radius:3px 3px 15px 15px;
+    bottom:0;
+    top:42.5px;
+    z-index:-1;
+}
+.reactionTable-bottom {
+    width:calc(100% - 100px);
+    height:100%;background: rgb(255,255,255);
+    background-image:linear-gradient(350deg, rgba(255,255,255,0) 0%, rgba(4, 1, 24, 0.6) 100%), url("../resources/img/texture-wood.jpg");
+    background-size:cover;
+    position:absolute;
+    left:50%;
+    top:50px;
+    transform:rotateX(-2deg) translatex(-50%);
+    z-index:-2;
+    filter:saturate(1.3);
+}
+/*-----------
+GESTURE DEMO TAGS
+-----------*/
+.column {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/*-----------
+CHEMICAL TAGS
+-----------*/
+.chemical {
+    width:100px;
+    height:100px;
+    background-image:url("../resources/img/good.png");
+    background-size:contain;
+}
+.chemical-tooltip {
+    white-space:nowrap;
+    pointer-events:none;
+    user-select:none;
+}
+.chemical-tooltip-type {
+    font-size:var(--txt-small);
+    font-weight:bold;
+    color:rgb(225,45,120);
+}
+
+/*----------
+TOOLTIP TAGS
+----------*/
+.tooltipContainer {
+    position:relative;
+}
+.tooltipContainer:hover .tooltip {
+    opacity:1;
+}
+.tooltip {
+    --tooltipDist:10px;
+    position:absolute;
+    left:50%;
+    transform:translatex(-50%);
+    top:calc(100% + var(--tooltipDist));
+    opacity:0;
+    transition:0.2s;
+}
+
+/*-----------
+BACKGROUND TAGS
+-----------*/
+.background {
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    left:0;
+    top:0;
+}
+.ceiling {
+    width:100%;
+    height:100px;
+    /* background-color:var(--color-EquipmentMarking);
+    background-image:linear-gradient(180deg, transparent 20%, rgba(255,255,255,1) 100%), var(--img-noise); */
+    filter: contrast(170%) brightness(100%);  
+    position:absolute;
+    left:0;
+    top:0;
+}
+
+
+
+/*-----------
+DEBUG TAGS
+-----------*/
+.dummy {
+    width:50px;
+    height:50px;
+    background-color:red;
+}
+.debug-button {
+    padding:5px 30px;
+    background-color:var(--color-debug);
+    display:inline-block;
+    color:white;
+    margin:20px;
+    margin-bottom:25px;
+    box-shadow:0 5px 0 var(--color-TextHighlight),
+               0 0 15px white;
+    border-radius:5px;
+    position:absolute;
+    bottom:20px;
+    right:20px;
+    z-index:100;
+}
+.debug-button:active {
+    margin-top:25px;
+    margin-bottom:20px;
+    box-shadow:0 0 0 transparent,
+               0 0 15px white;
+}
+.debug-button2 {
+    padding:5px 30px;
+    background-color:var(--color-debug);
+    display:inline-block;
+    color:white;
+    margin:20px;
+    margin-bottom:25px;
+    box-shadow:0 5px 0 var(--color-TextHighlight),
+               0 0 15px white;
+    border-radius:5px;
+    position:absolute;
+    bottom:80px;
+    right:20px;
+    z-index:100;
+}
+.debug-button2:active {
+    margin-top:25px;
+    margin-bottom:20px;
+    box-shadow:0 0 0 transparent,
+               0 0 15px white;
+}
+.generator-button {
+    padding:5px 30px;
+    background-color:var(--color-debug);
+    display:inline-block;
+    color:white;
+    margin:20px;
+    margin-bottom:25px;
+    box-shadow:0 5px 0 var(--color-TextHighlight),
+               0 0 15px white;
+    border-radius:5px;
+    position:absolute;
+    z-index:100;
+}
+.generator-button:active {
+    margin-top:25px;
+    margin-bottom:20px;
+    box-shadow:0 0 0 transparent,
+               0 0 15px white;
+}
+
+#webcam {
+    /* visibility: hidden; */
+    z-index: 1000;
+    pointer-events: none;
+}

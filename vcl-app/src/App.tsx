@@ -1,34 +1,60 @@
-// App.js (React project running on localhost:3000)
-import { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
-const express = require('express');
-const cors = require('cors');
-const app = express();
-// app.use(cors());
-// app.use(express.json());
+import ScreenContainer from './components/ScreenContainer';
+import GraduatedSideview from './components/GraduatedSideview';
+import Background from './components/Background';
 
-// Endpoint to handle incoming POST requests
-// app.post('/receive', (req:any, res:any) => {
-//     const { message } = req.body;
-//     console.log('Received message:', message);
-
-//     // You can process the message here or send a response back if needed.
-//     res.json({ received: true });
-// });
-
-// app.listen(3000, () => {
-//     console.log('Server is running on port 3000');
-// });
+var hasNotChangedScreenInTheLast500Milliseconds : boolean = true;
 
 function App() {
-    const [receivedMessage, setReceivedMessage] = useState('');
+  window.addEventListener(
+    "message",
+    function (e) {
+      console.log(e.origin);
+      if (e.origin !== "http://localhost:8080/") {
+        console.log("wrong");
+        return;
+      }
+      window.alert(e);
+    },
+    false
+  );
 
-    return (
-        <div className="App">
-            <h1>React Project</h1>
-            <p>Received Message: {receivedMessage}</p>
-        </div>
-    );
+  const [screen, setScreen] = useState(0);
+
+  useEffect(() => {
+    document.title = "Handistry"
+  }, []);
+
+  return (
+    <div className="App">
+      <Background/>
+      <ScreenContainer screen={screen}/>
+      <GraduatedSideview 
+        graduations={[300,200,100]}
+      />
+      <div className="ToPreviousScreen flex-centered" onMouseOver={(e) => {
+          attemptToSetScreen(clamp(screen - 1, 0, 2),setScreen)}
+      }></div>
+      <div className="ToNextScreen flex-centered" onMouseOver={(e) => {
+          attemptToSetScreen(clamp(screen + 1, 0, 2),setScreen)}
+      }></div>
+    </div>
+  );
+}
+
+function clamp(value : number, min : number, max : number) {
+  return Math.max(Math.min(value, max), min);
+}
+function attemptToSetScreen(newScreen : number, setScreen : Function) {
+  if (hasNotChangedScreenInTheLast500Milliseconds) {
+    // console.log("newScreen",newScreen);
+    setScreen(newScreen);
+    hasNotChangedScreenInTheLast500Milliseconds = false;
+    setTimeout(() => {
+      hasNotChangedScreenInTheLast500Milliseconds = true;
+    },500);
+  }
 }
 
 export default App;
