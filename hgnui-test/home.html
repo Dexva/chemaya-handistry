@@ -14,14 +14,83 @@
       #messages > li { padding: 0.5rem 1rem; }
       #messages > li:nth-child(odd) { background: #efefef; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.skypack.dev/@mediapipe/tasks-vision@0.1.0-alpha-11" crossorigin="anonymous"></script>
+
   </head>
   <body>
-    <ul id="messages"></ul>
+    <!-- Old Code: -->
+    <!-- <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+    </form> -->
+
+    <video autoplay="true" id="input_video" width="100%" height="100%"></video>
+
+    <!-- ###  SCRIPTS  ### -->
     <script src="/socket.io/socket.io.js"></script>
-    <script>
+    <!-- <script type="module" src="./processor.js"></script> -->
+    <script type = "module">
+      var socket = io();
+
+      import {
+          GestureRecognizer,
+          FilesetResolver,
+          DrawingUtils
+      } from "https://cdn.skypack.dev/@mediapipe/tasks-vision@0.1.0-alpha-11";
+
+      const video = document.getElementById("input_video");
+
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function (stream) {
+            video.srcObject = stream;
+          })
+          .catch(function (error) {
+            console.log("Something went wrong!");
+          });
+      }
+
+
+      const vision = await FilesetResolver.forVisionTasks(
+          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+      );
+      const gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
+          baseOptions: {
+              modelAssetPath: "https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/gesture_recognizer.task"
+          },
+          runningMode: "video",
+          numHands: 1
+      });
+
+      let lastVideoTime = -1;
+      let results = undefined;
+      function predictWebcam() {
+        let nowInMs = Date.now();
+        if (video.currentTime !== lastVideoTime) {
+          lastVideoTime = video.currentTime;
+          results = gestureRecognizer.recognizeForVideo(video, nowInMs);
+          // console.log(results);
+          if(results.gestures.length > 0) {
+            let gestureResult = results.gestures.at(0).at(0).categoryName;
+            let x0 = results.landmarks.at(0).at(0).x;
+            let y0 = results.landmarks.at(0).at(0).y;
+            let z0 = results.landmarks.at(0).at(0).z;
+            // console.log(gestureResult);
+            socket.emit('chat message', {"gesture": gestureResult, "x": x0, "y": y0, "z": z0, "timeNow": Date.now()});
+        }
+          // if (results.handedness)
+          // socket.emit('chat message',results[0]);
+          // if (results.gesture) socket.broadcast.emit(results[0].gesture.at(0).name);
+        }
+        window.requestAnimationFrame(predictWebcam);
+      }
+      predictWebcam();
+
+    </script>
+    
+    <!-- OLD SCRIPT -->
+    <!-- <script>
         var socket = io();
 
         var form = document.getElementById('form');
@@ -34,6 +103,6 @@
             input.value = '';
         }
         });
-    </script>
+    </script> -->
   </body>
 </html>

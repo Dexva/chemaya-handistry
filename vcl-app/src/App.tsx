@@ -9,7 +9,8 @@ var hasNotChangedScreenInTheLast500Milliseconds : boolean = true;
 
 function App() {
   socket.on('message', (msg) => {
-      console.log('message: ' + msg);
+      // console.log(msg);
+      console.log(Date.now() - msg.timeNow);
   });
 
   const [screen, setScreen] = useState(0);
