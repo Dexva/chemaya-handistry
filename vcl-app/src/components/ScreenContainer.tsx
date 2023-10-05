@@ -1,7 +1,7 @@
 /*------------
    IMPORTS
 ------------*/
-import React, { useState } from 'react';
+import React from 'react';
 import Screen from './Screen';
 import MainMenu from '../screens/Menu';
 import Tabletop from '../screens/Tabletop';
@@ -20,21 +20,19 @@ It has two side "buttons" that has hoverEvent to navigate through these 3 Screen
 function ScreenContainer(props : ScreenContainerProps) {
 
     //----- VARIABLES & STATES -----//
-    const [equipmentList, setEquipmentList] = useState([]);
     const ScreenContainerStyle = {"--screen": props.screen} as React.CSSProperties;
     
     //----- RETURN -----//
     return (
         <div className="ScreenContainer" style={ScreenContainerStyle}>
             <Screen index={0}>
-                <div className = "debug-button" onClick = {() => {console.log(equipmentList)}}>Check Equipment List</div>
                 <MainMenu/>
             </Screen>
             <Screen index={1}>
-                <Tabletop equipmentList={equipmentList} setEquipmentList={setEquipmentList}/>
+                <Tabletop/>
             </Screen>
             <Screen index={2}>
-                <Stockroom setEquipmentList = {setEquipmentList}/>
+                <Stockroom/>
             </Screen>
             <div className="reactionTable">
                 <div className="reactionTable-top"></div>

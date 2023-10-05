@@ -13,17 +13,12 @@ TL;DR: The item generation page.
 The Stockroom screen is where the user can gather equipment (e.g., glassware, chemicals)
 to be used for the experiment they are doing.
 */
-function Stockroom({ setEquipmentList } : any) {
+function Stockroom() {
 
     //----- VARIABLES & STATES -----//
     /* Passes up the updated list of generate glassware to the parent component. */
     const addEquipment = (newGlassware : any) => {
-        console.log("bruh");
-
-        setEquipmentList((currentList : any) => {
-            console.log(currentList);
-            return [...currentList, newGlassware];
-        });
+        
     }
 
     //----- AVAILABLE GLASSWARE -----//

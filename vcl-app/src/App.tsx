@@ -4,8 +4,11 @@ import ScreenContainer from './components/ScreenContainer';
 import GraduatedSideview from './components/GraduatedSideview';
 import Background from './components/Background';
 import { socket } from './socket.js';
+import { Entity } from "./vcl-model/Entity";
 
 var hasNotChangedScreenInTheLast500Milliseconds : boolean = true;
+
+Entity.initialize();  
 
 function App() {
   socket.on('message', (msg) => {

@@ -4,6 +4,16 @@
 import { Chemical } from '../vcl-model/Chemical';
 import CHEMICAL_LIST from '../vcl-features/LoadChemicals';
 
+/* Returns a random member of the array.*/
+export function randElem(array: any[]) {
+    return array[randInt(array.length - 1)];
+}
+
+/* Calculates a random integer between min and max, inclusive.*/
+export function randInt(max: number, min: number = 0) {
+    return Math.round(Math.random() * (max - min)) + min;
+}
+
 /* Adds new chemicals to a pre-existing Chemical map */
 export function AddChemical(originalChemicals: Map<string, Chemical>, newChemicals: Chemical[]) {
     newChemicals.forEach( (chemical) => {
