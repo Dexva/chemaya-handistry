@@ -17,12 +17,11 @@ interface Coordinate {
     Represents a physical object on the Tabletop, ie. a Glassware, an Equipment 
 */
 export class Entity {
-    private static Instances : Entity[] = [];
+    public static Instances : Entity[] = [];
     //----- FIELDS -----//
     private coordinates: Coordinate;     // [string] File path to equipment's sprite
     private data: EntityData;           // [string] Name associated with equipment instance
     private states: Map<string, boolean>;
-
     //----- CONSTRUCTOR -----//
     public constructor(data : EntityData,x: number = window.innerWidth / 2 + (randInt(500,-500)) , y: number = 310) {
         this.coordinates = {"x":x, "y":y, "z":Entity.Instances.length};

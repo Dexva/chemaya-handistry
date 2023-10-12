@@ -2,7 +2,7 @@
    IMPORTS
 ------------*/
 
-export interface Circle {
+export type Circle = {
     radius: number,
     center: {
         x: number,

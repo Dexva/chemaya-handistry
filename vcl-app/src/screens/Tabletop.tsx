@@ -1,11 +1,16 @@
 /*------------
    IMPORTS
 ------------*/
-import React from 'react';
+import React, { useState } from 'react';
 import Glassware from '../components/Glassware';
 import { Entity as EntityModel } from "../vcl-model/Entity";
-import Entity from '../components/Entity';
 import EntityContainer from '../components/EntityContainer';
+import Entity from '../components/Entity';
+import Cursor from '../vcl-model/Cursor';
+import {cursorX, cursorY} from '../vcl-model/Engine';
+import { socket } from '../socket.js';
+import Engine from '../vcl-model/Engine';
+
 import '../styles/style.css';
 
 /* Given 2 rectangular hitboxes, check if the 2 overlaps */
@@ -32,7 +37,25 @@ Here, the user may drag-and-drop glassware and make them interact with one anoth
 
 To-do: Integrate virtual cursor and NUI.
 */
+
+let x = 0;
+
 function Tabletop() {
+
+    const [update, setUpdate] = useState(x);
+
+    //---- SOCKET.IO ----//
+    socket.on('message', (msg) => {
+        // console.log(msg);
+        // console.log(msg)
+        Engine(msg.gesture, msg.landmarks);
+        if (x<100000000) x += 1;
+        else x = 0;
+        setUpdate(x);
+        // console.log(update);
+        // console.log(Date.now() - msg.timeNow);
+    }); 
+
     //----- VARIABLES & STATES -----//
 
     //----- FUNCTIONS -----//
@@ -56,6 +79,7 @@ function Tabletop() {
             <EntityContainer> 
                 {entityElements}
             </EntityContainer>
+            <Cursor></Cursor>
         </div>
     );
 }

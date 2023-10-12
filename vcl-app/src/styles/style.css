@@ -458,6 +458,16 @@ SCREEN TAGS
 .EntityContainer * {
     pointer-events: all;
 }
+.Cursor {
+    width:30px;
+    height:100px;
+    border-radius: 10px;
+    background-color: red;
+    transition:0.05s transform;
+    transform:translate(calc((var(--x) * 1px) - 50%), calc((100vh - (var(--y) * 1px)) - 50%)) rotate(calc(var(--rotate) * 180deg/3.1415));
+    position:absolute;
+    z-index:10000;
+}
 .entity {
     transform:translate(
         calc((var(--x) * 1px) - 50%),

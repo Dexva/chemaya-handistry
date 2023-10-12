@@ -13,6 +13,12 @@
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages > li { padding: 0.5rem 1rem; }
       #messages > li:nth-child(odd) { background: #efefef; }
+
+      #input_video {
+          transform: rotateY(180deg);
+          -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+          -moz-transform:rotateY(180deg); /* Firefox */
+      } 
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
     <script src="https://cdn.skypack.dev/@mediapipe/tasks-vision@0.1.0-alpha-11" crossorigin="anonymous"></script>
@@ -73,11 +79,8 @@
           // console.log(results);
           if(results.gestures.length > 0) {
             let gestureResult = results.gestures.at(0).at(0).categoryName;
-            let x0 = results.landmarks.at(0).at(0).x;
-            let y0 = results.landmarks.at(0).at(0).y;
-            let z0 = results.landmarks.at(0).at(0).z;
-            // console.log(gestureResult);
-            socket.emit('chat message', {"gesture": gestureResult, "x": x0, "y": y0, "z": z0, "timeNow": Date.now()});
+            let landmarksResult = results.landmarks.at(0);
+            socket.emit('chat message', {"gesture": gestureResult, "landmarks": landmarksResult, "timeNow": Date.now()});
         }
           // if (results.handedness)
           // socket.emit('chat message',results[0]);

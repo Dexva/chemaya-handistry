@@ -3,20 +3,15 @@ import './App.css';
 import ScreenContainer from './components/ScreenContainer';
 import GraduatedSideview from './components/GraduatedSideview';
 import Background from './components/Background';
-import { socket } from './socket.js';
-import { Entity } from "./vcl-model/Entity";
+import { Entity } from './vcl-model/Entity';
 
 var hasNotChangedScreenInTheLast500Milliseconds : boolean = true;
 
 Entity.initialize();  
 
 function App() {
-  socket.on('message', (msg) => {
-      // console.log(msg);
-      console.log(Date.now() - msg.timeNow);
-  });
-
   const [screen, setScreen] = useState(0);
+
 
   useEffect(() => {
     document.title = "Handistry"
