@@ -4,6 +4,7 @@
 import { Glassware } from './Glassware';
 import { Equipment } from './Equipment';
 import { randInt } from '../utilities/utility';
+import { EntityData } from './EntityData';
 
 
 interface Coordinate {
@@ -19,11 +20,11 @@ export class Entity {
     private static Instances : Entity[] = [];
     //----- FIELDS -----//
     private coordinates: Coordinate;     // [string] File path to equipment's sprite
-    private data: Glassware | Equipment;           // [string] Name associated with equipment instance
+    private data: EntityData;           // [string] Name associated with equipment instance
     private states: Map<string, boolean>;
 
     //----- CONSTRUCTOR -----//
-    public constructor(data : Glassware | Equipment,x: number = window.innerWidth / 2 + (randInt(500,-500)) , y: number = 310) {
+    public constructor(data : EntityData,x: number = window.innerWidth / 2 + (randInt(500,-500)) , y: number = 310) {
         this.coordinates = {"x":x, "y":y, "z":Entity.Instances.length};
         this.data = data;
         this.states = this.initializeStates();

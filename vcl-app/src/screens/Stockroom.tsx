@@ -35,7 +35,14 @@ function Stockroom() {
                     new Map(),
                     0
                 ),
-                "beaker"
+                "beaker",
+                {
+                    radius:100,
+                    center: {
+                        x:0,
+                        y:50
+                    }
+                }
             )
         }/>
     const glassware1 = <Glassware
@@ -52,7 +59,14 @@ function Stockroom() {
                     ),
                     Math.floor((500 + (Math.random() * 500) - 250) / 10) * 10
                 ),
-                "beaker"
+                "beaker",
+                {
+                    radius:100,
+                    center: {
+                        x:0,
+                        y:50
+                    }
+                }
             )
         }/>
     const glassware2 = <Glassware
@@ -69,7 +83,14 @@ function Stockroom() {
                     ),
                     Math.floor(Math.random() * 500 / 10) * 10 + 250
                 ),
-                "beaker"
+                "beaker",
+                {
+                    radius:100,
+                    center: {
+                        x:0,
+                        y:50
+                    }
+                }
             )
         }/>
     const glassware3 = <Glassware
@@ -86,7 +107,14 @@ function Stockroom() {
                     ),
                     Math.floor(Math.random() * 100 / 10) * 10 + 300
                 ),
-                "beaker"
+                "beaker",
+                {
+                    radius:100,
+                    center: {
+                        x:0,
+                        y:50
+                    }
+                }
             )
         }/>
 
