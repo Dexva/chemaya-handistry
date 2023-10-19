@@ -469,14 +469,13 @@ SCREEN TAGS
     z-index:10000;
 }
 .entity {
-    transform:translate(
-        calc((var(--x) * 1px) - 50%),
-        calc((100vh - (var(--y) * 1px)) - 50%)
-    );
+    transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%));
     position:absolute;
     z-index:var(--z);
 }
-
+.entity.state-hover {
+    transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%)) scale(1.1);
+}
 .reactionTable {
     width:130vw;
     height:200px;

@@ -23,9 +23,11 @@ function Entity(props : EntityProps) {
         "--z": props.entityIndex,
     } as React.CSSProperties;
 
+    var entityClasses: string = entity.calculateStateClasses();
+
     return (
         <div 
-            className="entity" 
+            className={ "entity " + entityClasses } 
             data-entityindex={props.entityIndex} 
             style={InteractiveStyle}
         >
