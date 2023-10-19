@@ -8,7 +8,7 @@ const windowWidth: number = window.innerWidth;
 const windowHeight: number = window.innerHeight;
 const gestureIsHold: Map<string, boolean> = new Map<string, boolean>();
 gestureIsHold.set("Closed_Fist",true);
-gestureIsHold.set("Open_Palm",true);
+gestureIsHold.set("Open_Palm",false);
 gestureIsHold.set("Pointing_Up",false);
 gestureIsHold.set("Thumb_Down",false);
 gestureIsHold.set("Thumb_Up",false);
@@ -63,15 +63,18 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // Searcher --------
     // -----------------
     //      Look through entity list, and determine intersecting Entities with: 1) The hand position 2) The object with the highest z-index's hitcircle, if it exists
-    let invokerEntity: Entity = Entity.generateEmpty();
+    let invokerEntity: Entity | undefined = undefined;
     Entity.Instances.forEach((entity : Entity)=>{
+        // RESET EVERY STATE
+        entity.resetAllStates();
+        
         // If entity is intersecting with pointer
         // console.log(entity.getData().getHitcircle());
         let translatedHitcircle: Circle = {
-            radius:entity.getData().getHitcircle().radius,
+            radius: entity.getData().getHitcircle().radius,
             center:{
-                x:entity.getData().getHitcircle().center.x + entity.getCoordinates().x,
-                y:entity.getData().getHitcircle().center.y + entity.getCoordinates().y
+                x: entity.getData().getHitcircle().center.x + entity.getCoordinates().x,
+                y: entity.getData().getHitcircle().center.y + entity.getCoordinates().y
             }
         };
         if (pointWithinCircle(pointer, translatedHitcircle)) {
@@ -89,6 +92,9 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             }
         }
     });
+    if (typeof invokerEntity == "undefined") {
+        return;
+    }
     // if (invokerEntity) {
     //     // console.log(invokerEntity);
     //     // console.log(isHold);
@@ -134,34 +140,39 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         receiverEntity:undefined
     }
 
-    // RESET EVERY STATE
-    invokerEntity.resetAllStates();
-
     // UPDATE STATES!
     // Some states cannot coexist with one another, such as intersectionInvoker and intersectionReceiver
     // In such a situation, one state will take priority, overwriting the other.
 
     // STATE: ---- hover ----, not exclusive
     if (invokerEntity) {
+        //@ts-ignore
         invokerEntity.setState("hover",true);
+        //@ts-ignore
         invokerEntity.getData().onHover(inputs);
     }
 
     // STATE: ---- held ----, exclusive
     if (isHold && invokerEntity) {
+        //@ts-ignore
         invokerEntity.setState("held",true);
+        //@ts-ignore
         invokerEntity.getData().onHold(inputs);
     }
 
     // STATE: ---- intersecting-invoker ----, exclusive
     if (isHold && invokerEntity) {
+        //@ts-ignore
         invokerEntity.setState("intersecting-invoker",true);
+        //@ts-ignore
         invokerEntity.getData().onIntersectInvoker(inputs);
     }
 
     // STATE: ---- intersecting-receiver ----, exclusive
     // else if (isHold && receiverEntity) {
+    ////@ts-ignore
     //     invokerEntity.setState("intersecting-receiver",true);
+    ////@ts-ignore
     //     invokerEntity.getData().onIntersectReceiver(inputs);
     // }
 }

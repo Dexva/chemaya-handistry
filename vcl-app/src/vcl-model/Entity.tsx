@@ -26,6 +26,7 @@ export class Entity {
     public constructor(data : EntityData,x: number = window.innerWidth / 2 + (randInt(500,-500)) , y: number = 310) {
         this.coordinates = {"x":x, "y":y, "z":Entity.Instances.length};
         this.data = data;
+        data.setContainingEntity(this);
         this.states = this.initializeStates();
 
         Entity.Instances.push(this);
@@ -45,21 +46,6 @@ export class Entity {
         new Entity(Glassware.generateDummy());
         new Entity(Glassware.generateDummy());
     }
-    public static generateEmpty(): Entity {
-        return new Entity({
-            containingEntity:undefined,
-            setContainingEntity() {},
-            getContainingEntity() {},
-            getHitcircle() {},
-            getEntityDataType() {},
-            onIntersectReceiver() {},
-            onIntersectInvoker() {},
-            onHover() {},
-            onHold() {},
-        });
-    }
-
-    //----- METHODS -----//
     public calculateStateClasses(): string {
         let classes = "";
         this.states.forEach((stateValue: boolean, stateName: string) => {
@@ -69,6 +55,7 @@ export class Entity {
         });
         return classes;
     }
+
     //----- GETTERS -----//
     public static allInstances() {
         return Entity.Instances;
@@ -89,15 +76,15 @@ export class Entity {
         return this.coordinates;
     }
     //----- SETTERS -----//
-    public setCoordinates(x : number,y : number) {
-        this.coordinates.x = x;
-        this.coordinates.y = y;
-    }
     public resetAllStates() {
-        this.states.set("hover",false);
+        this.states.set("hover", false);
         this.states.set("held",false);
         this.states.set("intersecting-invoker",false);
         this.states.set("intersecting-receiver",false);
+    }
+    public setCoordinates(x : number,y : number) {
+        this.coordinates.x = x;
+        this.coordinates.y = y;
     }
     public setState(stateId: string,state: boolean) {
         this.states.set(stateId,state);
