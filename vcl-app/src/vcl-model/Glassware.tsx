@@ -5,7 +5,14 @@ import { Mixture } from './Mixture';
 import { Equipment } from './Equipment';
 import { EntityData, Circle } from './EntityData';
 import { randElem } from '../utilities/utility';
+import { Entity } from "./Entity";
+import { InputData } from "./Engine";
 import CHEMICAL_LIST from '../vcl-features/LoadChemicals';
+
+type Point = {
+    x: number,
+    y: number
+}
 
 /*
 TL;DR: The basic class representing all Glassware
@@ -18,6 +25,7 @@ export class Glassware extends Equipment implements EntityData {
     private transferMethod: string;     // [string] A classification denoting how the mixture is transferred
     private readonly hitcircle: Circle;
     private readonly entityDataType: string = "glassware";
+    public containingEntity: Entity | undefined;
 
 
     //----- CONSTRUCTOR -----//
@@ -36,10 +44,20 @@ export class Glassware extends Equipment implements EntityData {
     }
     
     //----- ENTITYTYPE METHODS -----//
+    public setContainingEntity(entity: Entity) {
+        this.containingEntity = entity;
+    }
+    public getContainingEntity(): Entity | undefined {
+        return this.containingEntity;
+    }
     public onIntersectReceiver() {} 
     public onIntersectInvoker() {}
-    public onHold() {}
     public onHover() {}
+    public onHold(inputs: InputData) {
+        if (this.containingEntity) {
+            this.containingEntity.setCoordinates(inputs.pointer.x, inputs.pointer.y);
+        }
+    }
     public getEntityDataType(): string {
         return this.entityDataType;
     }

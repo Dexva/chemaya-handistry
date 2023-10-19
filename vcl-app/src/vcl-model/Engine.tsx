@@ -20,13 +20,20 @@ type Point = {
     x: number,
     y: number
 }
+export type InputData = {
+    isHold: boolean | undefined,
+    pointer: Point,
+    degrees: number,
+    invokerEntity: Entity,
+    receiverEntity: Entity | undefined
+}
 
 function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) { 
     // --------------------   
     // Interpreter --------
     // --------------------
     //      Receive raw gesture, determine binary Hold/Not Hold
-    let isHold = gestureIsHold.get(rawGestureType);
+    let isHold: boolean | undefined = gestureIsHold.get(rawGestureType);
     
     //      Receive raw landmarks, determine hand position (pointer) and rotation
     let pointer: Point = {x: windowWidth - rawLandmarks[9].x * windowWidth, y: windowHeight - rawLandmarks[9].y * windowHeight};
@@ -56,7 +63,7 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // Searcher --------
     // -----------------
     //      Look through entity list, and determine intersecting Entities with: 1) The hand position 2) The object with the highest z-index's hitcircle, if it exists
-    let intersectingEntityWithHighestZ: Entity | undefined = undefined;
+    let invokerEntity: Entity = Entity.generateEmpty();
     Entity.Instances.forEach((entity : Entity)=>{
         // If entity is intersecting with pointer
         // console.log(entity.getData().getHitcircle());
@@ -69,42 +76,42 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         };
         if (pointWithinCircle(pointer, translatedHitcircle)) {
             // And there is a previously existing highestZ entity
-            if (intersectingEntityWithHighestZ) {
+            if (invokerEntity) {
                 // And if entity has higher z than current saved entity
-                if (intersectingEntityWithHighestZ.getCoordinates().z < entity.getCoordinates().z) {
+                if (invokerEntity.getCoordinates().z < entity.getCoordinates().z) {
                     // Set as new highest Z entity.
-                    intersectingEntityWithHighestZ = entity;
+                    invokerEntity = entity;
                 }
             } else {
                 // There is no previous highest Z entity to compare with.
                 // Set as new highest Z entity.
-                intersectingEntityWithHighestZ = entity;
+                invokerEntity = entity;
             }
         }
     });
-    // if (intersectingEntityWithHighestZ) {
-    //     // console.log(intersectingEntityWithHighestZ);
+    // if (invokerEntity) {
+    //     // console.log(invokerEntity);
     //     // console.log(isHold);
     // } else {
     //     return;
     // }
 
     // find entities intersecting with highest z-indexer's bounding circle
-    // let intersectingEntityIntersectingWithEntityWithHighestZ: Entity;
+    // let targetEntity: Entity;
     // Entity.Instances.forEach((entity) => {
     //     // If entity's hitcircle intersects with highestZ's hitcircle
-    //     if (pointWithinCircle(intersectingEntityWithHighestZ.getData().getHitcircle(), entity.getData().getHitcircle())) {
+    //     if (pointWithinCircle(invokerEntity.getData().getHitcircle(), entity.getData().getHitcircle())) {
     //         // And there is a previously existing highestZ entity
-    //         if (intersectingEntityIntersectingWithEntityWithHighestZ) {
+    //         if (targetEntity) {
     //             // And if entity has higher z than current saved entity
-    //             if (intersectingEntityIntersectingWithEntityWithHighestZ.getCoordinates().z < entity.getCoordinates().z) {
+    //             if (invokerEntity.getCoordinates().z < entity.getCoordinates().z) {
     //                 // Set as new highest Z entity.
-    //                 intersectingEntityIntersectingWithEntityWithHighestZ = entity;
+    //                 targetEntity = entity;
     //             }
     //         } else {
     //             // There is no previous highest Z entity to compare with.
     //             // Set as new highest Z entity.
-    //             intersectingEntityIntersectingWithEntityWithHighestZ = entity;
+    //             targetEntity = entity;
     //         }
     //     }
     // });
@@ -114,11 +121,49 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // ---------------
     //      Given all the above information, determine the states of all Entities found by the Searcher function
 
-    if (isHold && intersectingEntityWithHighestZ) {
-        // console.log(intersectingEntityWithHighestZ);
-        //@ts-ignore
-        intersectingEntityWithHighestZ.setCoordinates(pointer.x, pointer.y);
+    // COLLATE ALL INFORMATION INTO AN INPUTS OBJECT
+    // Since the responsibility of updating the state of an Entity is under the entity itself
+    // the entity must have all the data calculated by the engine that may be needed
+    // to update it's state.
+    // This includes the gesture type, pointer, degrees, invoker entity, and receiver entity. 
+    let inputs: InputData = {
+        isHold:isHold,
+        pointer:pointer,
+        degrees:degrees,
+        invokerEntity:invokerEntity,
+        receiverEntity:undefined
     }
+
+    // RESET EVERY STATE
+    invokerEntity.resetAllStates();
+
+    // UPDATE STATES!
+    // Some states cannot coexist with one another, such as intersectionInvoker and intersectionReceiver
+    // In such a situation, one state will take priority, overwriting the other.
+
+    // STATE: ---- hover ----, not exclusive
+    if (invokerEntity) {
+        invokerEntity.setState("hover",true);
+        invokerEntity.getData().onHover(inputs);
+    }
+
+    // STATE: ---- held ----, exclusive
+    if (isHold && invokerEntity) {
+        invokerEntity.setState("held",true);
+        invokerEntity.getData().onHold(inputs);
+    }
+
+    // STATE: ---- intersecting-invoker ----, exclusive
+    if (isHold && invokerEntity) {
+        invokerEntity.setState("intersecting-invoker",true);
+        invokerEntity.getData().onIntersectInvoker(inputs);
+    }
+
+    // STATE: ---- intersecting-receiver ----, exclusive
+    // else if (isHold && receiverEntity) {
+    //     invokerEntity.setState("intersecting-receiver",true);
+    //     invokerEntity.getData().onIntersectReceiver(inputs);
+    // }
 }
 
 // Returns if a point is within a given circle. 
