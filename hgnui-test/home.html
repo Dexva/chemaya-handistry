@@ -64,6 +64,7 @@
       const gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
           baseOptions: {
               modelAssetPath: "https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/gesture_recognizer.task"
+              // modelAssetPath: "http://localhost:5500/task-files/jueves_gesture_recognizer.task"
           },
           runningMode: "video",
           numHands: 1
@@ -80,6 +81,7 @@
           if(results.gestures.length > 0) {
             let gestureResult = results.gestures.at(0).at(0).categoryName;
             let landmarksResult = results.landmarks.at(0);
+            // console.log(results);
             socket.emit('chat message', {"gesture": gestureResult, "landmarks": landmarksResult, "timeNow": Date.now()});
         }
           // if (results.handedness)
