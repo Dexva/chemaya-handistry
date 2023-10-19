@@ -8,7 +8,7 @@ const windowWidth: number = window.innerWidth;
 const windowHeight: number = window.innerHeight;
 const gestureIsHold: Map<string, boolean> = new Map<string, boolean>();
 gestureIsHold.set("Closed_Fist",true);
-gestureIsHold.set("Open_Palm",false);
+gestureIsHold.set("Open_Palm",true);
 gestureIsHold.set("Pointing_Up",false);
 gestureIsHold.set("Thumb_Down",false);
 gestureIsHold.set("Thumb_Up",false);
@@ -56,24 +56,38 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // Searcher --------
     // -----------------
     //      Look through entity list, and determine intersecting Entities with: 1) The hand position 2) The object with the highest z-index's hitcircle, if it exists
-    // let intersectingEntityWithHighestZ: Entity;
-    // Entity.Instances.forEach((entity : Entity)=>{
-    //     // If entity is intersecting with pointer
-    //     if (pointWithinCircle(pointer, entity.getData().getHitcircle())) {
-    //         // And there is a previously existing highestZ entity
-    //         if (intersectingEntityWithHighestZ) {
-    //             // And if entity has higher z than current saved entity
-    //             if (intersectingEntityWithHighestZ.getCoordinates().z < entity.getCoordinates().z) {
-    //                 // Set as new highest Z entity.
-    //                 intersectingEntityWithHighestZ = entity;
-    //             }
-    //         } else {
-    //             // There is no previous highest Z entity to compare with.
-    //             // Set as new highest Z entity.
-    //             intersectingEntityWithHighestZ = entity;
-    //         }
-    //     }
-    // });
+    let intersectingEntityWithHighestZ: Entity | undefined = undefined;
+    Entity.Instances.forEach((entity : Entity)=>{
+        // If entity is intersecting with pointer
+        // console.log(entity.getData().getHitcircle());
+        let translatedHitcircle: Circle = {
+            radius:entity.getData().getHitcircle().radius,
+            center:{
+                x:entity.getData().getHitcircle().center.x + entity.getCoordinates().x,
+                y:entity.getData().getHitcircle().center.y + entity.getCoordinates().y
+            }
+        };
+        if (pointWithinCircle(pointer, translatedHitcircle)) {
+            // And there is a previously existing highestZ entity
+            if (intersectingEntityWithHighestZ) {
+                // And if entity has higher z than current saved entity
+                if (intersectingEntityWithHighestZ.getCoordinates().z < entity.getCoordinates().z) {
+                    // Set as new highest Z entity.
+                    intersectingEntityWithHighestZ = entity;
+                }
+            } else {
+                // There is no previous highest Z entity to compare with.
+                // Set as new highest Z entity.
+                intersectingEntityWithHighestZ = entity;
+            }
+        }
+    });
+    // if (intersectingEntityWithHighestZ) {
+    //     // console.log(intersectingEntityWithHighestZ);
+    //     // console.log(isHold);
+    // } else {
+    //     return;
+    // }
 
     // find entities intersecting with highest z-indexer's bounding circle
     // let intersectingEntityIntersectingWithEntityWithHighestZ: Entity;
@@ -99,6 +113,12 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // Stator --------
     // ---------------
     //      Given all the above information, determine the states of all Entities found by the Searcher function
+
+    if (isHold && intersectingEntityWithHighestZ) {
+        // console.log(intersectingEntityWithHighestZ);
+        //@ts-ignore
+        intersectingEntityWithHighestZ.setCoordinates(pointer.x, pointer.y);
+    }
 }
 
 // Returns if a point is within a given circle. 

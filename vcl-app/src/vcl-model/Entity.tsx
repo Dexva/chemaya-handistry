@@ -44,11 +44,6 @@ export class Entity {
     public static initialize() {
         new Entity(Glassware.generateDummy());
         new Entity(Glassware.generateDummy());
-        new Entity(Glassware.generateDummy());
-        new Entity(Glassware.generateDummy());
-        new Entity(Glassware.generateDummy());
-        new Entity(Glassware.generateDummy());
-        new Entity(Glassware.generateDummy());
     }
 
     //----- GETTERS -----//
