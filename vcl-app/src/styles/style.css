@@ -469,7 +469,7 @@ SCREEN TAGS
     z-index:10000;
 }
 .entity {
-    transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%));
+    transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%))  rotate(calc(var(--r) * 180deg/3.1415));;
     position:absolute;
     z-index:var(--z);
 }

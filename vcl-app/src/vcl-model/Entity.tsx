@@ -20,11 +20,13 @@ export class Entity {
     public static Instances : Entity[] = [];
     //----- FIELDS -----//
     private coordinates: Coordinate;     // [string] File path to equipment's sprite
+    private rotation: number;
     private data: EntityData;           // [string] Name associated with equipment instance
     private states: Map<string, boolean>;
     //----- CONSTRUCTOR -----//
     public constructor(data : EntityData,x: number = window.innerWidth / 2 + (randInt(500,-500)) , y: number = 310) {
         this.coordinates = {"x":x, "y":y, "z":Entity.Instances.length};
+        this.rotation = 0;
         this.data = data;
         data.setContainingEntity(this);
         this.states = this.initializeStates();
@@ -75,12 +77,16 @@ export class Entity {
     public getCoordinates() {
         return this.coordinates;
     }
+    public getRotation(): number {
+        return this.rotation;
+    }
     //----- SETTERS -----//
     public resetAllStates() {
         this.states.set("hover", false);
         this.states.set("held",false);
         this.states.set("intersecting-invoker",false);
         this.states.set("intersecting-receiver",false);
+        this.rotation = 0;
     }
     public setCoordinates(x : number,y : number) {
         this.coordinates.x = x;
@@ -88,6 +94,9 @@ export class Entity {
     }
     public setState(stateId: string,state: boolean) {
         this.states.set(stateId,state);
+    }
+    public setRotation(deg: number) {
+        this.rotation = deg;
     }
     public setHold() {
         this.states.set("held",true);

@@ -21,6 +21,7 @@ function Entity(props : EntityProps) {
         "--x": entity.getCoordinates().x,
         "--y": entity.getCoordinates().y,
         "--z": props.entityIndex,
+        "--r": entity.getRotation()
     } as React.CSSProperties;
 
     var entityClasses: string = entity.calculateStateClasses();

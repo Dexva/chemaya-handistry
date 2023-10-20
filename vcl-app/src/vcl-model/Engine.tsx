@@ -127,6 +127,9 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // ---------------
     //      Given all the above information, determine the states of all Entities found by the Searcher function
 
+    // Update the calculated rotation of the entity.
+    invokerEntity.setRotation(degrees);
+   
     // COLLATE ALL INFORMATION INTO AN INPUTS OBJECT
     // Since the responsibility of updating the state of an Entity is under the entity itself
     // the entity must have all the data calculated by the engine that may be needed
