@@ -462,16 +462,25 @@ SCREEN TAGS
     width:30px;
     height:100px;
     border-radius: 10px;
-    background-color: red;
-    transition:0.05s transform;
+    background-color: black;
+    transition:0.05s transform, 0.2s width, 0.2s border-radius;
     transform:translate(calc((var(--x) * 1px) - 50%), calc((100vh - (var(--y) * 1px)) - 50%)) rotate(calc(var(--rotate) * 180deg/3.1415));
     position:absolute;
-    z-index:10000;
+    z-index:100000000;
+}
+.Cursor.state-none {
+    background-color: rgb(255, 21, 99);
+}
+.Cursor.state-holding {
+    width:50px;
+    height:100px;
+    border-radius: 50px;
 }
 .entity {
     transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%))  rotate(calc(var(--r) * 180deg/3.1415));;
     position:absolute;
     z-index:var(--z);
+    transition:0.1s;
 }
 .entity.state-hover {
     transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%)) scale(1.1);

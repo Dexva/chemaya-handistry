@@ -20,7 +20,7 @@ function Entity(props : EntityProps) {
     const InteractiveStyle = {
         "--x": entity.getCoordinates().x,
         "--y": entity.getCoordinates().y,
-        "--z": props.entityIndex,
+        "--z": entity.getCoordinates().z,
         "--r": entity.getRotation()
     } as React.CSSProperties;
 

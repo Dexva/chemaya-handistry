@@ -112,4 +112,7 @@ export class Entity {
         this.states.set("intersecting-invoker",false);
         this.states.set("intersecting-receiver",false);
     }
+    public setZ(z: number) {
+        this.coordinates.z = z;
+    }
 }

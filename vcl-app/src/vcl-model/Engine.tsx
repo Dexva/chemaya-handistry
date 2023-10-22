@@ -4,6 +4,8 @@ import { Entity } from "./Entity";
 export let cursorX: number = 0
 export let cursorY: number = 0;
 export let degrees: number = 0;
+export let gesture: string = "None";
+export let isHolding: boolean | undefined = false;
 const windowWidth: number = window.innerWidth;
 const windowHeight: number = window.innerHeight;
 const gestureIsHold: Map<string, boolean> = new Map<string, boolean>();
@@ -16,6 +18,7 @@ gestureIsHold.set("Victory",false);
 gestureIsHold.set("I_Love_You",false);
 gestureIsHold.set("None",false);
 
+let highestZ = 0;
 type Point = {
     x: number,
     y: number
@@ -29,11 +32,13 @@ export type InputData = {
 }
 
 function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) { 
+    gesture = rawGestureType;
     // --------------------   
     // Interpreter --------
     // --------------------
     //      Receive raw gesture, determine binary Hold/Not Hold
     let isHold: boolean | undefined = gestureIsHold.get(rawGestureType);
+    isHolding = isHold;
     
     //      Receive raw landmarks, determine hand position (pointer) and rotation
     let pointer: Point = {x: windowWidth - rawLandmarks[9].x * windowWidth, y: windowHeight - rawLandmarks[9].y * windowHeight};
@@ -158,6 +163,8 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
 
     // STATE: ---- held ----, exclusive
     if (isHold && invokerEntity) {
+        //@ts-ignore
+        invokerEntity.setZ(++highestZ);
         //@ts-ignore
         invokerEntity.setState("held",true);
         //@ts-ignore

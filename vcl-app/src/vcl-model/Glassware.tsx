@@ -54,7 +54,6 @@ export class Glassware extends Equipment implements EntityData {
     public onIntersectInvoker() {}
     public onHover() {}
     public onHold(inputs: InputData) {
-        console.log(this.containingEntity);
         if (this.containingEntity) {
             this.containingEntity.setCoordinates(inputs.pointer.x, inputs.pointer.y);
         }
