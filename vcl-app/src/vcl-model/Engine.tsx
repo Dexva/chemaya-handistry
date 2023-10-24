@@ -33,7 +33,18 @@ export type InputData = {
     receiverEntity: Entity | undefined
 }
 
-function EngineTimestep(rawGestureType: string, rawLandmarks: any[], sendTime: number, receiveTime: number) { 
+export function EngineTargetless() {
+    Entity.Instances.forEach((entity)=>{
+        let coords = entity.getCoordinates();
+        if (coords.y > 300) {
+            entity.setCoordinates(coords.x,coords.y - 0.2);
+        } else if (coords.y <= 300) {
+            entity.setCoordinates(coords.x,300);
+        }
+    });
+}
+
+export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) { 
     gesture = rawGestureType;
     // --------------------   
     // Interpreter --------
@@ -181,6 +192,7 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[], sendTime: n
         invokerEntity.getData().onIntersectInvoker(inputs);
     }
 
+    EngineTargetless();
     // STATE: ---- intersecting-receiver ----, exclusive
     // else if (isHold && receiverEntity) {
     ////@ts-ignore
@@ -219,5 +231,3 @@ function circleIntersectsCircle(a: Circle, b: Circle) {
 function dist(a: Point, b: Point): number {
     return Math.sqrt(Math.pow(b.x - a.x,2) + Math.pow(b.y - a.y,2));
 }
-
-export default EngineTimestep;
