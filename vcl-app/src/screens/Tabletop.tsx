@@ -9,7 +9,8 @@ import Entity from '../components/Entity';
 import Cursor from '../vcl-model/Cursor';
 import {cursorX, cursorY} from '../vcl-model/Engine';
 import { socket } from '../socket.js';
-import Engine from '../vcl-model/Engine';
+import { EngineTimestep } from '../vcl-model/Engine';
+import { EngineTargetless } from '../vcl-model/Engine';
 
 import '../styles/style.css';
 
@@ -44,17 +45,22 @@ function Tabletop() {
 
     const [update, setUpdate] = useState(x);
 
+    let newMessage: any = false;
     //---- SOCKET.IO ----//
     socket.on('message', (msg) => {
-        // console.log(msg);
-        // console.log(msg)
-        Engine(msg.gesture, msg.landmarks);
-        if (x<100000000) x += 1;
-        else x = 0;
-        setUpdate(x);
-        // console.log(update);
-        // console.log(Date.now() - msg.timeNow);
+        newMessage = msg;
     }); 
+
+    setInterval(()=>{
+        if (newMessage) {
+            EngineTimestep(newMessage.gesture, newMessage.landmarks);
+            if (x<100000000) x += 1;
+            else x = 0;
+            setUpdate(x);
+        } else {
+            EngineTargetless();
+        }
+    },30);
 
     //----- VARIABLES & STATES -----//
 
