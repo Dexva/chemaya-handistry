@@ -1,6 +1,8 @@
 import { Circle } from "./EntityData";
 import { Entity } from "./Entity";
+// var fs = require('fs');
 
+var benchmarkTime : any[] = [];
 export let cursorX: number = 0
 export let cursorY: number = 0;
 export let degrees: number = 0;
@@ -31,7 +33,7 @@ export type InputData = {
     receiverEntity: Entity | undefined
 }
 
-function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) { 
+function EngineTimestep(rawGestureType: string, rawLandmarks: any[], sendTime: number, receiveTime: number) { 
     gesture = rawGestureType;
     // --------------------   
     // Interpreter --------
@@ -186,6 +188,23 @@ function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     ////@ts-ignore
     //     invokerEntity.getData().onIntersectReceiver(inputs);
     // }
+
+    // TIME BENCHMARKING
+    // let engineTime = Date.now();
+    // let timeData = {
+    //     'socketLatency': receiveTime - sendTime,
+    //     'engineLatency': engineTime - receiveTime,
+    //     'totalLatency': engineTime - sendTime
+    // };
+    // benchmarkTime.push(timeData);
+    // if (benchmarkTime.length > 10) {
+    //     console.log("got benchmarkingTime");
+    //     let bt = JSON.stringify(benchmarkTime);
+    //     fs.writeFile("benchmarking_data.json", bt, {}, () => {});
+    //     throw {};
+    // }
+    // console.log(timeData);
+    // console.clear();
 }
 
 // Returns if a point is within a given circle. 

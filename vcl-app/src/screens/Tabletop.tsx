@@ -48,7 +48,7 @@ function Tabletop() {
     socket.on('message', (msg) => {
         // console.log(msg);
         // console.log(msg)
-        Engine(msg.gesture, msg.landmarks);
+        Engine(msg.gesture, msg.landmarks, msg.timeNow, Date.now());
         if (x<100000000) x += 1;
         else x = 0;
         setUpdate(x);
