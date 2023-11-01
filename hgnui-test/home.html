@@ -63,8 +63,8 @@
       );
       const gestureRecognizer = await GestureRecognizer.createFromOptions(vision, {
           baseOptions: {
-              modelAssetPath: "https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/gesture_recognizer.task"
-              // modelAssetPath: "http://localhost:5500/task-files/jueves_gesture_recognizer.task"
+              // modelAssetPath: "https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/gesture_recognizer.task"
+              modelAssetPath: "http://localhost:5500/task-files/jueves_gesture_recognizer.task"
           },
           runningMode: "video",
           numHands: 1

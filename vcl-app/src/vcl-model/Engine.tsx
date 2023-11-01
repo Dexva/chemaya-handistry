@@ -11,14 +11,34 @@ export let isHolding: boolean | undefined = false;
 const windowWidth: number = window.innerWidth;
 const windowHeight: number = window.innerHeight;
 const gestureIsHold: Map<string, boolean> = new Map<string, boolean>();
-gestureIsHold.set("Closed_Fist",true);
-gestureIsHold.set("Open_Palm",false);
-gestureIsHold.set("Pointing_Up",false);
-gestureIsHold.set("Thumb_Down",false);
-gestureIsHold.set("Thumb_Up",false);
-gestureIsHold.set("Victory",false);
-gestureIsHold.set("I_Love_You",false);
-gestureIsHold.set("None",false);
+const jueves_gestureMap = {
+    "claw": false,
+    "fist": true,
+    "holding": true,
+    "four_hand": false,
+    "three_hand": false,
+    "ok_hand": false,
+    "open_palm": false,
+    "oui_oui": true,
+    "point_up": false,
+    "thumbs_up": false,
+    "two_hand": false,
+    "spiderman": false,
+    "": false
+}
+
+for (const [key, value] of Object.entries(jueves_gestureMap)) {
+    gestureIsHold.set(key,value);
+}
+
+// gestureIsHold.set("Closed_Fist",true); // default mediapipe model gesture categories
+// gestureIsHold.set("Open_Palm",false);
+// gestureIsHold.set("Pointing_Up",false);
+// gestureIsHold.set("Thumb_Down",false);
+// gestureIsHold.set("Thumb_Up",false);
+// gestureIsHold.set("Victory",false);
+// gestureIsHold.set("I_Love_You",false);
+// gestureIsHold.set("None",false);
 
 let highestZ = 0;
 type Point = {
@@ -64,16 +84,14 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // rotation setting
     let nodeDX = node1.x - node2.x;
     let nodeDY = node1.y - node2.y;
+    // let nodeDistance = dist(node1, node2);
     let nodeDistance = dist(node1, node2);
     let initialDegree = Math.asin(nodeDX/nodeDistance);
 
-    if (nodeDX > 0 && nodeDY > 0) degrees = initialDegree; // quadrant 1 -- this is not following cartesian logic, check DX & DY values
-    else if (nodeDX < 0 && nodeDY >= 0) degrees = initialDegree; // quadrant 2
-    else if (nodeDX < 0 && nodeDY < 0) degrees = Math.PI - initialDegree; // quadrant 3
+    if (nodeDX >= 0 && nodeDY > 0) degrees = initialDegree; // quadrant 1 -- this is not following cartesian logic, check DX & DY values
+    else if (nodeDX < 0 && nodeDY > 0) degrees = initialDegree; // quadrant 2
+    else if (nodeDX < 0 && nodeDY <= 0) degrees = Math.PI - initialDegree; // quadrant 3
     else if (nodeDX > 0 && nodeDY < 0) degrees = Math.PI - initialDegree; // quadrant 4
-    else degrees = initialDegree;
-
-    // console.log(degrees);
 
     // console.log(degrees);
 
@@ -161,6 +179,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         invokerEntity:invokerEntity,
         receiverEntity:undefined
     }
+    let isPouring = (Math.abs(degrees) >= 1.4);
 
     // UPDATE STATES!
     // Some states cannot coexist with one another, such as intersectionInvoker and intersectionReceiver
