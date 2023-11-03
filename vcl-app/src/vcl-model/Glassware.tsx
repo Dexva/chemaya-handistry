@@ -27,7 +27,6 @@ export class Glassware extends Equipment implements EntityData {
     private readonly entityDataType: string = "glassware";
     public containingEntity: Entity | undefined;
 
-
     //----- CONSTRUCTOR -----//
     public constructor(name: string,
                        spritePath: string,
@@ -66,8 +65,11 @@ export class Glassware extends Equipment implements EntityData {
     }
 
     //----- METHODS -----//
-    public transfer() {
-        if (this.transferMethod == 'beaker') {}
+    public transfer(receiver: Glassware, volume: number) {
+        if (this.transferMethod == 'beaker') {
+            let initialVolume = this.mixture.getVolume();
+
+        }
     }
     public static generateDummy(type: string = randElem(["water","zesto","potion"])) {
         const types = {

@@ -11,6 +11,7 @@ Entity.initialize();
 
 function App() {
   const [screen, setScreen] = useState(0);
+  console.log(screen);
 
 
   useEffect(() => {

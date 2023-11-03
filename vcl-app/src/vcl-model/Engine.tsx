@@ -1,5 +1,6 @@
 import { Circle } from "./EntityData";
 import { Entity } from "./Entity";
+import { Mixture } from "./Mixture";
 // var fs = require('fs');
 
 var benchmarkTime : any[] = [];
@@ -14,7 +15,7 @@ const gestureIsHold: Map<string, boolean> = new Map<string, boolean>();
 const jueves_gestureMap = {
     "claw": false,
     "fist": true,
-    "holding": true,
+    "holding": false,
     "four_hand": false,
     "three_hand": false,
     "ok_hand": false,
@@ -118,6 +119,34 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             }
         }
     });
+    let receiverEntity: Entity | undefined = undefined;
+    if (invokerEntity) {
+        Entity.Instances.forEach((entity : Entity)=>{
+            if (entity !== invokerEntity) {
+                // RESET EVERY STATE
+                entity.resetAllStates();
+                
+                // If entity is intersecting with pointer
+                // console.log(entity.getData().getHitcircle());
+                if (circleIntersectsCircle(invokerEntity?.getData().getHitcircle(), entity.getData().getHitcircle())) {
+                    // And there is a previously existing highestZ entity
+                    if (receiverEntity) {
+                        // And if entity has higher z than current saved entity
+                        if (receiverEntity.getCoordinates().z < entity.getCoordinates().z) {
+                            // Set as new highest Z entity.
+                            receiverEntity = entity;
+                        }
+                    } else {
+                        // There is no previous highest Z entity to compare with.
+                        // Set as new highest Z entity.
+                        receiverEntity = entity;
+                    }
+                }
+            }
+        });    
+    }
+    // console.log(receiverEntity);
+    
     // if (invokerEntity) {
     //     // console.log(invokerEntity);
     //     // console.log(isHold);
@@ -161,7 +190,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         pointer:pointer,
         degrees:degrees,
         invokerEntity:invokerEntity,
-        receiverEntity:undefined
+        receiverEntity:receiverEntity
     }
 
     // Now that all entities have proper states, update everything accordingly
@@ -177,7 +206,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             entity.getData().onHover();
         }
         if (entity.isInState("held")) {
-            console.log("being held!!!!");
+            // console.log("being held!!!!");
             entity.getData().onHold(inputs);
         }
     });
@@ -188,6 +217,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // Update the calculated rotation of the entity.
     ///@ts-ignore
     invokerEntity.setRotation(degrees);
+
     // UPDATE INVOKER STATE!
     // Some states cannot coexist with one another, such as intersectionInvoker and intersectionReceiver
     // In such a situation, one state will take priority, overwriting the other.
@@ -211,6 +241,30 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         //@ts-ignore
         invokerEntity.setState("intersecting-invoker",true);
     }
+
+    // STATE: ---- pour ----, exclusive
+    if (isHold && invokerEntity && receiverEntity && inputs.isPouring) {
+        // console.log("we pouring!!");
+        //@ts-ignore
+        invokerEntity.setState("transfer-invoker");
+        //@ts-ignore
+        receiverEntity.setState("transfer-receiver");
+        //@ts-ignore
+        let initialVolume = invokerEntity.getData().getMixture().getVolume();
+        
+        if (initialVolume > Mixture.POUR_RATE) {
+            //@ts-ignore
+            let movedChemicals = invokerEntity.getData().getMixture().partitionChemicals(Mixture.POUR_RATE / initialVolume);
+            //@ts-ignore
+            receiverEntity.getData().getMixture().addListOfChemicals(movedChemicals);
+            
+            //@ts-ignore
+            invokerEntity.getData().getMixture().changeVolume(-1 * Mixture.POUR_RATE);
+            //@ts-ignore
+            receiverEntity.getData().getMixture().changeVolume(Mixture.POUR_RATE);
+        }
+    }
+
     // STATE: ---- intersecting-receiver ----, exclusive
     // else if (isHold && receiverEntity) {
     ////@ts-ignore

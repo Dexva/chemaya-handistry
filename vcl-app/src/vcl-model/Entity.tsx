@@ -17,7 +17,7 @@ interface Coordinate {
     Represents a physical object on the Tabletop, ie. a Glassware, an Equipment 
 */
 export class Entity {
-    private static defaultInertiaFrames : number = 3000;
+    private static defaultInertiaFrames : number = 10;
     public static Instances : Entity[] = [];
     //----- FIELDS -----//
     private coordinates: Coordinate;     // [string] File path to equipment's sprite
@@ -39,9 +39,8 @@ export class Entity {
         let states = new Map<string, number>();
         states.set("hover",0);
         states.set("held",0);
-        states.set("intersecting-invoker",0);
-        states.set("intersecting-receiver",0);
-
+        states.set("transfer-invoker",0);
+        states.set("transfer-receiver",0);
         return states;
     }
 
@@ -78,7 +77,7 @@ export class Entity {
         return this.states.get(stateId);
     }
     public isIntersecting() {
-        return this.states.get("intersecting-receiver") || this.states.get("intersecting-invoker");
+        return this.states.get("transfer-receiver") || this.states.get("transfer-invoker");
     }
     public getCoordinates() {
         return this.coordinates;
@@ -93,9 +92,9 @@ export class Entity {
         //@ts-ignore
         this.states.set("held", this.states.get("held") - 1);
         //@ts-ignore
-        this.states.set("intersecting-invoker", this.states.get("intersecting-invoker") - 1);
+        this.states.set("transfer-invoker", this.states.get("transfer-invoker") - 1);
         //@ts-ignore
-        this.states.set("intersecting-receiver", this.states.get("intersecting-receiver") - 1);
+        this.states.set("transfer-receiver", this.states.get("transfer-receiver") - 1);
         this.rotation = 0;
     }
     public setCoordinates(x : number,y : number) {
@@ -116,11 +115,11 @@ export class Entity {
     }
     // Sets the intersect state of the object based on if it is the invoker or the receiver of the intersect event.
     public setIntersect(isInvoker : boolean) {
-        this.setState(isInvoker ? "intersecting-invoker" : "intersecting-receiver",false);
+        this.setState(isInvoker ? "transfer-invoker" : "transfer-receiver",false);
     }
     public setUnintersect() {
-        this.setState("intersecting-invoker",false);
-        this.setState("intersecting-receiver",false);
+        this.setState("transfer-invoker",false);
+        this.setState("transfer-receiver",false);
     }
     public setZ(z: number) {
         this.coordinates.z = z;

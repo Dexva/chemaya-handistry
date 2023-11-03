@@ -61,6 +61,7 @@ export class Mixture {
     //----- FIELDS -----//
     private chemicals: Map<string, Chemical>;   // [Map] key = formula of chemical, value = Chemical instance
     private volume: number;                     // [number] Volume of the mixture in milliliters (mL)
+    public static POUR_RATE : number = 0.2; // mL change per tick
 
     //----- CONSTRUCTOR -----//
     public constructor(chemicals: Map<string, Chemical>, volume: number) {
@@ -70,24 +71,49 @@ export class Mixture {
     
     //----- METHODS -----//
 
-    /* Adds a new chemical to the mixture's chemical field; Also updates volume */
-    public updateChemicals(new_chemical: Chemical, v: number): void { 
+    public partitionChemicals(transfer_ratio:number) {
+        let returnChemicalMap : Chemical[] = [];
+        this.chemicals.forEach((c, formula)=>{
+            let addedChemical : Chemical = {
+                name: c.name, 
+                formula: c.formula,
+                phase: c.phase,
+                molarMass: c.molarMass,
+                charge: c.charge,
+                enthalpyForm: c.enthalpyForm,
+                entropyForm: c.entropyForm, 
+                moles: c.moles * transfer_ratio,
+                color: c.color
+            }
+            c.moles = (1-transfer_ratio) * c.moles;
+            returnChemicalMap.push(addedChemical);
+        });
+        return returnChemicalMap;
+    }
+    public addListOfChemicals(chemicalList : Chemical[]) {
+        chemicalList.forEach((c) => {
+            this.updateChemicals(c);
+        });
+    }
+
+    /* Adds a new chemical to the mixture's chemical field; */
+    public updateChemicals(new_chemical: Chemical): void { 
         // If the chemical already exists in the mixture, then only add moles
         if (this.chemicals.get(new_chemical.formula) !== undefined) {
             let old_moles = window.structuredClone(this.chemicals.get(new_chemical.formula)?.moles);
-            console.log("old moles: " + old_moles); // Debugging purposes
+            // console.log("old moles: " + old_moles); // Debugging purposes
             let old_reference = this.chemicals.get(new_chemical.formula)?.moles;
             //@ts-ignore
             this.chemicals.get(new_chemical.formula).moles += window.structuredClone(new_chemical.moles); 
-            console.log("New moles: " + this.chemicals.get(new_chemical.formula)?.moles);
+            // console.log("New moles: " + this.chemicals.get(new_chemical.formula)?.moles);
         }
 
         // Otherwise, generate a new key-value pair in the Mixture's chemical map
         else {
-            console.log("new chemical added to mixture"); // Debugging purposes
+            // console.log("new chemical added to mixture"); // Debugging purposes
             this.chemicals.set(window.structuredClone(new_chemical.formula), window.structuredClone(new_chemical));           
         }
-        this.volume += v;
+        // this.volume += v;
     }
 
     /* Mixture's color update logic --> for lance to do */
@@ -235,7 +261,7 @@ export class Mixture {
                 "moles": window.structuredClone(value[1]) * moles_x,
                 "color": window.structuredClone(value[0].color)
             }
-            this.updateChemicals(added_product, 0);
+            this.updateChemicals(added_product);
         });
         mixture_reaction.getReactants().forEach((value: [Chemical, number], key: string) => {
             let added_reactant : Chemical = {
@@ -249,7 +275,7 @@ export class Mixture {
                 "moles": window.structuredClone(-value[1]) * moles_x,
                 "color": window.structuredClone(value[0].color)
             }
-            this.updateChemicals(added_reactant, 0);
+            this.updateChemicals(added_reactant);
         });
     }
 
@@ -257,4 +283,8 @@ export class Mixture {
     //----- GETTERS -----//
     public getChemicals() { return this.chemicals; }
     public getVolume() { return this.volume; }
+    public changeVolume(dv: number) { 
+        // console.log("we movin");
+        this.volume += dv; 
+    }
 }
