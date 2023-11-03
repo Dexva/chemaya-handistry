@@ -47,21 +47,11 @@ type Point = {
 }
 export type InputData = {
     isHold: boolean | undefined,
+    isPouring: boolean,
     pointer: Point,
     degrees: number,
-    invokerEntity: Entity,
+    invokerEntity: Entity | undefined,
     receiverEntity: Entity | undefined
-}
-
-export function EngineTargetless() {
-    Entity.Instances.forEach((entity)=>{
-        let coords = entity.getCoordinates();
-        if (coords.y > 300) {
-            entity.setCoordinates(coords.x,coords.y - 0.2);
-        } else if (coords.y <= 300) {
-            entity.setCoordinates(coords.x,300);
-        }
-    });
 }
 
 export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) { 
@@ -128,9 +118,6 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             }
         }
     });
-    if (typeof invokerEntity == "undefined") {
-        return;
-    }
     // if (invokerEntity) {
     //     // console.log(invokerEntity);
     //     // console.log(isHold);
@@ -162,10 +149,6 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // Stator --------
     // ---------------
     //      Given all the above information, determine the states of all Entities found by the Searcher function
-
-    // Update the calculated rotation of the entity.
-    ///@ts-ignore
-    invokerEntity.setRotation(degrees);
    
     // COLLATE ALL INFORMATION INTO AN INPUTS OBJECT
     // Since the responsibility of updating the state of an Entity is under the entity itself
@@ -174,14 +157,38 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // This includes the gesture type, pointer, degrees, invoker entity, and receiver entity. 
     let inputs: InputData = {
         isHold:isHold,
+        isPouring:(Math.abs(degrees) >= 1.4),
         pointer:pointer,
         degrees:degrees,
         invokerEntity:invokerEntity,
         receiverEntity:undefined
     }
-    let isPouring = (Math.abs(degrees) >= 1.4);
 
-    // UPDATE STATES!
+    // Now that all entities have proper states, update everything accordingly
+    Entity.Instances.forEach((entity)=>{
+        let coords = entity.getCoordinates();
+        if (coords.y > 300) {
+            entity.setCoordinates(coords.x,coords.y - 0.2);
+        } else if (coords.y <= 300) {
+            entity.setCoordinates(coords.x,300);
+        }
+
+        if (entity.isInState("hover")) {
+            entity.getData().onHover();
+        }
+        if (entity.isInState("held")) {
+            console.log("being held!!!!");
+            entity.getData().onHold(inputs);
+        }
+    });
+
+    if (typeof invokerEntity == "undefined") {
+        return;
+    }
+    // Update the calculated rotation of the entity.
+    ///@ts-ignore
+    invokerEntity.setRotation(degrees);
+    // UPDATE INVOKER STATE!
     // Some states cannot coexist with one another, such as intersectionInvoker and intersectionReceiver
     // In such a situation, one state will take priority, overwriting the other.
 
@@ -189,8 +196,6 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     if (invokerEntity) {
         //@ts-ignore
         invokerEntity.setState("hover",true);
-        //@ts-ignore
-        invokerEntity.getData().onHover(inputs);
     }
 
     // STATE: ---- held ----, exclusive
@@ -199,19 +204,13 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         invokerEntity.setZ(++highestZ);
         //@ts-ignore
         invokerEntity.setState("held",true);
-        //@ts-ignore
-        invokerEntity.getData().onHold(inputs);
     }
 
     // STATE: ---- intersecting-invoker ----, exclusive
     if (isHold && invokerEntity) {
         //@ts-ignore
         invokerEntity.setState("intersecting-invoker",true);
-        //@ts-ignore
-        invokerEntity.getData().onIntersectInvoker(inputs);
     }
-
-    EngineTargetless();
     // STATE: ---- intersecting-receiver ----, exclusive
     // else if (isHold && receiverEntity) {
     ////@ts-ignore

@@ -17,12 +17,13 @@ interface Coordinate {
     Represents a physical object on the Tabletop, ie. a Glassware, an Equipment 
 */
 export class Entity {
+    private static defaultInertiaFrames : number = 3000;
     public static Instances : Entity[] = [];
     //----- FIELDS -----//
     private coordinates: Coordinate;     // [string] File path to equipment's sprite
     private rotation: number;
     private data: EntityData;           // [string] Name associated with equipment instance
-    private states: Map<string, boolean>;
+    private states: Map<string, number>;
     //----- CONSTRUCTOR -----//
     public constructor(data : EntityData,x: number = window.innerWidth / 2 + (randInt(500,-500)) , y: number = 310) {
         this.coordinates = {"x":x, "y":y, "z":Entity.Instances.length};
@@ -34,11 +35,12 @@ export class Entity {
         Entity.Instances.push(this);
     }
     private initializeStates() {
-        let states = new Map<string, boolean>();
-        states.set("hover",false);
-        states.set("held",false);
-        states.set("intersecting-invoker",false);
-        states.set("intersecting-receiver",false);
+        console.log("test");
+        let states = new Map<string, number>();
+        states.set("hover",0);
+        states.set("held",0);
+        states.set("intersecting-invoker",0);
+        states.set("intersecting-receiver",0);
 
         return states;
     }
@@ -50,12 +52,16 @@ export class Entity {
     }
     public calculateStateClasses(): string {
         let classes = "";
-        this.states.forEach((stateValue: boolean, stateName: string) => {
-            if (stateValue) {
+        this.states.forEach((_: number, stateName: string) => {
+            if (this.isInState(stateName)) {
                 classes += `state-${stateName}`;
             }
         });
         return classes;
+    }
+    public isInState(stateName : string) {
+        //@ts-ignore
+        return this.states.get(stateName) > 0;
     }
 
     //----- GETTERS -----//
@@ -82,10 +88,14 @@ export class Entity {
     }
     //----- SETTERS -----//
     public resetAllStates() {
-        this.states.set("hover", false);
-        this.states.set("held",false);
-        this.states.set("intersecting-invoker",false);
-        this.states.set("intersecting-receiver",false);
+        //@ts-ignore
+        this.states.set("hover", this.states.get("hover") - 1);
+        //@ts-ignore
+        this.states.set("held", this.states.get("held") - 1);
+        //@ts-ignore
+        this.states.set("intersecting-invoker", this.states.get("intersecting-invoker") - 1);
+        //@ts-ignore
+        this.states.set("intersecting-receiver", this.states.get("intersecting-receiver") - 1);
         this.rotation = 0;
     }
     public setCoordinates(x : number,y : number) {
@@ -93,24 +103,24 @@ export class Entity {
         this.coordinates.y = y;
     }
     public setState(stateId: string,state: boolean) {
-        this.states.set(stateId,state);
+        this.states.set(stateId,state ? Entity.defaultInertiaFrames : 0);
     }
     public setRotation(deg: number) {
         this.rotation = deg;
     }
     public setHold() {
-        this.states.set("held",true);
+        this.setState("held",true);
     }
     public setUnhold() {
-        this.states.set("held",false);
+        this.setState("held",false);
     }
     // Sets the intersect state of the object based on if it is the invoker or the receiver of the intersect event.
     public setIntersect(isInvoker : boolean) {
-        this.states.set(isInvoker ? "intersecting-invoker" : "intersecting-receiver",false);
+        this.setState(isInvoker ? "intersecting-invoker" : "intersecting-receiver",false);
     }
     public setUnintersect() {
-        this.states.set("intersecting-invoker",false);
-        this.states.set("intersecting-receiver",false);
+        this.setState("intersecting-invoker",false);
+        this.setState("intersecting-receiver",false);
     }
     public setZ(z: number) {
         this.coordinates.z = z;
