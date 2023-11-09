@@ -1,9 +1,11 @@
 import { Circle } from "./EntityData";
 import { Entity } from "./Entity";
 import { Mixture } from "./Mixture";
+import GraduatedSideview from "../components/GraduatedSideview";
 // var fs = require('fs');
 
 export let tooltipEntity : Entity | null = null; // Entity to display the tooltip of.
+export let graduatedDisplayEntity : Entity | null = null; // Entity whose volume is displayed
 var benchmarkTime : any[] = [];
 export let cursorX: number = 0
 export let cursorY: number = 0;
@@ -214,6 +216,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
 
     if (typeof invokerEntity == "undefined") {
         tooltipEntity = null;
+        graduatedDisplayEntity = null;
         return;
     }
     // Update the calculated rotation of the entity.
@@ -229,6 +232,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         //@ts-ignore
         invokerEntity.setState("hover",true);
         tooltipEntity = invokerEntity;
+        graduatedDisplayEntity = invokerEntity;
     }
 
     // STATE: ---- held ----, exclusive

@@ -6,14 +6,16 @@ import GraduationLineGroup from './GraduationLineGroup';
 import '../styles/style.css';
 
 interface GraduatedSideviewProps {
+    displayState : boolean;
     graduations : number[];
+    fill : number;
+    max : number;
 }
 
 /* A component for the graduated-volume measurement sidepanel */
 function GraduatedSideview(props : GraduatedSideviewProps) {
-    const [fill, setFill] = useState(30);
     return (
-        <div className="GraduatedSideview" onClick={() => {setFill(fill + 3); console.log(fill)}}>
+        <div className={`GraduatedSideview ${props.displayState ? "state-display" : "state-hidden"}`}>
             {
                 Array.from(props.graduations, graduation => {
                     return <GraduationLineGroup graduation={graduation} />
@@ -21,7 +23,7 @@ function GraduatedSideview(props : GraduatedSideviewProps) {
             }
             <div
                 className="GraduatedSideview-fill"
-                style={{"--height": `${fill}`} as React.CSSProperties}
+                style={{"--vol": `${props.fill}`, "--max": `${props.max}`} as React.CSSProperties}
             />
         </div>
     );
