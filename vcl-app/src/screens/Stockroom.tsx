@@ -3,9 +3,12 @@
 ------------*/
 import React from 'react';
 import Glassware from '../components/Glassware';
+import { Chemical } from '../vcl-model/Chemical';
+import ExperimentGlassware from "../vcl-features/Glassware.json";
 import CHEMICAL_LIST from '../vcl-features/LoadChemicals';
 import {Glassware as GlasswareModel} from '../vcl-model/Glassware';
 import {Mixture} from '../vcl-model/Mixture';
+import { Entity as EntityModel } from "../vcl-model/Entity";
 import '../styles/style.css';
 
 /*
@@ -17,34 +20,29 @@ function Stockroom() {
 
     //----- VARIABLES & STATES -----//
     /* Passes up the updated list of generate glassware to the parent component. */
-    const addEquipment = (newGlassware : any) => {
-        
-    }
+    const createEntity = (newGlassware : any) => new EntityModel(newGlassware);
 
     //----- AVAILABLE GLASSWARE -----//
     // To-do: Turn this into it's own JSON file for easier generation
-    const glassware0 = <Glassware
-        data={
-            new GlasswareModel(
-                "erlenmeyerFlask",
-                "../resources/img/erlenmeyerFlask.png",
-                "../resources/img/erlenmeyerFlask-mask.png",
-                1000,
-                new Mixture(
-                    //@ts-ignore
-                    new Map(),
-                    0
-                ),
-                "beaker",
-                {
-                    radius:100,
-                    center: {
-                        x:0,
-                        y:50
-                    }
-                }
-            )
-        }/>
+    const glassware0 = new GlasswareModel(
+        "erlenmeyerFlask",
+        "../resources/img/erlenmeyerFlask.png",
+        "../resources/img/erlenmeyerFlask-mask.png",
+        1000,
+        new Mixture(
+            //@ts-ignore
+            new Map(),
+            0
+        ),
+        "beaker",
+        {
+            radius:100,
+            center: {
+                x:0,
+                y:50
+            }
+        }
+    )
     const glassware1 = <Glassware
         data={
             new GlasswareModel(
@@ -118,26 +116,67 @@ function Stockroom() {
             )
         }/>
 
+    function createMap (formula : string[], moles: number[]) {
+        let returnMap = new Map();
+        for (let i=0;i<formula.length;i++) {
+            let chemical : Chemical | undefined = CHEMICAL_LIST.get(formula[i]);
+            if (chemical) {
+                chemical.moles = moles[i];
+                returnMap.set(chemical.name, chemical);
+            }
+        }
+        return returnMap;
+    }
+
+    var buttonCount = 0;
+    var availableEntities : any[] = Array.from(ExperimentGlassware, (e) => { //not the cause of problem
+        var newGlassware : any = new GlasswareModel(
+            e.name,
+            e.mediapath,
+            e.maskpath,
+            e.maxvolume,
+            new Mixture(
+                //@ts-ignore
+                new Map(
+                    createMap(e.chemformula, e.chemmole)
+                ),
+                e.actvolume
+            ),
+            "beaker",
+            {
+                radius:100,
+                center: {
+                    x:0,
+                    y:50
+                }
+            }
+        );
+        buttonCount += 1;
+        return (
+            <div className="Stockroom-shelf" style={{"--shelfInd": buttonCount} as React.CSSProperties}>
+                <div className = "generator-button" onClick = {() => createEntity(newGlassware)}>{e.name}</div>
+                <div className="Stockroom-shelf-top"></div>
+            </div>
+        )
+    });
+
     //---- RETURN -----//
     return (
         <div className='Stockroom'>
-            <div className="Stockroom-shelf" style={{"--shelfInd": 1} as React.CSSProperties}>
-                {/* <div className = "generator-button" onClick = {() => addEquipment([glassware1, glassware1, glassware2, glassware3][Math.floor(Math.random() * 4)])}>Generate Surprise</div> */}
-                <div className = "generator-button" onClick = {() => addEquipment(glassware0)}>Empty Flask</div>
-                <div className="Stockroom-shelf-top"></div>
-            </div>
-            <div className="Stockroom-shelf" style={{"--shelfInd": 2} as React.CSSProperties}>
-                <div className = "generator-button" onClick = {() => addEquipment(glassware1)}>Flask of Water (H2O)</div>
+            {availableEntities}
+            
+            {/* <div className="Stockroom-shelf" style={{"--shelfInd": 2} as React.CSSProperties}>
+                <div className = "generator-button" onClick = {() => createEntity(glassware1)}>Flask of Water (H2O)</div>
                 <div className="Stockroom-shelf-top"></div>
             </div>
             <div className="Stockroom-shelf" style={{"--shelfInd": 3} as React.CSSProperties}>
-                <div className = "generator-button" onClick = {() => addEquipment(glassware2)}>Flask of Juice (ZeStO)</div>
+                <div className = "generator-button" onClick = {() => createEntity(glassware2)}>Flask of Juice (ZeStO)</div>
                 <div className="Stockroom-shelf-top"></div>
             </div>
             <div className="Stockroom-shelf" style={{"--shelfInd": 4} as React.CSSProperties}>
-                <div className = "generator-button" onClick = {() => addEquipment(glassware3)}>Flask of Potion (HeAlTH)</div>
+                <div className = "generator-button" onClick = {() => createEntity(glassware3)}>Flask of Potion (HeAlTH)</div>
                 <div className="Stockroom-shelf-top"></div>
-            </div>
+            </div> */}
         </div>
     );
 }

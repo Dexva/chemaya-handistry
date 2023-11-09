@@ -13,7 +13,7 @@ For future extensions: Add UI to change experiments
 function Menu() {
 
     //----- VARIABLES -----//
-    const CurrentExpName: string = "WIP Stage";
+    const CurrentExpName: string = "Basic Calorimetry";
 
     //---- RETURN -----//
     return (
@@ -21,8 +21,8 @@ function Menu() {
             <div className="MenuScreen-info">
                 <div className="MenuScreen-logo"></div>
                 <div className="MenuScreen-box">
-                    <h1 className="MenuScreen-box-title">Handistry</h1>
-                    <h2 className="MenuScreen-box-subtitle">chemistry at your fingertips</h2>
+                    <h1 className="MenuScreen-box-title">Chemaya</h1>
+                    <h2 className="MenuScreen-box-subtitle">chemistry at your fingertips.</h2>
                 </div>
             </div>
             <div className="MenuScreen-currentExp">

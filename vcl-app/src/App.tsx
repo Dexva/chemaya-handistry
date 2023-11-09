@@ -13,9 +13,8 @@ function App() {
   const [screen, setScreen] = useState(0);
   console.log(screen);
 
-
   useEffect(() => {
-    document.title = "Handistry"
+    document.title = "Chemaya"
   }, []);
 
   return (
