@@ -4,14 +4,17 @@
 import React, { useState } from 'react';
 import Glassware from '../components/Glassware';
 import { Entity as EntityModel } from "../vcl-model/Entity";
+import { Glassware as GlasswareModel } from "../vcl-model/Glassware";
 import EntityContainer from '../components/EntityContainer';
 import Entity from '../components/Entity';
 import Cursor from '../vcl-model/Cursor';
 import {cursorX, cursorY} from '../vcl-model/Engine';
+import GraduatedSideview from '../components/GraduatedSideview';
 import { socket } from '../socket.js';
 import { EngineTimestep } from '../vcl-model/Engine';
 import Tooltip from '../components/Tooltip';
 import { tooltipEntity } from '../vcl-model/Engine';
+import { graduatedDisplayEntity } from '../vcl-model/Engine';
 
 import '../styles/style.css';
 
@@ -73,6 +76,23 @@ function Tabletop() {
         </Entity>
     });
 
+    let displayGraduations = false;
+    let graduations: number[] = new Array(4);
+    let fill: number = 0;
+    let max: number = 0;
+    if (graduatedDisplayEntity) {
+        let glasswareModel = (graduatedDisplayEntity.getData() as GlasswareModel);
+        max = glasswareModel.getMaxCap();
+        graduations[0] = max;
+        graduations[1] = max / 4 * 3;
+        graduations[2] = max / 4 * 2;
+        graduations[3] = max / 4;
+
+        fill = glasswareModel.getMixture().getVolume();
+
+        displayGraduations = true;
+    }
+
     //----- RETURN -----//
     return (
         <div className="Tabletop">
@@ -86,6 +106,12 @@ function Tabletop() {
             </EntityContainer>
             <Cursor></Cursor>
             <Tooltip entity={tooltipEntity}/>
+            <GraduatedSideview 
+                displayState={displayGraduations}
+                graduations={graduations}
+                fill={fill}
+                max={max}
+            />
         </div>
     );
 }

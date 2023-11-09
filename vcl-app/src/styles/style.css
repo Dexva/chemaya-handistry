@@ -83,7 +83,7 @@ TOOLTIP TAGS
 -----------*/
 .Tooltip {
     position:absolute;
-    left:10px;
+    right:10px;
     top:10px;
     width:300px;
     text-align:left;
@@ -103,13 +103,13 @@ GRADUATION SIDEVIEW TAGS
 -----------*/
 .GraduatedSideview {
     width:100px;
-    height:calc(100% - 60px);
-    position:fixed;
-    left:calc(-100% + 30px);
+    height:calc(100vh - 60px);
+    position:absolute;
+    left:30px;
     top:30px;
     box-sizing:border-box;
     border:7px solid var(--color-EquipmentOutline); 
-    border-radius:1000px;
+    border-radius:10px;
     display:flex;
     flex-direction:column;
     padding:30px 10px;
@@ -117,6 +117,10 @@ GRADUATION SIDEVIEW TAGS
     background-color:var(--color-EquipmentFill);
     box-shadow:0px 0px 5px rgba(0,0,0,0.5);
     /* pointer-events: none; */
+    opacity:0;
+}
+.GraduatedSideview.state-display {
+    opacity:1;
 }
 .GraduationLineGroup {
     display:flex;
@@ -140,8 +144,7 @@ GRADUATION SIDEVIEW TAGS
     width:100%;
 }
 .GraduatedSideview-fill {
-    --height:0;
-    height:calc(var(--height) * 1%);
+    height:calc(var(--vol) / var(--max) * 100%);
     width:100%;
     position:absolute;
     bottom:0;
@@ -160,8 +163,6 @@ GRADUATION SIDEVIEW TAGS
     width:100%;
     height:30px;
     background-color:var(--color-EquipmentFill-Opaque);
-    border-bottom-left-radius:1000%;
-    border-bottom-right-radius:1000%;
 }
 /*-----------
 GLASSWARE TAGS
