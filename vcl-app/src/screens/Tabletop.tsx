@@ -10,6 +10,8 @@ import Cursor from '../vcl-model/Cursor';
 import {cursorX, cursorY} from '../vcl-model/Engine';
 import { socket } from '../socket.js';
 import { EngineTimestep } from '../vcl-model/Engine';
+import Tooltip from '../components/Tooltip';
+import { tooltipEntity } from '../vcl-model/Engine';
 
 import '../styles/style.css';
 
@@ -83,6 +85,7 @@ function Tabletop() {
                 {entityElements}
             </EntityContainer>
             <Cursor></Cursor>
+            <Tooltip entity={tooltipEntity}/>
         </div>
     );
 }

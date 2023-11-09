@@ -24,4 +24,5 @@ export interface EntityData {
     onIntersectInvoker: Function;
     onHover: Function;
     onHold: Function;
+    getTooltipType(): string;
 }

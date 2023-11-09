@@ -43,6 +43,9 @@ export class Glassware extends Equipment implements EntityData {
     }
     
     //----- ENTITYTYPE METHODS -----//
+    public getTooltipType() {
+        return "Glassware";
+    }
     public setContainingEntity(entity: Entity) {
         this.containingEntity = entity;
     }

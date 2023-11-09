@@ -79,21 +79,20 @@ h1, h2, h3, h4, h5, h6 {
     transform:translate(-50%,-50%);
 }
 /*-----------
-ABOVE-SCREEN TAGS
+TOOLTIP TAGS
 -----------*/
-.interactive .Tooltip {
+.Tooltip {
     position:absolute;
-    left:50%;
-    transform:translate(-50%,10px);
+    left:10px;
+    top:10px;
     width:300px;
     text-align:left;
     padding:15px;
     z-index:100;
     pointer-events: none !important;
-    transition:0.2s;
     opacity:0;
 }
-.interactive:hover .Tooltip {
+.Tooltip.state-display {
     opacity:1;
 }
 .Tooltip .extraInfo {
@@ -561,25 +560,6 @@ CHEMICAL TAGS
     font-size:var(--txt-small);
     font-weight:bold;
     color:rgb(225,45,120);
-}
-
-/*----------
-TOOLTIP TAGS
-----------*/
-.tooltipContainer {
-    position:relative;
-}
-.tooltipContainer:hover .tooltip {
-    opacity:1;
-}
-.tooltip {
-    --tooltipDist:10px;
-    position:absolute;
-    left:50%;
-    transform:translatex(-50%);
-    top:calc(100% + var(--tooltipDist));
-    opacity:0;
-    transition:0.2s;
 }
 
 /*-----------
