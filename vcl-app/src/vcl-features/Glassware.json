@@ -1,9 +1,10 @@
 [
     {
-        "name":"Empty Flask",
+        "name":"Erlenmeyer Flask",
+        "content": "",
         "mediapath": "../resources/img/erlenmeyerFlask.png",
         "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
-        "maxvolume": 1000,
+        "maxvolume": 250,
         "actvolume": 0,
         "chemformula":[],
         "chemmole":[],
@@ -12,12 +13,26 @@
         "center": {"x": 0, "y": 50}
     },
     {
-        "name":"Zesto Pack",
+        "name":"Erlenmeyer Flask",
+        "content": "Zesto Tetrapack",
+        "mediapath": "../resources/img/erlenmeyerFlask.png",
+        "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
+        "maxvolume": 250,
+        "actvolume": 50,
+        "chemformula":["ZeSTo(l)"],
+        "chemmole":[5],
+        "transfer-type": "beaker",
+        "radius": 100,
+        "center": {"x": 0, "y": 50}
+    },
+    {
+        "name":"Graduated Cylinder",
+        "content": "Potion of Health",
         "mediapath": "../resources/img/erlenmeyerFlask.png",
         "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
         "maxvolume": 1000,
         "actvolume": 500,
-        "chemformula":["ZeSTo(l)"],
+        "chemformula":["HeAlTh(l)"],
         "chemmole":[5],
         "transfer-type": "beaker",
         "radius": 100,

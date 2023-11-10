@@ -148,6 +148,11 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             }
         });    
     }
+    if (invokerEntity) console.log("Testing",
+    invokerEntity,
+    receiverEntity,
+    //@ts-ignore
+    invokerEntity?.getData().getMixture()===receiverEntity?.getData().getMixture());
     // console.log(receiverEntity);
     
     // if (invokerEntity) {
@@ -251,7 +256,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
 
     // STATE: ---- pour ----, exclusive
     if (isHold && invokerEntity && receiverEntity && inputs.isPouring) {
-        // console.log("we pouring!!");
+        console.log("we pouring!!");
         //@ts-ignore
         invokerEntity.setState("transfer-invoker");
         //@ts-ignore

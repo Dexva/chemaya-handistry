@@ -20,7 +20,33 @@ function Stockroom() {
 
     //----- VARIABLES & STATES -----//
     /* Passes up the updated list of generate glassware to the parent component. */
-    const createEntity = (newGlassware : any) => new EntityModel(newGlassware);
+    const createEntity = (e : any) => {
+        // let a = window.structuredClone(newGlassware);
+        var copyGlassware : any = new GlasswareModel(
+            window.structuredClone(e.name),
+            window.structuredClone(e.mediapath),
+            window.structuredClone(e.maskpath),
+            window.structuredClone(e.maxvolume),
+            new Mixture(
+                //@ts-ignore
+                new Map(
+                    createMap(window.structuredClone(e.chemformula),
+                              window.structuredClone(e.chemmole))
+                ),
+                window.structuredClone(e.actvolume)
+            ),
+            "beaker",
+            {
+                radius:100,
+                center: {
+                    x:0,
+                    y:50
+                }
+            }
+        );
+        new EntityModel(copyGlassware);
+        console.log(EntityModel.Instances);
+    }
 
     //----- AVAILABLE GLASSWARE -----//
     // To-do: Turn this into it's own JSON file for easier generation
@@ -130,31 +156,10 @@ function Stockroom() {
 
     var buttonCount = 0;
     var availableEntities : any[] = Array.from(ExperimentGlassware, (e) => { //not the cause of problem
-        var newGlassware : any = new GlasswareModel(
-            e.name,
-            e.mediapath,
-            e.maskpath,
-            e.maxvolume,
-            new Mixture(
-                //@ts-ignore
-                new Map(
-                    createMap(e.chemformula, e.chemmole)
-                ),
-                e.actvolume
-            ),
-            "beaker",
-            {
-                radius:100,
-                center: {
-                    x:0,
-                    y:50
-                }
-            }
-        );
         buttonCount += 1;
         return (
             <div className="Stockroom-shelf" style={{"--shelfInd": buttonCount} as React.CSSProperties}>
-                <div className = "generator-button" onClick = {() => createEntity(newGlassware)}>{e.name}</div>
+                <div className = "generator-button" onClick = {() => createEntity(e)}>{e.name}</div>
                 <div className="Stockroom-shelf-top"></div>
             </div>
         )

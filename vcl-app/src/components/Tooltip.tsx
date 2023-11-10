@@ -24,7 +24,7 @@ function Tooltip(props : TooltipProps) {
 
     let tooltipType = props.entity.getData().getTooltipType();
     if (tooltipType == "Glassware") {
-        console.log("lfgggg");
+        // console.log("lfgggg");
         let glassware = props.entity.getData() as Glassware;
         //----- VARIABLES & STATES -----//
         const iterator = glassware.getMixture().getChemicals().entries();
