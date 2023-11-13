@@ -35,15 +35,6 @@ for (const [key, value] of Object.entries(jueves_gestureMap)) {
     gestureIsHold.set(key,value);
 }
 
-// gestureIsHold.set("Closed_Fist",true); // default mediapipe model gesture categories
-// gestureIsHold.set("Open_Palm",false);
-// gestureIsHold.set("Pointing_Up",false);
-// gestureIsHold.set("Thumb_Down",false);
-// gestureIsHold.set("Thumb_Up",false);
-// gestureIsHold.set("Victory",false);
-// gestureIsHold.set("I_Love_You",false);
-// gestureIsHold.set("None",false);
-
 let highestZ = 0;
 type Point = {
     x: number,
@@ -148,11 +139,11 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             }
         });    
     }
-    if (invokerEntity) console.log("Testing",
-    invokerEntity,
-    receiverEntity,
-    //@ts-ignore
-    invokerEntity?.getData().getMixture()===receiverEntity?.getData().getMixture());
+    // if (invokerEntity) console.log("Testing",
+    // invokerEntity,
+    // receiverEntity,
+    // //@ts-ignore
+    // invokerEntity?.getData().getMixture()===receiverEntity?.getData().getMixture());
     // console.log(receiverEntity);
     
     // if (invokerEntity) {
@@ -226,7 +217,6 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     }
     // Update the calculated rotation of the entity.
     ///@ts-ignore
-    invokerEntity.setRotation(degrees);
 
     // UPDATE INVOKER STATE!
     // Some states cannot coexist with one another, such as intersectionInvoker and intersectionReceiver
@@ -245,22 +235,17 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         //@ts-ignore
         invokerEntity.setZ(++highestZ);
         //@ts-ignore
+        invokerEntity.setRotation(degrees);
+        //@ts-ignore
         invokerEntity.setState("held",true);
     }
 
-    // STATE: ---- intersecting-invoker ----, exclusive
-    if (isHold && invokerEntity) {
-        //@ts-ignore
-        invokerEntity.setState("intersecting-invoker",true);
-    }
-
     // STATE: ---- pour ----, exclusive
-    if (isHold && invokerEntity && receiverEntity && inputs.isPouring) {
-        console.log("we pouring!!");
+    if (isHold && invokerEntity && inputs.isPouring) {
+        // console.log("we pouring!!");
         //@ts-ignore
         invokerEntity.setState("transfer-invoker");
-        //@ts-ignore
-        receiverEntity.setState("transfer-receiver");
+
         //@ts-ignore
         let initialVolume = invokerEntity.getData().getMixture().getVolume();
         
@@ -268,12 +253,16 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             //@ts-ignore
             let movedChemicals = invokerEntity.getData().getMixture().partitionChemicals(Mixture.POUR_RATE / initialVolume);
             //@ts-ignore
-            receiverEntity.getData().getMixture().addListOfChemicals(movedChemicals);
-            
-            //@ts-ignore
             invokerEntity.getData().getMixture().changeVolume(-1 * Mixture.POUR_RATE);
-            //@ts-ignore
-            receiverEntity.getData().getMixture().changeVolume(Mixture.POUR_RATE);
+            
+            if (receiverEntity) {
+                //@ts-ignore
+                receiverEntity.setState("transfer-receiver");
+                //@ts-ignore
+                receiverEntity.getData().getMixture().changeVolume(Mixture.POUR_RATE);
+                //@ts-ignore
+                receiverEntity.getData().getMixture().addListOfChemicals(movedChemicals);
+            }
         }
     }
 
@@ -301,6 +290,8 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // }
     // console.log(timeData);
     // console.clear();
+
+    // if (invokerEntity) {console.log(Entity.Instances)};
 }
 
 // Returns if a point is within a given circle. 

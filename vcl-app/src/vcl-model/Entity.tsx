@@ -17,7 +17,7 @@ interface Coordinate {
     Represents a physical object on the Tabletop, ie. a Glassware, an Equipment 
 */
 export class Entity {
-    private static defaultInertiaFrames : number = 10;
+    private static defaultInertiaFrames : number = 5;
     public static Instances : Entity[] = [];
     //----- FIELDS -----//
     private coordinates: Coordinate;     // [string] File path to equipment's sprite
@@ -88,13 +88,13 @@ export class Entity {
     //----- SETTERS -----//
     public resetAllStates() {
         //@ts-ignore
-        this.states.set("hover", this.states.get("hover") - 1);
+        this.states.set("hover", Math.max(this.states.get("hover") - 1, -1));
         //@ts-ignore
-        this.states.set("held", this.states.get("held") - 1);
+        this.states.set("held", Math.max(this.states.get("held") - 1, -1));
         //@ts-ignore
-        this.states.set("transfer-invoker", this.states.get("transfer-invoker") - 1);
+        this.states.set("transfer-invoker", Math.max(this.states.get("transfer-invoker") - 1, -1));
         //@ts-ignore
-        this.states.set("transfer-receiver", this.states.get("transfer-receiver") - 1);
+        this.states.set("transfer-receiver", Math.max(this.states.get("transfer-receiver") - 1, -1));
         this.rotation = 0;
     }
     public setCoordinates(x : number,y : number) {
