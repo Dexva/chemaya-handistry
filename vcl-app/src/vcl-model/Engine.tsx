@@ -139,11 +139,6 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             }
         });    
     }
-    // if (invokerEntity) console.log("Testing",
-    // invokerEntity,
-    // receiverEntity,
-    // //@ts-ignore
-    // invokerEntity?.getData().getMixture()===receiverEntity?.getData().getMixture());
     // console.log(receiverEntity);
     
     // if (invokerEntity) {

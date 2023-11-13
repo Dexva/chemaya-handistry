@@ -10,6 +10,7 @@ import {Glassware as GlasswareModel} from '../vcl-model/Glassware';
 import {Mixture} from '../vcl-model/Mixture';
 import { Entity as EntityModel } from "../vcl-model/Entity";
 import '../styles/style.css';
+import { setToScreen } from '../App';
 
 /*
 TL;DR: The item generation page.
@@ -168,6 +169,7 @@ function Stockroom() {
     //---- RETURN -----//
     return (
         <div className='Stockroom'>
+            <div onClick={(e) => {setToScreen(1)}} className="stockroomToTabletop screenChangeButton"></div>
             {availableEntities}
             
             {/* <div className="Stockroom-shelf" style={{"--shelfInd": 2} as React.CSSProperties}>

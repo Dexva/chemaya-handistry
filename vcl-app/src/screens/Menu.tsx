@@ -2,6 +2,7 @@
    IMPORTS
 ------------*/
 import '../styles/style.css';
+import { setToScreen } from '../App';
 
 /*
 TL;DR: The site's landing page.
@@ -11,7 +12,6 @@ It features the app title and logo.
 For future extensions: Add UI to change experiments
 */
 function Menu() {
-
     //----- VARIABLES -----//
     const CurrentExpName: string = "Basic Calorimetry";
 
@@ -28,6 +28,7 @@ function Menu() {
             <div className="MenuScreen-currentExp">
                 <div className="MenuScreen-currentExp-label">Current Experiment:</div>
                 <div className="MenuScreen-currentExp-name">{CurrentExpName}</div>
+                <div onClick={(e) => {setToScreen(1)}} className="screenChangeButton">Start Experiment</div>
             </div>
         </div>
     );

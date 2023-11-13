@@ -375,8 +375,8 @@ SCREEN TAGS
     pointer-events: all;
 }
 .Stockroom {
-    width: 78vw;
-    height: 100vw;
+    width:100%;
+    height:100vh;
     position: relative;
     left: 50%;
     transform: translatex(-50%);
@@ -583,8 +583,45 @@ BACKGROUND TAGS
     left:0;
     top:0;
 }
-
-
+.screenChangeButton {
+    width:auto;
+    padding:5px 10px;
+    background-color:#1f2051;
+    display:inline-block;
+    color:white;
+    box-shadow:0 5px 0 var(--color-EquipmentMarking),
+               0 0 15px white;
+    margin:20px 0;
+    border-radius:5px;
+    background-size:64px;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.screenChangeButton:active {
+    transform:translatey(10px);
+    box-shadow:0 0 0 transparent,
+               0 0 15px white;
+}
+.screenChangeButton.tabletopToStockroom {
+    position:absolute;
+    width:64px;
+    height:64px;
+    padding:10px;
+    right:20px;
+    top:20px;
+    margin:0;
+    background-image:url("../resources/img/stockroom.png");
+}
+.screenChangeButton.stockroomToTabletop {
+    position:absolute;
+    width:64px;
+    height:64px;
+    padding:10px;
+    left:20px;
+    top:20px;
+    margin:0;
+    background-image:url("../resources/img/tabletop.png");
+}
 
 /*-----------
 DEBUG TAGS

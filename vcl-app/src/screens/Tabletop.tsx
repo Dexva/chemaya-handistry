@@ -15,6 +15,7 @@ import { EngineTimestep } from '../vcl-model/Engine';
 import Tooltip from '../components/Tooltip';
 import { tooltipEntity } from '../vcl-model/Engine';
 import { graduatedDisplayEntity } from '../vcl-model/Engine';
+import { setToScreen } from '../App';
 
 import '../styles/style.css';
 
@@ -96,6 +97,7 @@ function Tabletop() {
     //----- RETURN -----//
     return (
         <div className="Tabletop">
+            <div onClick={(e) => {setToScreen(2)}} className="tabletopToStockroom screenChangeButton"></div>
             <div  
                 className = "debug-button" 
                 onClick = {() => {console.log(EntityModel.allInstances())}}>
