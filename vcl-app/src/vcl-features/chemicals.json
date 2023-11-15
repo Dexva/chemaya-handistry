@@ -10,6 +10,16 @@
         "color": {"r":48, "g":217, "b":255, "a":0.5}
     },
     {
+        "name": "Reagent X",
+        "formula": "X(aq)",
+        "phase": "aq",
+        "molarMass": 0,
+        "charge": 0,
+        "enthalpyForm": 0,
+        "entropyForm": 0,
+        "color": {"r":48, "g":217, "b":255, "a":0.5}
+    },
+    {
         "name": "L. Zesto Tetrapak",
         "formula": "ZeSTo(l)",
         "phase": "l",

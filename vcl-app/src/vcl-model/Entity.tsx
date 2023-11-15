@@ -20,6 +20,7 @@ export class Entity {
     private static defaultInertiaFrames : number = 5;
     public static Instances : Entity[] = [];
     //----- FIELDS -----//
+    public id: number;
     private coordinates: Coordinate;     // [string] File path to equipment's sprite
     private rotation: number;
     private data: EntityData;           // [string] Name associated with equipment instance
@@ -31,7 +32,7 @@ export class Entity {
         this.data = data;
         data.setContainingEntity(this);
         this.states = this.initializeStates();
-
+        this.id = Entity.Instances.length;
         Entity.Instances.push(this);
     }
     private initializeStates() {

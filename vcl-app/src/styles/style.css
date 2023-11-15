@@ -459,22 +459,29 @@ SCREEN TAGS
     pointer-events: all;
 }
 .Cursor {
-    width:30px;
+    width:100px;
     height:100px;
-    border-radius: 10px;
-    background-color: black;
     transition:0.05s transform, 0.2s width, 0.2s border-radius;
-    transform:translate(calc((var(--x) * 1px) - 50%), calc((100vh - (var(--y) * 1px)) - 50%)) rotate(calc(var(--rotate) * 180deg/3.1415));
+    transform:translate(calc((var(--x) * 1px) - 50%), calc((100vh - (var(--y) * 1px)) - 50%)) rotate(calc((var(--rotate) * 180deg/3.1415) + 90deg));
     position:absolute;
     z-index:100000000;
+    background-size:contain;
+    background-position:center;
+    background-repeat: no-repeat;
 }
 .Cursor.state-none {
-    background-color: rgb(255, 21, 99);
+    background-image:url("../resources/img/cursor/open.png");
 }
-.Cursor.state-holding {
-    width:50px;
-    height:100px;
-    border-radius: 50px;
+.Cursor.state-hover {
+    background-image:url("../resources/img/cursor/hover.png");
+}
+.Cursor.state-hold {
+    background-image:url("../resources/img/cursor/hold.png");
+}
+.Cursor.state-pour {
+    background-image:url("../resources/img/cursor/pour.png");
+    width:110px;
+    height:110px;
 }
 .entity {
     transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%))  rotate(calc(var(--r) * 180deg/3.1415));;

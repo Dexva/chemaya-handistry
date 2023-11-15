@@ -68,7 +68,9 @@ export function addReactions(rxn1: Reaction, rxn2: Reaction) {
         addStoichChemicalMap(window.structuredClone(rxn1.getReactants()), window.structuredClone(rxn2.getReactants())),
         addStoichChemicalMap(window.structuredClone(rxn1.getProducts()), window.structuredClone(rxn2.getProducts())),
         298.15,
-        (window.structuredClone(rxn1.getEa()) + window.structuredClone(rxn2.getEa()))/2
+        (window.structuredClone(rxn1.getEa()) + window.structuredClone(rxn2.getEa()))/2,
+        window.structuredClone(rxn1.getH() + rxn2.getH()),
+        window.structuredClone(rxn1.getS() + rxn2.getS())
     );
     return newReaction;
 }

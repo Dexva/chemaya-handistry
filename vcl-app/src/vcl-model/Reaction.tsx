@@ -30,16 +30,22 @@ export class Reaction {
                        rxnReactants: Map<string, [Chemical, number]>,
                        rxnProducts: Map<string, [Chemical, number]>,
                        T: number,
-                       Ea: number) {
+                       Ea: number,
+                       H: number,
+                       S: number) {
         this.name = n;
         this.reactants = rxnReactants;
         this.products = rxnProducts;
-        this.enthalpyRxn = calculateEnthalpyRxn(rxnReactants, rxnProducts);
-        this.entropyRxn = calculateEntropyRxn(rxnReactants, rxnProducts);
         this.temperature = T;
+        this.activationE = Ea;        
+        this.enthalpyRxn = H;
+        this.entropyRxn = S;
         this.gibbsFreeRxn = calculateGibbsFreeEnergy(this.enthalpyRxn, this.entropyRxn, this.temperature);
         this.equilibriumK = calculateEquilibriumK(this.gibbsFreeRxn);
-        this.activationE = Ea;
+        // this.enthalpyRxn = calculateEnthalpyRxn(rxnReactants, rxnProducts);
+        // this.entropyRxn = calculateEntropyRxn(rxnReactants, rxnProducts);
+        // this.gibbsFreeRxn = calculateGibbsFreeEnergy(this.enthalpyRxn, this.entropyRxn, this.temperature);
+        // this.equilibriumK = calculateEquilibriumK(this.gibbsFreeRxn);
     }
         
     //----- GETTERS -----//

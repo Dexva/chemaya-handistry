@@ -4,6 +4,7 @@ import { Mixture } from "./Mixture";
 import GraduatedSideview from "../components/GraduatedSideview";
 // var fs = require('fs');
 
+export let cursorState : "none" | "hold" | "hover" | "pour" = "none"; 
 export let tooltipEntity : Entity | null = null; // Entity to display the tooltip of.
 export let graduatedDisplayEntity : Entity | null = null; // Entity whose volume is displayed
 var benchmarkTime : any[] = [];
@@ -99,30 +100,38 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             }
         };
         if (pointWithinCircle(pointer, translatedHitcircle)) {
-            // And there is a previously existing highestZ entity
-            if (invokerEntity) {
-                // And if entity has higher z than current saved entity
-                if (invokerEntity.getCoordinates().z < entity.getCoordinates().z) {
-                    // Set as new highest Z entity.
-                    invokerEntity = entity;
-                }
-            } else {
-                // There is no previous highest Z entity to compare with.
-                // Set as new highest Z entity.
-                invokerEntity = entity;
-            }
+            invokerEntity = entity;
         }
     });
     let receiverEntity: Entity | undefined = undefined;
     if (invokerEntity) {
+        let translatedInvokerHitcircle: Circle = {
+            //@ts-ignore
+            radius: invokerEntity.getData().getHitcircle().radius,
+            center:{
+                //@ts-ignore
+                x: invokerEntity.getData().getHitcircle().center.x + invokerEntity.getCoordinates().x,
+                //@ts-ignore
+                y: invokerEntity.getData().getHitcircle().center.y + invokerEntity.getCoordinates().y
+            }
+        };
         Entity.Instances.forEach((entity : Entity)=>{
             if (entity !== invokerEntity) {
                 // RESET EVERY STATE
                 entity.resetAllStates();
+
+                let translatedHitcircle: Circle = {
+                    radius: entity.getData().getHitcircle().radius,
+                    center:{
+                        x: entity.getData().getHitcircle().center.x + entity.getCoordinates().x,
+                        y: entity.getData().getHitcircle().center.y + entity.getCoordinates().y
+                    }
+                };
                 
                 // If entity is intersecting with pointer
                 // console.log(entity.getData().getHitcircle());
-                if (circleIntersectsCircle(invokerEntity?.getData().getHitcircle(), entity.getData().getHitcircle())) {
+                if (circleIntersectsCircle(translatedInvokerHitcircle, translatedHitcircle)) {
+                    console.log("found intersecting circles", invokerEntity?.id, entity.id);
                     // And there is a previously existing highestZ entity
                     if (receiverEntity) {
                         // And if entity has higher z than current saved entity
@@ -204,7 +213,6 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             entity.getData().onHold(inputs);
         }
     });
-
     if (typeof invokerEntity == "undefined") {
         tooltipEntity = null;
         graduatedDisplayEntity = null;
@@ -217,8 +225,12 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     // Some states cannot coexist with one another, such as intersectionInvoker and intersectionReceiver
     // In such a situation, one state will take priority, overwriting the other.
 
+    cursorState = "none";
     // STATE: ---- hover ----, not exclusive
     if (invokerEntity) {
+        cursorState = "hover";
+        //@ts-ignore
+        console.log("My ID is: " + invokerEntity.id);
         //@ts-ignore
         invokerEntity.setState("hover",true);
         tooltipEntity = invokerEntity;
@@ -227,6 +239,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
 
     // STATE: ---- held ----, exclusive
     if (isHold && invokerEntity) {
+        cursorState = "hold";
         //@ts-ignore
         invokerEntity.setZ(++highestZ);
         //@ts-ignore
@@ -237,6 +250,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
 
     // STATE: ---- pour ----, exclusive
     if (isHold && invokerEntity && inputs.isPouring) {
+        cursorState = "pour";
         // console.log("we pouring!!");
         //@ts-ignore
         invokerEntity.setState("transfer-invoker");
@@ -251,6 +265,8 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             invokerEntity.getData().getMixture().changeVolume(-1 * Mixture.POUR_RATE);
             
             if (receiverEntity) {
+                //@ts-ignore
+                console.log("invokerEntity: " + invokerEntity.id, "receiverEntity: " + receiverEntity.id);
                 //@ts-ignore
                 receiverEntity.setState("transfer-receiver");
                 //@ts-ignore
@@ -295,6 +311,7 @@ function pointWithinCircle(p: Point, c: Circle) {
 }
 // Returns if two circles are intersecting. 
 function circleIntersectsCircle(a: Circle, b: Circle) {
+    // console.log(a.center,b.center,dist(a.center, b.center));
     return dist(a.center, b.center) < (a.radius + b.radius);
 }
 // Returns the distance between two Points.

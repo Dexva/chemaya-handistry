@@ -21,7 +21,9 @@ Sample JSON Entry:
         "productsStoich"*: [1, 1],
         "K": 1,
         "Trxn": 273.15,
-        "Erxn": 0.005        
+        "Erxn": 0.005,
+        "Hrxn": 0,
+        "Srxn": 0       
     }
 
     * The order of stoich. coeffs. matter!
@@ -35,7 +37,9 @@ for(let i=0; i<reactionJSON.length; i++) {
         toStoichChemicalMap(reactionJSON[i].reactants, reactionJSON[i].reactantsStoich),
         toStoichChemicalMap(reactionJSON[i].products, reactionJSON[i].productsStoich),
         reactionJSON[i].Trxn,
-        reactionJSON[i].Erxn
+        reactionJSON[i].Erxn,
+        reactionJSON[i].Hrxn,
+        reactionJSON[i].Srxn
     )
     REACTION_LIST.push(newReaction);
 }

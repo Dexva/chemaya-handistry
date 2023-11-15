@@ -4,7 +4,7 @@
 import React from 'react';
 import Glassware from '../components/Glassware';
 import { Chemical } from '../vcl-model/Chemical';
-import ExperimentGlassware from "../vcl-features/Glassware.json";
+import ExperimentGlassware from "../vcl-features/glassware.json";
 import CHEMICAL_LIST from '../vcl-features/LoadChemicals';
 import {Glassware as GlasswareModel} from '../vcl-model/Glassware';
 import {Mixture} from '../vcl-model/Mixture';

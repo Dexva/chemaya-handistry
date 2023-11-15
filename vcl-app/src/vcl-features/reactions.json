@@ -1,15 +1,16 @@
 [
     {
-        "name": "Autoionization of water",
-        "reactants": ["H2O(l)"],
-        "reactantsStoich": [1],
-        "products": ["H+(aq)", "OH-(aq)"],
-        "productsStoich": [1, 1],
-        "K": 1e-14,
-        "Trxn": 298,
-        "Erxn": 74.4752        
+        "name": "Unknown Reaction",
+        "reactants": ["X(aq)","Y(aq)"],
+        "reactantsStoich": [1, 1],
+        "products": ["Z(aq)"],
+        "productsStoich": [1],
+        "K": 1e10,
+        "Trxn": 298.15,
+        "Erxn": 0.005,    
+        "Hrxn": -192.464,
+        "Srxn": 5000000
     },
-
     {
         "name": "The Juice & Potion Miracle",
         "reactants": ["H2O(l)"],
@@ -17,7 +18,9 @@
         "products": ["ZeSTo(l)", "HeAlTh(l)"],
         "productsStoich": [1, 1],
         "K": 1,
-        "Trxn": 273.15,
-        "Erxn": 0.005        
+        "Trxn": 298.15,
+        "Erxn": 0.005,    
+        "Hrxn": 0,
+        "Srxn": 0
     }
 ]
