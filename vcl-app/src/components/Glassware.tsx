@@ -27,12 +27,12 @@ function Glassware(props : GlasswareProps) {
     const glasswareStyle = {
         "--tilt": "0", 
         "--fillLevel": props.data.getMixture().getVolume() / props.data.getMaxCap() * 100,
-        "--color": props.data.getMixture().calculateColor()
+        "--color": props.data.getMixture().calculateColor(),
     } as React.CSSProperties;
 
     //----- RETURN -----//
     return (
-        <div className="Glassware" style={glasswareStyle}>
+        <div className={`Glassware ${props.data.getName().toLowerCase().replace(/\s/g, '')}`} style={glasswareStyle}>
             <div className="glassware-image"></div>
             <div className="glassware-internalFillState"></div>
         </div>

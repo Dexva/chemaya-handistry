@@ -177,8 +177,33 @@ GLASSWARE TAGS
     position:relative;
     /* overflow:hidden; */
     transform:rotate(calc(var(--tilt) * 1deg));
-    -webkit-mask-image:url(../resources/img/erlenmeyerFlask-mask.png);
+    -webkit-mask-position:center;
+    -webkit-mask-repeat:no-repeat;
     -webkit-mask-size:contain;
+}
+.Glassware.graduatedcylinder {
+    -webkit-mask-image:url(../resources/img/graduatedCylinder-mask.png);
+}
+.Glassware.graduatedcylinder .glassware-image {
+    background-image:url(../resources/img/graduatedCylinder.png);
+}
+.Glassware.beaker {
+    -webkit-mask-image:url(../resources/img/beaker-mask.png);
+}
+.Glassware.beaker .glassware-image {
+    background-image:url(../resources/img/beaker.png);
+}
+.Glassware.roundbottom {
+    -webkit-mask-image:url(../resources/img/roundbottom-mask.png);
+}
+.Glassware.roundbottom .glassware-image {
+    background-image:url(../resources/img/roundbottom.png);
+}
+.Glassware.erlenmeyerflask {
+    -webkit-mask-image:url(../resources/img/erlenmeyerFlask-mask.png);
+}
+.Glassware.erlenmeyerflask .glassware-image {
+    background-image:url(../resources/img/erlenmeyerFlask.png);
 }
 /* 
     When two glassware enter a pouring state, 
@@ -193,15 +218,6 @@ GLASSWARE TAGS
     performing the pouring onto the glassware 
     that is receiving the pour.
 */
-.GlasswarePouringStateScaffold {
-
-}
-.GlasswarePouringStateScaffold .Glassware.state-pouring-invoker {
-
-}
-.GlasswarePouringStateScaffold .Glassware.state-pouring-receiver {
-
-}
 .Glassware::before {
     content: "";
     display:block;
@@ -221,17 +237,14 @@ GLASSWARE TAGS
     position:absolute;
     left:0;
     top:0;
-    background-image:url(../resources/img/erlenmeyerFlask.png);
     background-size:contain;
-    filter:brightness(0.8)
+    filter:brightness(0.8);
+    background-position:center;
 }
 .glassware-internalFillState {
     --fillWidth: var(--glasswareWidth);
     --fillHeight: calc(var(--glasswareHeight) * var(--fillLevel) / 100);
     --curvature: calc(100% * (1.3 - var(--fillLevel) / 100));
-    /* --tiltAmplitude: calc(var(--tilt) / 90  );
-    --ratioOfWidthAndHeight: calc(var(--glasswareHeight) / var(--glasswareWidth));
-    --tiltAdjustment: calc(var(--glasswareHeight) * var(--fillOffset) / var(--ratioOfWidthAndHeight)); */
     width:var(--fillWidth);
     height:var(--fillHeight);
     border-top:5px solid var(--color-EquipmentOutline);
@@ -239,7 +252,6 @@ GLASSWARE TAGS
     border-top-left-radius:var(--curvature);
     bottom:0;
     left:0;
-    /* transform:rotate(calc(-1 * var(--tilt) * 1deg)); */
     background-color:var(--color);
     position:absolute;
     z-index:-1;

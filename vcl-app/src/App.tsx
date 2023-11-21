@@ -4,8 +4,6 @@ import ScreenContainer from './components/ScreenContainer';
 import Background from './components/Background';
 import { Entity } from './vcl-model/Entity';
 
-Entity.initialize();  
-
 export var setToScreen : Function;
 function App() {
   const [screen, setScreen] = useState(0);

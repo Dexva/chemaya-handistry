@@ -26,16 +26,18 @@ export class Glassware extends Equipment implements EntityData {
     private readonly hitcircle: Circle;
     private readonly entityDataType: string = "glassware";
     public containingEntity: Entity | undefined;
+    private maskPath: string;
 
     //----- CONSTRUCTOR -----//
     public constructor(name: string,
                        spritePath: string,
-                       maskPath: string, // currently not being used
+                       maskPath: string,
                        maxCap: number, 
                        mixture: Mixture, 
                        transferMethod: string,
                        hitcircle: Circle) {
         super(name, spritePath);
+        this.maskPath = maskPath;
         this.maxCapacity = maxCap;
         this.mixture = mixture;
         this.transferMethod = transferMethod
@@ -74,37 +76,8 @@ export class Glassware extends Equipment implements EntityData {
 
         }
     }
-    public static generateDummy(type: string = randElem(["water","zesto","potion"])) {
-        const types = {
-            "water":[["L. water", CHEMICAL_LIST.get("H2O(l)")]],
-            "zesto":[["L. Zesto Tetrapak", CHEMICAL_LIST.get("ZeSTo(l)")]],
-            "potion":[["L. Potion", CHEMICAL_LIST.get("HeAlTh(l)")]]
-        }
-
-        return new Glassware(
-            "erlenmeyerFlask",
-            "../resources/img/erlenmeyerFlask.png",
-            "../resources/img/erlenmeyerFlask-mask.png",
-            1000,
-            new Mixture(
-                new Map(
-                    //@ts-ignore
-                    types[type]
-                ),
-                Math.floor((500 + (Math.random() * 500) - 250) / 10) * 10
-            ),
-            "beaker",
-            {
-                radius:200,
-                center: {
-                    x:0,
-                    y:50
-                }
-            }
-        )
-    }
-
     //----- GETTERS -----//
+    public getMaskPath() { return this.maskPath; }
     public getMaxCap() { return this.maxCapacity; }
     public getMixture() { return this.mixture; }
     public getTransferMethod() { return this.transferMethod; }

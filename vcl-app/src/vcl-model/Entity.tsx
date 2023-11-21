@@ -46,10 +46,6 @@ export class Entity {
     }
 
     //----- METHODS -----//
-    public static initialize() {
-        // new Entity(Glassware.generateDummy());
-        // new Entity(Glassware.generateDummy());
-    }
     public calculateStateClasses(): string {
         let classes = "";
         this.states.forEach((_: number, stateName: string) => {
