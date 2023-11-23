@@ -28,6 +28,7 @@ function Stockroom() {
             window.structuredClone(e.mediapath),
             window.structuredClone(e.maskpath),
             window.structuredClone(e.maxvolume),
+            window.structuredClone(e.readable),
             new Mixture(
                 //@ts-ignore
                 new Map(

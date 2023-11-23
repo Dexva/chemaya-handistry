@@ -25,6 +25,7 @@ export class Glassware extends Equipment implements EntityData {
     private transferMethod: string;     // [string] A classification denoting how the mixture is transferred
     private readonly hitcircle: Circle;
     private readonly entityDataType: string = "glassware";
+    public readonly isReadable: boolean;
     public containingEntity: Entity | undefined;
     private maskPath: string;
 
@@ -33,10 +34,12 @@ export class Glassware extends Equipment implements EntityData {
                        spritePath: string,
                        maskPath: string,
                        maxCap: number, 
+                       isRead: boolean,
                        mixture: Mixture, 
                        transferMethod: string,
                        hitcircle: Circle) {
         super(name, spritePath);
+        this.isReadable = isRead;
         this.maskPath = maskPath;
         this.maxCapacity = maxCap;
         this.mixture = mixture;

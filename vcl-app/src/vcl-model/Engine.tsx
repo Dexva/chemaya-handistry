@@ -100,7 +100,18 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             }
         };
         if (pointWithinCircle(pointer, translatedHitcircle)) {
-            invokerEntity = entity;
+            // And there is a previously existing highestZ entity
+            if (invokerEntity) {
+                // And if entity has higher z than current saved entity
+                if (invokerEntity.getCoordinates().z < entity.getCoordinates().z) {
+                    // Set as new highest Z entity.
+                    invokerEntity = entity;
+                }
+            } else {
+                // There is no previous highest Z entity to compare with.
+                // Set as new highest Z entity.
+                invokerEntity = entity;
+            }
         }
     });
     let receiverEntity: Entity | undefined = undefined;
@@ -131,7 +142,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
                 // If entity is intersecting with pointer
                 // console.log(entity.getData().getHitcircle());
                 if (circleIntersectsCircle(translatedInvokerHitcircle, translatedHitcircle)) {
-                    console.log("found intersecting circles", invokerEntity?.id, entity.id);
+                    // console.log("found intersecting circles", invokerEntity?.id, entity.id);
                     // And there is a previously existing highestZ entity
                     if (receiverEntity) {
                         // And if entity has higher z than current saved entity
@@ -211,11 +222,17 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         if (entity.isInState("held")) {
             // console.log("being held!!!!");
             entity.getData().onHold(inputs);
+
+            if (entity == invokerEntity) {
+                //@ts-ignores
+                invokerEntity.setZ(highestZ+1);
+                highestZ += 1;
+            }
         }
     });
     if (typeof invokerEntity == "undefined") {
         tooltipEntity = null;
-        graduatedDisplayEntity = null;
+        // graduatedDisplayEntity = null;
         return;
     }
     // Update the calculated rotation of the entity.
@@ -230,18 +247,26 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     if (invokerEntity) {
         cursorState = "hover";
         //@ts-ignore
-        console.log("My ID is: " + invokerEntity.id);
+        // console.log("My ID is: " + invokerEntity.id);
         //@ts-ignore
         invokerEntity.setState("hover",true);
         tooltipEntity = invokerEntity;
-        graduatedDisplayEntity = invokerEntity;
+    }
+
+    //@ts-ignore
+    if (receiverEntity) {console.log(receiverEntity.getData());}
+
+    //@ts-ignore
+    if (receiverEntity && receiverEntity.getData().isReadable) {
+        console.log("receiver being graduated displayed");
+        graduatedDisplayEntity = receiverEntity;
+    } else {
+        graduatedDisplayEntity = null;
     }
 
     // STATE: ---- held ----, exclusive
     if (isHold && invokerEntity) {
         cursorState = "hold";
-        //@ts-ignore
-        invokerEntity.setZ(++highestZ);
         //@ts-ignore
         invokerEntity.setRotation(degrees);
         //@ts-ignore
@@ -265,8 +290,6 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             invokerEntity.getData().getMixture().changeVolume(-1 * Mixture.POUR_RATE);
             
             if (receiverEntity) {
-                //@ts-ignore
-                console.log("invokerEntity: " + invokerEntity.id, "receiverEntity: " + receiverEntity.id);
                 //@ts-ignore
                 receiverEntity.setState("transfer-receiver");
                 //@ts-ignore
