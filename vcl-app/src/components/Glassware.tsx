@@ -19,11 +19,6 @@ TL;DR: A component representing a Glassware object.
 function Glassware(props : GlasswareProps) {
 
     //----- VARIABLES & STATES ----//
-    const [updateState, setUpdateState] = useState(0);
-    const stateUpdate = () => {
-        setUpdateState(updateState+1)
-        console.log("glassware got updated");
-    }
     const glasswareStyle = {
         "--tilt": "0", 
         "--fillLevel": props.data.getMixture().getVolume() / props.data.getMaxCap() * 100,

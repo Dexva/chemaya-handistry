@@ -18,10 +18,11 @@ export interface EntityData {
     containingEntity: Entity | undefined;
     setContainingEntity: Function;
     getContainingEntity: Function;
-    getHitcircle: Function;
     getEntityDataType: Function;
     onIntersectReceiver: Function;
     onIntersectInvoker: Function;
+    getHitcircleRadius: Function;
+    getHitcircleCenter: Function;
     onHover: Function;
     onHold: Function;
     getTooltipType(): string;

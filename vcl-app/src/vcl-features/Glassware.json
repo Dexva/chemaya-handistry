@@ -11,7 +11,10 @@
         "chemmole":[],
         "transfer-type": "beaker",
         "radius": 100,
-        "center": {"x": 0, "y": 50}
+        "hitcircle": {
+            "radius":30,
+            "translation":{"dist": 50, "angle": 0}
+        }
     },
     {
         "name":"Graduated Cylinder",
@@ -25,7 +28,10 @@
         "chemmole":[5],
         "transfer-type": "beaker",
         "radius": 100,
-        "center": {"x": 0, "y": 50}
+        "hitcircle": {
+            "radius":30,
+            "translation":{"dist": 50, "angle": 0}
+        }
     },
     {
         "name":"Roundbottom",
@@ -39,6 +45,9 @@
         "chemmole":[5],
         "transfer-type": "beaker",
         "radius": 100,
-        "center": {"x": 0, "y": 50}
+        "hitcircle": {
+            "radius":30,
+            "translation":{"dist": 50, "angle": 0}
+        }
     }
 ]

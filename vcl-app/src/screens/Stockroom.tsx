@@ -37,13 +37,8 @@ function Stockroom() {
                 window.structuredClone(e.actvolume)
             ),
             "beaker",
-            {
-                radius:100,
-                center: {
-                    x:0,
-                    y:50
-                }
-            },
+            window.structuredClone(e.hitcircle.translation),
+            window.structuredClone(e.hitcircle.radius),
             window.structuredClone(e.height)
         );
         new EntityModel(copyGlassware);

@@ -257,43 +257,6 @@ GLASSWARE TAGS
     z-index:-1;
 }
 /*-----------
-CHEMICAL TAGS
------------*/
-
-/*-----------
-DRAGGABLE TAGS
------------*/
-.interactive > .Glassware {
-    transform:scale(0.95);
-    transition:transform 0.2s;
-}
-.interactive:hover > .Glassware {
-    /* transform:scale(1); */
-}
-.interactive:active {
-    z-index:10;
-    filter:drop-shadow(0 0 0px rgb(255,255,255))
-           drop-shadow(0 0 5px rgba(180, 21, 87, 0.7));
-}
-.interactive::before {
-    content:"";
-    display:block;
-    position:absolute;
-    left:calc(50% - 3px);
-    bottom:-12px;
-    transform:translatex(-50%);
-    width:120%;
-    height:30%;
-    /* background-image: radial-gradient(var(--color-Shadow-transparent) 40%, transparent 70%); */
-    z-index:-1;
-}
-.passiveIntersector {
-    /* background-color:palevioletred; */
-}
-.activeIntersector {
-    /* background-color:palegreen; */
-}
-/*-----------
 SCREEN TAGS
 -----------*/
 .ScreenContainer {
