@@ -196,13 +196,15 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         receiverEntity:receiverEntity
     }
 
+    const floorHeight = 200;
+
     // Now that all entities have proper states, update everything accordingly
     Entity.Instances.forEach((entity)=>{
         let coords = entity.getCoordinates();
-        if (coords.y > 300) {
+        if (coords.y > floorHeight) {
             entity.setCoordinates(coords.x,coords.y - 0.2);
-        } else if (coords.y <= 300) {
-            entity.setCoordinates(coords.x,300);
+        } else if (coords.y <= floorHeight) {
+            entity.setCoordinates(coords.x,floorHeight);
         }
 
         if (entity.isInState("hover")) {

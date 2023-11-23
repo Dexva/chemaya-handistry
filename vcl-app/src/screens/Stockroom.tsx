@@ -43,7 +43,8 @@ function Stockroom() {
                     x:0,
                     y:50
                 }
-            }
+            },
+            window.structuredClone(e.height)
         );
         new EntityModel(copyGlassware);
         console.log(EntityModel.Instances);

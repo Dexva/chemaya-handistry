@@ -27,6 +27,7 @@ export class Glassware extends Equipment implements EntityData {
     private readonly entityDataType: string = "glassware";
     public containingEntity: Entity | undefined;
     private maskPath: string;
+    private height: Number;
 
     //----- CONSTRUCTOR -----//
     public constructor(name: string,
@@ -35,13 +36,15 @@ export class Glassware extends Equipment implements EntityData {
                        maxCap: number, 
                        mixture: Mixture, 
                        transferMethod: string,
-                       hitcircle: Circle) {
+                       hitcircle: Circle,
+                       height: Number) {
         super(name, spritePath);
         this.maskPath = maskPath;
         this.maxCapacity = maxCap;
         this.mixture = mixture;
         this.transferMethod = transferMethod
         this.hitcircle = hitcircle;
+        this.height = height;
     }
     
     //----- ENTITYTYPE METHODS -----//
@@ -81,4 +84,5 @@ export class Glassware extends Equipment implements EntityData {
     public getMaxCap() { return this.maxCapacity; }
     public getMixture() { return this.mixture; }
     public getTransferMethod() { return this.transferMethod; }
+    public getHeight() { return this.height; }
 }
