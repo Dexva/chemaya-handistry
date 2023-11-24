@@ -63,7 +63,7 @@ export class Mixture {
     private chemicals: Map<string, Chemical>;   // [Map] key = formula of chemical, value = Chemical instance
     private volume: number;                     // [number] Volume of the mixture in milliliters (mL)
     // private temperature: number;
-    public static POUR_RATE : number = 0.2; // mL change per tick
+    public static POUR_RATE : number = 0.08; // mL change per tick
 
     //----- CONSTRUCTOR -----//
     public constructor(chemicals: Map<string, Chemical>, volume: number) {
@@ -214,7 +214,14 @@ export class Mixture {
         if (mixture_reaction.getReactants().size != 2) return;
         if (mixture_reaction.getProducts().size != 1) return;
 
-        
+        // find minimum 
+        // let reactant_formulas: string[] = [];
+        // mixture_reaction.getReactants().forEach((value: [Chemical, number], key: string)=>{
+        //     reactant_formulas.push(key);
+        // });
+        // let A = reactant_formulas[0];
+        // let B = reactant_formulas[1]
+        // let product_moles = Math.min(mixture_reaction.getReactants().at(A), mixture_reaction.getReactants().at(B));
     }
 
     // Propagates the mixture's chemical composition through a given reaction

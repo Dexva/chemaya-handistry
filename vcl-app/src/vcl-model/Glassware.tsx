@@ -30,6 +30,7 @@ export class Glassware extends Equipment implements EntityData {
     private readonly hitcircleRadius: number;
     private readonly entityDataType: string = "glassware";
     public readonly isReadable: boolean;
+    private radius: number;
     public containingEntity: Entity | undefined;
     private readonly maskPath: string;
     private height: Number;
@@ -44,7 +45,8 @@ export class Glassware extends Equipment implements EntityData {
                        transferMethod: string,
                        hitcircleTranslation: AngleDistTranslation,
                        hitcircleRadius: number,
-                       height: number) {
+                       height: number,
+                       radius: number) {
         super(name, spritePath);
         this.isReadable = isRead;
         this.maskPath = maskPath;
@@ -54,6 +56,7 @@ export class Glassware extends Equipment implements EntityData {
         this.hitcircleTranslation = hitcircleTranslation;
         this.hitcircleRadius = hitcircleRadius;
         this.height = height;
+        this.radius = radius;
     }
     
     //----- ENTITYTYPE METHODS -----//
@@ -80,8 +83,8 @@ export class Glassware extends Equipment implements EntityData {
     public getHitcircleRadius(): number {
         return this.hitcircleRadius;
     }
-    public getHitcircleCenter(center: Point,degree: number): Point {
-        return angleTranslate(center,this.hitcircleTranslation.angle + degree,this.hitcircleTranslation.dist)
+    public getHitcircleCenter(center: Point,rad: number): Point {
+        return angleTranslate(center,this.hitcircleTranslation.angle + radToDeg(-rad + (3.1415 / 2)),this.hitcircleTranslation.dist);
     }
 
     //----- METHODS -----//
@@ -97,6 +100,7 @@ export class Glassware extends Equipment implements EntityData {
     public getMixture() { return this.mixture; }
     public getTransferMethod() { return this.transferMethod; }
     public getHeight() { return this.height; }
+    public getRadius() { return this.radius; }
 }
 
 // Given a point, translates that point by the given dist along an angle with a given angle from the x-axis.
@@ -105,6 +109,9 @@ function angleTranslate(point: Point,angle: number,dist: number) {
         x:point.x + dist * Math.cos(degToRad(angle)),
         y:point.y + dist * Math.sin(degToRad(angle))
     };
+}
+function radToDeg(rad: number) {
+    return 180/3.1415 * rad;
 }
 function degToRad(deg: number) {
     return 3.1415/180 * deg;

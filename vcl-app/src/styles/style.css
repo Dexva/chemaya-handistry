@@ -459,7 +459,7 @@ SCREEN TAGS
     height:110px;
 }
 .entity {
-    transform:translate(calc((var(--x) * 1px - 50%)),calc((100vh - (var(--y) * 1px)) - 100%))  rotate(calc(var(--r) * 180deg/3.1415));;
+    transform:translate(calc((var(--x) * 1px - 50%)),calc((100vh - (var(--y) * 1px)) - 50%))  rotate(calc(var(--r) * 180deg/3.1415));;
     position:absolute;
     z-index:var(--z);
     transition:0.1s;
@@ -608,6 +608,29 @@ BACKGROUND TAGS
 /*-----------
 DEBUG TAGS
 -----------*/
+.DebugDot {
+    --x:0;
+    --y:0;
+    --color:red;
+    width:30px;
+    height:30px;
+    border-radius:30px;
+    background-color:var(--color);
+    position:absolute;
+    bottom:0;
+    left:0;
+    transform:translate(calc(var(--x) * 1px),calc(var(--y) * -1px));
+    animation: hide 0s forwards;
+    animation-delay:2s;
+}
+@keyframes hide {
+    0% {
+        display:block;
+    }
+    100% {
+        display:none;
+    }
+}
 .dummy {
     width:50px;
     height:50px;

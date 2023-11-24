@@ -40,7 +40,8 @@ function Stockroom() {
             "beaker",
             window.structuredClone(e.hitcircle.translation),
             window.structuredClone(e.hitcircle.radius),
-            window.structuredClone(e.height)
+            window.structuredClone(e.height),
+            window.structuredClone(e.radius)
         );
         new EntityModel(copyGlassware);
         console.log(EntityModel.Instances);

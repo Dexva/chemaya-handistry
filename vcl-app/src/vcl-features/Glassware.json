@@ -12,7 +12,10 @@
         "chemmole":[5],
         "transfer-type": "beaker",
         "radius": 100,
-        "center": {"x": 0, "y": 50}
+        "hitcircle": {
+            "radius":50,
+            "translation":{"dist": 120, "angle": 0}
+        }
     },
     {
         "name":"Erlenmeyer Flask",
@@ -28,8 +31,8 @@
         "transfer-type": "beaker",
         "radius": 100,
         "hitcircle": {
-            "radius":30,
-            "translation":{"dist": 50, "angle": 0}
+            "radius":50,
+            "translation":{"dist": 120, "angle": 0}
         }
     },
     {
@@ -47,7 +50,7 @@
         "radius": 100,
         "hitcircle": {
             "radius":30,
-            "translation":{"dist": 50, "angle": 0}
+            "translation":{"dist": 200, "angle": 0}
         }
     },
     {
@@ -65,7 +68,7 @@
         "radius": 100,
         "hitcircle": {
             "radius":30,
-            "translation":{"dist": 50, "angle": 0}
+            "translation":{"dist": 150, "angle": 0}
         }
     }
 ]

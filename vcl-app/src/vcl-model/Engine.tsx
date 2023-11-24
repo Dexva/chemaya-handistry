@@ -92,11 +92,11 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         
         // If entity is intersecting with pointer
         // console.log(entity.getData().getHitcircle());
-        let translatedHitcircle: Circle = {
-            radius: entity.getData().getHitcircleRadius(),
-            center:entity.getData().getHitcircleCenter(entity.getCoordinates(),degrees)
+        let entityCircle: Circle = {
+            radius: entity.getData().getRadius(),
+            center: entity.getCoordinates()
         };
-        if (pointWithinCircle(pointer, translatedHitcircle)) {
+        if (pointWithinCircle(pointer, entityCircle)) {
             // And there is a previously existing highestZ entity
             if (invokerEntity) {
                 // And if entity has higher z than current saved entity
@@ -115,13 +115,9 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     if (invokerEntity) {
         let translatedInvokerHitcircle: Circle = {
             //@ts-ignore
-            radius: invokerEntity.getData().getHitcircle().radius,
-            center:{
-                //@ts-ignore
-                x: invokerEntity.getData().getHitcircle().center.x + invokerEntity.getCoordinates().x,
-                //@ts-ignore
-                y: invokerEntity.getData().getHitcircle().center.y + invokerEntity.getCoordinates().y
-            }
+            radius: invokerEntity.getData().getHitcircleRadius(),
+            //@ts-ignore
+            center: invokerEntity.getData().getHitcircleCenter(invokerEntity.getCoordinates(),degrees)
         };
         Entity.Instances.forEach((entity : Entity)=>{
             if (entity !== invokerEntity) {
@@ -130,7 +126,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
 
                 let translatedHitcircle: Circle = {
                     radius: entity.getData().getHitcircleRadius(),
-                    center: entity.getData().getHitcircleCenter(entity.getCoordinates(),degrees)
+                    center: entity.getData().getHitcircleCenter(entity.getCoordinates(),0)
                 };
                 
                 // If entity is intersecting with pointer
@@ -201,7 +197,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         receiverEntity:receiverEntity
     }
 
-    const floorHeight = 200;
+    const floorHeight = 300;
 
     // Now that all entities have proper states, update everything accordingly
     Entity.Instances.forEach((entity)=>{
@@ -216,12 +212,12 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             entity.getData().onHover();
         }
         if (entity.isInState("held")) {
-            let translatedHitcircle: Circle = {
-                radius: entity.getData().getHitcircleRadius(),
-                center: entity.getData().getHitcircleCenter(entity.getCoordinates(),degrees)
-            };
+            // let translatedHitcircle: Circle = {
+            //     radius: entity.getData().getHitcircleRadius(),
+            //     center: entity.getData().getHitcircleCenter(entity.getCoordinates(),degrees)
+            // };
 
-            addDebugDot(translatedHitcircle.center.x,translatedHitcircle.center.y);
+            // addDebugDot(translatedHitcircle.center.x,translatedHitcircle.center.y,"red");
 
             // console.log("being held!!!!");
             entity.getData().onHold(inputs);
@@ -275,7 +271,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         //@ts-ignore
         invokerEntity.setState("held",true);
         //@ts-ignore
-        console.log(invokerEntity.getData().getMixture());
+        // console.log(invokerEntity.getData().getMixture());
     }
 
     // STATE: ---- pour ----, exclusive

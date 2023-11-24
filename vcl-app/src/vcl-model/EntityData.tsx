@@ -21,6 +21,7 @@ export interface EntityData {
     getEntityDataType: Function;
     onIntersectReceiver: Function;
     onIntersectInvoker: Function;
+    getRadius: Function;
     getHitcircleRadius: Function;
     getHitcircleCenter: Function;
     onHover: Function;
