@@ -7,11 +7,14 @@ import { EntityData, Circle } from './EntityData';
 import { randElem } from '../utilities/utility';
 import { Entity } from "./Entity";
 import { InputData } from "./Engine";
-import CHEMICAL_LIST from '../vcl-features/LoadChemicals';
 
 type Point = {
     x: number,
     y: number
+}
+type AngleDistTranslation = {
+    angle: number,
+    dist: number
 }
 
 /*
@@ -23,11 +26,12 @@ export class Glassware extends Equipment implements EntityData {
     private maxCapacity: number;        // [number] The maximum capacity of the glassware in milliliters (mL)
     private mixture: Mixture;           // [Mixture] The mixture that the glassware holds
     private transferMethod: string;     // [string] A classification denoting how the mixture is transferred
-    private readonly hitcircle: Circle;
+    private readonly hitcircleTranslation: AngleDistTranslation; // [{dist: number, angle: number}] Stores the angle and distance the hitcircle is away from the center of the entity.
+    private readonly hitcircleRadius: number;
     private readonly entityDataType: string = "glassware";
     public readonly isReadable: boolean;
     public containingEntity: Entity | undefined;
-    private maskPath: string;
+    private readonly maskPath: string;
     private height: Number;
 
     //----- CONSTRUCTOR -----//
@@ -38,15 +42,17 @@ export class Glassware extends Equipment implements EntityData {
                        isRead: boolean,
                        mixture: Mixture, 
                        transferMethod: string,
-                       hitcircle: Circle,
-                       height: Number) {
+                       hitcircleTranslation: AngleDistTranslation,
+                       hitcircleRadius: number,
+                       height: number) {
         super(name, spritePath);
         this.isReadable = isRead;
         this.maskPath = maskPath;
         this.maxCapacity = maxCap;
         this.mixture = mixture;
         this.transferMethod = transferMethod
-        this.hitcircle = hitcircle;
+        this.hitcircleTranslation = hitcircleTranslation;
+        this.hitcircleRadius = hitcircleRadius;
         this.height = height;
     }
     
@@ -71,8 +77,11 @@ export class Glassware extends Equipment implements EntityData {
     public getEntityDataType(): string {
         return this.entityDataType;
     }
-    public getHitcircle(): Circle {
-        return this.hitcircle;
+    public getHitcircleRadius(): number {
+        return this.hitcircleRadius;
+    }
+    public getHitcircleCenter(center: Point,degree: number): Point {
+        return angleTranslate(center,this.hitcircleTranslation.angle + degree,this.hitcircleTranslation.dist)
     }
 
     //----- METHODS -----//
@@ -88,4 +97,15 @@ export class Glassware extends Equipment implements EntityData {
     public getMixture() { return this.mixture; }
     public getTransferMethod() { return this.transferMethod; }
     public getHeight() { return this.height; }
+}
+
+// Given a point, translates that point by the given dist along an angle with a given angle from the x-axis.
+function angleTranslate(point: Point,angle: number,dist: number) {
+    return {
+        x:point.x + dist * Math.cos(degToRad(angle)),
+        y:point.y + dist * Math.sin(degToRad(angle))
+    };
+}
+function degToRad(deg: number) {
+    return 3.1415/180 * deg;
 }

@@ -16,6 +16,8 @@ import Tooltip from '../components/Tooltip';
 import { tooltipEntity } from '../vcl-model/Engine';
 import { graduatedDisplayEntity } from '../vcl-model/Engine';
 import { setToScreen } from '../App';
+import DebugDot from '../components/DebugDot';
+import { debugDotDatas } from '../components/DebugDot';
 
 import '../styles/style.css';
 
@@ -95,7 +97,13 @@ function Tabletop() {
     }
 
     //----- ELEMENTS UNDER COMPONENT -----//
-    // var dotElements : any[] = Array.from(debugDot);
+    var debugDotElements : any[] = Array.from(debugDotDatas,(dotData,index)=>{
+        return <DebugDot
+            x={dotData.x}
+            y={dotData.y}
+            color={dotData.color}
+        ></DebugDot>
+    });
 
     //----- RETURN -----//
     return (
@@ -104,8 +112,8 @@ function Tabletop() {
             <EntityContainer> 
                 {entityElements}
             </EntityContainer>
-            <div>
-
+            <div className="debugDotParent">
+                {debugDotElements}
             </div>
             <Cursor></Cursor>
             <Tooltip entity={tooltipEntity}/>

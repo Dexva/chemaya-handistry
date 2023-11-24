@@ -1,7 +1,7 @@
 import { Circle } from "./EntityData";
 import { Entity } from "./Entity";
 import { Mixture } from "./Mixture";
-import GraduatedSideview from "../components/GraduatedSideview";
+import { addDebugDot } from "../components/DebugDot";
 // var fs = require('fs');
 
 export let cursorState : "none" | "hold" | "hover" | "pour" = "none"; 
@@ -93,11 +93,8 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         // If entity is intersecting with pointer
         // console.log(entity.getData().getHitcircle());
         let translatedHitcircle: Circle = {
-            radius: entity.getData().getHitcircle().radius,
-            center:{
-                x: entity.getData().getHitcircle().center.x + entity.getCoordinates().x,
-                y: entity.getData().getHitcircle().center.y + entity.getCoordinates().y
-            }
+            radius: entity.getData().getHitcircleRadius(),
+            center:entity.getData().getHitcircleCenter(entity.getCoordinates(),degrees)
         };
         if (pointWithinCircle(pointer, translatedHitcircle)) {
             // And there is a previously existing highestZ entity
@@ -132,11 +129,8 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
                 entity.resetAllStates();
 
                 let translatedHitcircle: Circle = {
-                    radius: entity.getData().getHitcircle().radius,
-                    center:{
-                        x: entity.getData().getHitcircle().center.x + entity.getCoordinates().x,
-                        y: entity.getData().getHitcircle().center.y + entity.getCoordinates().y
-                    }
+                    radius: entity.getData().getHitcircleRadius(),
+                    center: entity.getData().getHitcircleCenter(entity.getCoordinates(),degrees)
                 };
                 
                 // If entity is intersecting with pointer
@@ -222,6 +216,13 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
             entity.getData().onHover();
         }
         if (entity.isInState("held")) {
+            let translatedHitcircle: Circle = {
+                radius: entity.getData().getHitcircleRadius(),
+                center: entity.getData().getHitcircleCenter(entity.getCoordinates(),degrees)
+            };
+
+            addDebugDot(translatedHitcircle.center.x,translatedHitcircle.center.y);
+
             // console.log("being held!!!!");
             entity.getData().onHold(inputs);
 

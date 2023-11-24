@@ -10,6 +10,21 @@ interface DebugDotProps {
     color: String;
 }
 
+type debugDotData = {
+    x: Number;
+    y: Number;
+    color: String;
+}
+export var debugDotDatas : debugDotData[] = [];
+
+export function addDebugDot(x: Number,y: Number,color: String = "red") {
+    debugDotDatas.push({
+        x:x,
+        y:y,
+        color:color
+    } as debugDotData);
+}
+
 /*
 The parent component for Entities to be generated on the Tabletop screen
 */
