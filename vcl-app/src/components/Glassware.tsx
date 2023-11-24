@@ -28,6 +28,7 @@ function Glassware(props : GlasswareProps) {
         "--tilt": "0", 
         "--fillLevel": props.data.getMixture().getVolume() / props.data.getMaxCap() * 100,
         "--color": props.data.getMixture().calculateColor(),
+        "--glasswareHeight": `${props.data.getHeight()}px`
     } as React.CSSProperties;
 
     //----- RETURN -----//

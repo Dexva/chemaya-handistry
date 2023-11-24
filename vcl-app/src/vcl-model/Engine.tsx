@@ -207,13 +207,15 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         receiverEntity:receiverEntity
     }
 
+    const floorHeight = 200;
+
     // Now that all entities have proper states, update everything accordingly
     Entity.Instances.forEach((entity)=>{
         let coords = entity.getCoordinates();
-        if (coords.y > 300) {
+        if (coords.y > floorHeight) {
             entity.setCoordinates(coords.x,coords.y - 0.2);
-        } else if (coords.y <= 300) {
-            entity.setCoordinates(coords.x,300);
+        } else if (coords.y <= floorHeight) {
+            entity.setCoordinates(coords.x,floorHeight);
         }
 
         if (entity.isInState("hover")) {
@@ -254,11 +256,11 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
     }
 
     //@ts-ignore
-    if (receiverEntity) {console.log(receiverEntity.getData());}
+    // if (receiverEntity) {console.log(receiverEntity.getData());}
 
     //@ts-ignore
     if (receiverEntity && receiverEntity.getData().isReadable) {
-        console.log("receiver being graduated displayed");
+        // console.log("receiver being graduated displayed");
         graduatedDisplayEntity = receiverEntity;
     } else {
         graduatedDisplayEntity = null;
@@ -271,6 +273,8 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
         invokerEntity.setRotation(degrees);
         //@ts-ignore
         invokerEntity.setState("held",true);
+        //@ts-ignore
+        console.log(invokerEntity.getData().getMixture());
     }
 
     // STATE: ---- pour ----, exclusive
@@ -296,6 +300,10 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
                 receiverEntity.getData().getMixture().changeVolume(Mixture.POUR_RATE);
                 //@ts-ignore
                 receiverEntity.getData().getMixture().addListOfChemicals(movedChemicals);
+                //@ts-ignore
+                receiverEntity.getData().getMixture().reactChemicals(receiverEntity.getData().getMixture().searchReactions());
+                //@ts-ignore
+                // console.log(receiverEntity.getData().getMixture());
             }
         }
     }

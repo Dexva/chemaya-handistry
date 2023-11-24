@@ -32,7 +32,8 @@ export class Reaction {
                        T: number,
                        Ea: number,
                        H: number,
-                       S: number) {
+                       S: number,
+                       K: number) {
         this.name = n;
         this.reactants = rxnReactants;
         this.products = rxnProducts;
@@ -41,7 +42,7 @@ export class Reaction {
         this.enthalpyRxn = H;
         this.entropyRxn = S;
         this.gibbsFreeRxn = calculateGibbsFreeEnergy(this.enthalpyRxn, this.entropyRxn, this.temperature);
-        this.equilibriumK = calculateEquilibriumK(this.gibbsFreeRxn);
+        this.equilibriumK = K;
         // this.enthalpyRxn = calculateEnthalpyRxn(rxnReactants, rxnProducts);
         // this.entropyRxn = calculateEntropyRxn(rxnReactants, rxnProducts);
         // this.gibbsFreeRxn = calculateGibbsFreeEnergy(this.enthalpyRxn, this.entropyRxn, this.temperature);

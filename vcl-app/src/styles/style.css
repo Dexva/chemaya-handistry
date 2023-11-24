@@ -169,7 +169,7 @@ GLASSWARE TAGS
 -----------*/
 .Glassware {
     --glasswareWidth: calc(var(--glasswareHeight) * (116.7/200));
-    --glasswareHeight: 300px;
+    --glasswareHeight: 250px;
     --color:orange;
     width:var(--glasswareWidth);
     height:var(--glasswareHeight);
@@ -305,7 +305,7 @@ SCREEN TAGS
     overflow-y:hidden;
     width:400vw;
     position:absolute;
-    transition:1s;
+    transition:0.7s;
     transform:translatex(calc(var(--screen) * -100vw));
     /* pointer-events: none; */
 }
@@ -496,7 +496,7 @@ SCREEN TAGS
     height:110px;
 }
 .entity {
-    transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%))  rotate(calc(var(--r) * 180deg/3.1415));;
+    transform:translate(calc((var(--x) * 1px - 50%)),calc((100vh - (var(--y) * 1px)) - 100%))  rotate(calc(var(--r) * 180deg/3.1415));;
     position:absolute;
     z-index:var(--z);
     transition:0.1s;
@@ -627,7 +627,7 @@ BACKGROUND TAGS
     height:64px;
     padding:10px;
     right:20px;
-    top:20px;
+    bottom:20px;
     margin:0;
     background-image:url("../resources/img/stockroom.png");
 }
@@ -637,7 +637,7 @@ BACKGROUND TAGS
     height:64px;
     padding:10px;
     left:20px;
-    top:20px;
+    bottom:20px;
     margin:0;
     background-image:url("../resources/img/tabletop.png");
 }

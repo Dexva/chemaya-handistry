@@ -5,7 +5,8 @@ import { Chemical } from './Chemical';
 import { Reaction } from './Reaction';
 import { addReactions } from '../utilities/calculators';
 import REACTION_LIST from '../vcl-features/LoadReactions';
-var nr = require('newton-raphson');
+import { stringify } from 'querystring';
+var nr = require('newton-raphson-method');
 
 /*
 Converts RGB to HSL
@@ -61,6 +62,7 @@ export class Mixture {
     //----- FIELDS -----//
     private chemicals: Map<string, Chemical>;   // [Map] key = formula of chemical, value = Chemical instance
     private volume: number;                     // [number] Volume of the mixture in milliliters (mL)
+    // private temperature: number;
     public static POUR_RATE : number = 0.2; // mL change per tick
 
     //----- CONSTRUCTOR -----//
@@ -196,22 +198,30 @@ export class Mixture {
             });
             if (reaction_satisfied) console.log(reaction);
             if (reaction_satisfied && overall_reaction == null) {
-                console.log("got new reaction");
-                console.log(reaction);
+                // console.log("got new reaction");
+                // console.log(reaction);
                 overall_reaction = reaction;   
             }
             else if (reaction_satisfied && overall_reaction !== null) {
                 overall_reaction = addReactions(overall_reaction, reaction);
-                console.log("got reaction");
+                // console.log("got reaction");
             }
         });     
         return overall_reaction; 
     }
 
+    public reactChemicalsABC(mixture_reaction: Reaction) { //aA + bB --> cC
+        if (mixture_reaction.getReactants().size != 2) return;
+        if (mixture_reaction.getProducts().size != 1) return;
+
+        
+    }
+
     // Propagates the mixture's chemical composition through a given reaction
     // Uses the Newton-Raphson method for numerical approximation of the k_equation (ICE)
     public reactChemicals(mixture_reaction: Reaction) {
-        console.log(mixture_reaction);
+        // console.log(mixture_reaction);
+        if (mixture_reaction == null) return;
 
         const volume: number = this.getVolume();
 
@@ -235,19 +245,25 @@ export class Mixture {
              });
             // console.log("k_numerator : " + k_numerator); //-> uncoment for debugging
             // console.log("k_denominator : " + k_denominator); //-> uncoment for debugging
-            // console.log("k_equation: " + mixture_reaction.getK().toString() + "=" + k_numerator_str + " / " + k_denominator_str); //-> uncoment for debugging
+            // console.log("k_equation: " + mixture_reaction.getK() + "=" + k_numerator_str + " / " + k_denominator_str); //-> uncoment for debugging
             return k_numerator - mixture_reaction.getK()*k_denominator; //eq expression - k_value
         }
 
         // function f(x: number) {return x**2 - 1E-14;} //-> uncomment for debugging NR method
         // function fp(x:number) {return 2*x;} //-> uncomment for debugging NR method
 
-        let moles_x = nr(k_equation, 1E-10, { //1E-10 is an arbitrary choice for first mole amt. to be searched
+        function k_prime(x: number) {
+            let h: number = 1E-8;
+            return (k_equation(x+h)-k_equation(x))/(h);
+        }
+
+        let moles_x = nr(k_equation, 1, { //1E-10 is an arbitrary choice for first mole amt. to be searched
             "maxIterations": 100,
             "verbose": true,
         });
+        
+        console.log("moles_x: " + moles_x); //-> uncomment for debugging
         if (moles_x === false) {moles_x = 0;}
-        // console.log("moles_x: " + moles_x); //-> uncomment for debugging
 
         mixture_reaction.getProducts().forEach((value: [Chemical, number], key: string) => {
             let added_product : Chemical = {
@@ -272,7 +288,7 @@ export class Mixture {
                 "charge": window.structuredClone(value[0].charge),
                 "enthalpyForm": window.structuredClone(value[0].enthalpyForm),
                 "entropyForm": window.structuredClone(value[0].entropyForm),
-                "moles": window.structuredClone(-value[1]) * moles_x,
+                "moles": -1 * window.structuredClone(value[1]) * moles_x,
                 "color": window.structuredClone(value[0].color)
             }
             this.updateChemicals(added_reactant);

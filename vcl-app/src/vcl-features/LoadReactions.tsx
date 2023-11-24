@@ -39,7 +39,8 @@ for(let i=0; i<reactionJSON.length; i++) {
         reactionJSON[i].Trxn,
         reactionJSON[i].Erxn,
         reactionJSON[i].Hrxn,
-        reactionJSON[i].Srxn
+        reactionJSON[i].Srxn,
+        reactionJSON[i].K
     )
     REACTION_LIST.push(newReaction);
 }

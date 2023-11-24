@@ -5,7 +5,7 @@
         "reactantsStoich": [1, 1],
         "products": ["Z(aq)"],
         "productsStoich": [1],
-        "K": 1e10,
+        "K": 100000,
         "Trxn": 298.15,
         "Erxn": 0.005,    
         "Hrxn": -192.464,

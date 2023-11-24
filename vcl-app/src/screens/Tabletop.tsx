@@ -69,7 +69,7 @@ function Tabletop() {
 
     //----- FUNCTIONS -----//
     
-    //----- COMPONENT OF RETURN -----//
+    //----- ELEMENTS UNDER COMPONENT -----//
     var entityElements : any[] = Array.from(EntityModel.allInstances(), (entityData, index) => { //not the cause of problem
         var equipment : any = entityData.getData();
         return <Entity entityIndex={index}>
@@ -94,18 +94,19 @@ function Tabletop() {
         displayGraduations = true;
     }
 
+    //----- ELEMENTS UNDER COMPONENT -----//
+    // var dotElements : any[] = Array.from(debugDot);
+
     //----- RETURN -----//
     return (
         <div className="Tabletop">
             <div onClick={(e) => {setToScreen(2)}} className="tabletopToStockroom screenChangeButton"></div>
-            <div  
-                className = "debug-button" 
-                onClick = {() => {console.log(EntityModel.allInstances())}}>
-                Log All Entities
-            </div>
             <EntityContainer> 
                 {entityElements}
             </EntityContainer>
+            <div>
+
+            </div>
             <Cursor></Cursor>
             <Tooltip entity={tooltipEntity}/>
             <GraduatedSideview 

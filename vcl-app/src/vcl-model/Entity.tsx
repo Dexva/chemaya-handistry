@@ -26,7 +26,7 @@ export class Entity {
     private data: EntityData;           // [string] Name associated with equipment instance
     private states: Map<string, number>;
     //----- CONSTRUCTOR -----//
-    public constructor(data : EntityData,x: number = window.innerWidth / 2 + (randInt(500,-500)) , y: number = 310) {
+    public constructor(data : EntityData,x: number = window.innerWidth / 2 + (randInt(500,-500)) , y: number = 180) {
         this.coordinates = {"x":x, "y":y, "z":Entity.Instances.length};
         this.rotation = 0;
         this.data = data;

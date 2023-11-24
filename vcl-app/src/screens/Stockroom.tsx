@@ -44,7 +44,8 @@ function Stockroom() {
                     x:0,
                     y:50
                 }
-            }
+            },
+            window.structuredClone(e.height)
         );
         new EntityModel(copyGlassware);
         console.log(EntityModel.Instances);
@@ -56,7 +57,7 @@ function Stockroom() {
             let chemical : Chemical | undefined = CHEMICAL_LIST.get(formula[i]);
             if (chemical) {
                 chemical.moles = moles[i];
-                returnMap.set(chemical.name, chemical);
+                returnMap.set(chemical.formula, chemical);
             }
         }
         return returnMap;

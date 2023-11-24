@@ -13,11 +13,31 @@
         "name": "Reagent X",
         "formula": "X(aq)",
         "phase": "aq",
-        "molarMass": 0,
+        "molarMass": 1,
         "charge": 0,
         "enthalpyForm": 0,
         "entropyForm": 0,
         "color": {"r":48, "g":217, "b":255, "a":0.5}
+    },
+    {
+        "name": "Reagent Y",
+        "formula": "Y(aq)",
+        "phase": "aq",
+        "molarMass": 1,
+        "charge": 0,
+        "enthalpyForm": 0,
+        "entropyForm": 0,
+        "color": {"r":10, "g":10, "b":100, "a":0.5}
+    },
+    {
+        "name": "Reagent Z",
+        "formula": "Z(aq)",
+        "phase": "aq",
+        "molarMass": 2,
+        "charge": 0,
+        "enthalpyForm": 0,
+        "entropyForm": 0,
+        "color": {"r":78, "g":87, "b":49, "a":0.5}
     },
     {
         "name": "L. Zesto Tetrapak",
