@@ -7,9 +7,9 @@
         "height": 250,
         "readable": false,
         "maxvolume": 250,
-        "actvolume": 100,
+        "actvolume": 50,
         "chemformula":["X(aq)"],
-        "chemmole":[5],
+        "chemmole":[0.005],
         "transfer-type": "beaker",
         "radius": 100,
         "hitcircle": {
@@ -25,9 +25,9 @@
         "height": 250,
         "readable": false,
         "maxvolume": 250,
-        "actvolume": 100,
+        "actvolume": 50,
         "chemformula":["Y(aq)"],
-        "chemmole":[5],
+        "chemmole":[0.005],
         "transfer-type": "beaker",
         "radius": 100,
         "hitcircle": {

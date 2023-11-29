@@ -298,7 +298,9 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) {
                 //@ts-ignore
                 receiverEntity.getData().getMixture().addListOfChemicals(movedChemicals);
                 //@ts-ignore
-                receiverEntity.getData().getMixture().reactChemicals(receiverEntity.getData().getMixture().searchReactions());
+                // console.log(receiverEntity.getData().getMixture());
+                //@ts-ignore
+                receiverEntity.getData().getMixture().reactChemicalsComplete(receiverEntity.getData().getMixture().searchReactions());
                 //@ts-ignore
                 // console.log(receiverEntity.getData().getMixture());
             }

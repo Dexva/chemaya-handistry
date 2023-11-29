@@ -39,13 +39,19 @@ function Tooltip(props : TooltipProps) {
             multipleChemicals = true;
         }
 
+        var mixtureElements : any[] = Array.from(glassware.getMixture().getChemicals(), (value, key) => { //not the cause of problem
+            return <p>{value[0] + ":" + value[1].moles}</p>
+        });
+
         //----- RETURN -----//
         return (
             <div className="Tooltip styleGlassBox state-display">
-                <h2>{multipleChemicals ? firstChemical.name : "L. mixture"}</h2>
-                <p className="extraInfo">{(firstChemical.phase == "l" ? "🌢Liquid" : "🌢Aqueous Solution") +
+                <h2>{multipleChemicals ? firstChemical.name : "Mixture"}</h2>
+                <p className="extraInfo">{(firstChemical.phase == "l" ? "Liquid" : "Aqueous Solution") +
                     ", " +
                     (firstChemical.formula)}</p>
+                {mixtureElements}
+                <p>{"Temperature: " + glassware.getMixture().getTemperature()}</p>
                 <p>{Math.round(glassware.getMixture().getVolume()) + "mL within " + glassware.getName()}</p>
             </div>
         );

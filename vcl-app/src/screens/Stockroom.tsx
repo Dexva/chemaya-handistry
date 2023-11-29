@@ -35,7 +35,8 @@ function Stockroom() {
                     createMap(window.structuredClone(e.chemformula),
                               window.structuredClone(e.chemmole))
                 ),
-                window.structuredClone(e.actvolume)
+                window.structuredClone(e.actvolume),
+                25  //in celsius
             ),
             "beaker",
             window.structuredClone(e.hitcircle.translation),

@@ -6,6 +6,7 @@ import { Reaction } from './Reaction';
 import { addReactions } from '../utilities/calculators';
 import REACTION_LIST from '../vcl-features/LoadReactions';
 import { stringify } from 'querystring';
+import CHEMICAL_LIST from '../vcl-features/LoadChemicals';
 var nr = require('newton-raphson-method');
 
 /*
@@ -62,13 +63,15 @@ export class Mixture {
     //----- FIELDS -----//
     private chemicals: Map<string, Chemical>;   // [Map] key = formula of chemical, value = Chemical instance
     private volume: number;                     // [number] Volume of the mixture in milliliters (mL)
-    // private temperature: number;
+    private temperature: number;
     public static POUR_RATE : number = 0.08; // mL change per tick
+    public moles_transferred: number = 0;
 
     //----- CONSTRUCTOR -----//
-    public constructor(chemicals: Map<string, Chemical>, volume: number) {
+    public constructor(chemicals: Map<string, Chemical>, volume: number, temperature: number) {
         this.chemicals = chemicals;
         this.volume = volume;
+        this.temperature = temperature;
     }
     
     //----- METHODS -----//
@@ -196,32 +199,85 @@ export class Mixture {
             reaction.getReactants().forEach((value: [Chemical, number], key: string) => {
                 if (!this.chemicals.has(key)) { reaction_satisfied = false; }
             });
-            if (reaction_satisfied) console.log(reaction);
             if (reaction_satisfied && overall_reaction == null) {
-                // console.log("got new reaction");
-                // console.log(reaction);
                 overall_reaction = reaction;   
             }
             else if (reaction_satisfied && overall_reaction !== null) {
                 overall_reaction = addReactions(overall_reaction, reaction);
-                // console.log("got reaction");
             }
-        });     
+        });  
         return overall_reaction; 
     }
 
-    public reactChemicalsABC(mixture_reaction: Reaction) { //aA + bB --> cC
-        if (mixture_reaction.getReactants().size != 2) return;
+    public reactChemicalsComplete(mixture_reaction: Reaction) { //aA + bB + cC + ... + --> zZ
+        if (mixture_reaction == null) return;
         if (mixture_reaction.getProducts().size != 1) return;
 
-        // find minimum 
-        // let reactant_formulas: string[] = [];
-        // mixture_reaction.getReactants().forEach((value: [Chemical, number], key: string)=>{
-        //     reactant_formulas.push(key);
-        // });
-        // let A = reactant_formulas[0];
-        // let B = reactant_formulas[1]
-        // let product_moles = Math.min(mixture_reaction.getReactants().at(A), mixture_reaction.getReactants().at(B));
+        console.log("Before",this);
+
+        // setting up info
+        let reactant_formulas: string[] = [];
+        let reactant_coeffs: number[] = [];
+        mixture_reaction.getReactants().forEach((value: [Chemical, number], key: string)=>{
+            reactant_formulas.push(key);
+            reactant_coeffs.push(value[1]);
+        });
+        let product_formula: string = "";
+        let product_coeff: number = 1;
+        mixture_reaction.getProducts().forEach((value: [Chemical, number], key: string)=>{
+            product_formula = key;
+            product_coeff = value[1];
+        });
+
+        // console.log(this.chemicals);
+
+        // finding limiting reactant index
+        let limiting_index: number = 0;
+        let min_product: number = Infinity;
+        for (let i=0; i<reactant_formulas.length; i++) {
+            let reactant_moles: number | undefined = window.structuredClone(this.chemicals.get(reactant_formulas[i])?.moles);
+            let test_product: number = 0;
+            //if (reactant_moles !== undefined)
+            //@ts-ignore
+            test_product = reactant_moles * product_coeff / reactant_coeffs[i];
+            // console.log("Test Product ", reactant_formulas[i], ": ", test_product);
+            if (test_product < min_product) {
+                min_product = window.structuredClone(test_product);
+                limiting_index = i;
+            }
+        }
+        console.log("Limiting Reactant: " + reactant_formulas[limiting_index]);
+        
+        // updating mixture temperature
+        //@ts-ignore
+        if (this.chemicals.get(reactant_formulas[limiting_index])?.moles <= 0.001) return;
+        
+        //@ts-ignore
+        let moles_rxn: number = this.chemicals.get(reactant_formulas[limiting_index])?.moles / reactant_coeffs[limiting_index];
+        //@ts-ignore
+        this.moles_transferred += this.chemicals.get(reactant_formulas[limiting_index])?.moles;
+        
+        console.log("moles of reaction:", moles_rxn);
+        this.temperature += -1 * (moles_rxn * mixture_reaction.getH() * 1000) / (4.186 * this.volume);
+        //assumptions: density of mixture is 1g/mL;
+
+
+        // updating the reactants accordingly
+        for (let i=0; i<reactant_formulas.length; i++) {
+            let limiting_moles: number | undefined = this.chemicals.get(reactant_formulas[limiting_index])?.moles;
+            //@ts-ignore
+            let change_moles = (limiting_moles * reactant_coeffs[i] / reactant_coeffs[limiting_index]);
+            //@ts-ignore
+            this.chemicals.get(reactant_formulas[i]).moles -= change_moles;
+        }
+
+        // updating the product accordingly
+        //@ts-ignore
+        let added_product : Chemical = window.structuredClone(CHEMICAL_LIST.get(product_formula));
+        added_product.moles += min_product;
+        this.updateChemicals(added_product);
+
+        console.log("After",window.structuredClone(this));
     }
 
     // Propagates the mixture's chemical composition through a given reaction
@@ -306,6 +362,7 @@ export class Mixture {
     //----- GETTERS -----//
     public getChemicals() { return this.chemicals; }
     public getVolume() { return this.volume; }
+    public getTemperature() { return this.temperature; }
     public changeVolume(dv: number) { 
         // console.log("we movin");
         this.volume += dv; 
