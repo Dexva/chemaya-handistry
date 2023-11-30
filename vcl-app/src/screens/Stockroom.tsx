@@ -2,7 +2,6 @@
    IMPORTS
 ------------*/
 import React from 'react';
-import Glassware from '../components/Glassware';
 import { Chemical } from '../vcl-model/Chemical';
 import ExperimentGlassware from "../vcl-features/glassware.json";
 import CHEMICAL_LIST from '../vcl-features/LoadChemicals';
@@ -11,6 +10,8 @@ import {Mixture} from '../vcl-model/Mixture';
 import { Entity as EntityModel } from "../vcl-model/Entity";
 import '../styles/style.css';
 import { setToScreen } from '../App';
+import Glassware from '../components/Glassware';
+import Entity from '../components/Entity';
 
 /*
 TL;DR: The item generation page.
@@ -60,12 +61,38 @@ function Stockroom() {
         return returnMap;
     }
 
-    var buttonCount = 0;
-    var availableEntities : any[] = Array.from(ExperimentGlassware, (e) => { //not the cause of problem
-        buttonCount += 1;
+    var shelfInd = 0;
+    var availableEntities : any[] = Array.from(ExperimentGlassware, (row) => { //not the cause of problem
+        shelfInd += 1;
+
+        let glasswares = Array.from(row,(e)=>{
+            let color: any = CHEMICAL_LIST.get(e.chemformula[0]);
+            if (color) color = `rgba(${color.color.r},${color.color.g},${color.color.b},${color.color.a})`;
+    
+            //----- VARIABLES & STATES ----//
+            const glasswareStyle = {
+                "--tilt": "0", 
+                "--glasswareHeight": `200px`,
+                "--fillLevel": color ? 50 : 0,
+                "--color": color ? color : "",
+            } as React.CSSProperties;
+            return <div className="stockroomSpriteContainer">
+                <div onClick = {() => createEntity(e)} style={glasswareStyle} className={`stockroomStaticSprite Glassware ${e.name.toLowerCase().replace(/\s/g, '')}`}>
+                    <div className="glassware-image"></div>
+                    <div className="glassware-internalFillState"></div>
+                </div>
+                <div className="stockroomSpriteLabel">
+                    <div className="stockroomSpriteLabel-title">{e.chemformula}</div>
+                    <div className="stockroomSpriteLabel-equipment">{e.name}</div>
+                </div>
+            </div>
+        })
+        
+        
+
         return (
-            <div className="Stockroom-shelf" style={{"--shelfInd": buttonCount} as React.CSSProperties}>
-                <div className = "generator-button" onClick = {() => createEntity(e)}>{e.name}</div>
+            <div className="Stockroom-shelf" style={{"--shelfInd": shelfInd} as React.CSSProperties}>
+                {glasswares}
                 <div className="slab">
                     <div className="slab-top"></div>
                     <div className="slab-top-border"></div>

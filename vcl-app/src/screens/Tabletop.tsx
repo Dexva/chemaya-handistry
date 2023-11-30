@@ -3,10 +3,10 @@
 ------------*/
 import React, { useState } from 'react';
 import Glassware from '../components/Glassware';
+import Entity from '../components/Entity';
 import { Entity as EntityModel } from "../vcl-model/Entity";
 import { Glassware as GlasswareModel } from "../vcl-model/Glassware";
 import EntityContainer from '../components/EntityContainer';
-import Entity from '../components/Entity';
 import Cursor from '../vcl-model/Cursor';
 import {cursorX, cursorY} from '../vcl-model/Engine';
 import GraduatedSideview from '../components/GraduatedSideview';

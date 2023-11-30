@@ -391,7 +391,8 @@ SCREEN TAGS
     /* these shelves should appear to be vertically centered and equally distributed across the screen. */
     /* shelves must be positioned so that they can have individual z-indexes. so vertical positioning
        is hardcoded. */
-    top: calc((var(--shelfInd) - 1) * 250px + 120px); 
+    top: calc((var(--shelfInd) - 1) * 250px); 
+    z-index:calc(-1 * var(--shelfInd));
     /* z-index of the shelves (from top to bottom) must be decreasing. */
     /* z-index: calc((5 - var(--shelfInd)) * 10); */
     perspective:300px;
@@ -399,15 +400,57 @@ SCREEN TAGS
     pointer-events: none;
     justify-content: space-between;
     justify-content:left;
+    padding:0 100px;
+    box-sizing:border-box;
     display:flex;
+    
 }
 .Stockroom-shelf .slab {
     position:absolute;
-    bottom:0;
+    top:100%;
+    left:0px;
+    transform:translatey(-50px);
 }
-
+body .Stockroom-shelf .stockroomStaticSprite { 
+    z-index:1;
+    margin:0 50px;
+    pointer-events:all;
+}
+.stockroomSpriteContainer {
+    position:relative;
+    padding-top:30px;
+}
+.stockroomStaticSprite:hover {
+    transform:scale(1.1);
+}
+.stockroomStaticSprite:active {
+    transform:scale(1);
+}
+.stockroomSpriteLabel {
+    background-color:rgba(255,255,255, 0.8);
+    box-shadow:0px 0px 5px rgba(255,255,255,0.7);
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
+    border: 1px solid rgba(220,220,220,0.9);
+    z-index:1000;
+    position:absolute;
+    padding:7px;
+    bottom:-10px;
+    left:50%;
+    transform:translatex(-50%);
+    border:3px solid rgb(230,230,230);
+}
+.stockroomSpriteLabel * {
+    white-space:nowrap;
+}
+.stockroomSpriteLabel-title {
+    font-weight:bold;
+}
+.stockroomSpriteLabel-equipment {
+    font-size:0.8em;
+}
 .Stockroom-shelf * {
-    pointer-events: all;
+    pointer-events: none;
 }
 
 .Stockroom-shelf-top {
@@ -442,18 +485,22 @@ SCREEN TAGS
 .stockroomSupportGraphic-rightMiddle {
     transform:translateX(calc(75vw/2 - 3.4vw));
     top:160px;
+    z-index:-1000;
 }
 .stockroomSupportGraphic-leftMiddle {
     transform:translateX(calc(75vw/-2 + 2.5vw));
     top:160px;
+    z-index:-1000;
 }
 .stockroomSupportGraphic-rightBack {
     transform:translateX(calc(75vw/2 - 5.8vw));
     top:135px;
+    z-index:-1000;
 }
 .stockroomSupportGraphic-leftBack {
     transform:translateX(calc(75vw/-2 + 5.1vw));
     top:135px;
+    z-index:-1000;
 }
 
 /* eqpt. means equipment */

@@ -1,74 +1,78 @@
 [
-    {
-        "name":"Erlenmeyer Flask",
-        "content": "Reagent X",
-        "mediapath": "../resources/img/erlenmeyerFlask.png",
-        "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
-        "height": 250,
-        "readable": false,
-        "maxvolume": 250,
-        "actvolume": 50,
-        "chemformula":["X(aq)"],
-        "chemmole":[0.005],
-        "transfer-type": "beaker",
-        "radius": 100,
-        "hitcircle": {
-            "radius":50,
-            "translation":{"dist": 120, "angle": 0}
+    [],
+    [
+        {
+            "name":"Erlenmeyer Flask",
+            "content": "Reagent X",
+            "mediapath": "../resources/img/erlenmeyerFlask.png",
+            "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
+            "height": 250,
+            "readable": false,
+            "maxvolume": 250,
+            "actvolume": 50,
+            "chemformula":["X(aq)"],
+            "chemmole":[0.005],
+            "transfer-type": "beaker",
+            "radius": 100,
+            "hitcircle": {
+                "radius":50,
+                "translation":{"dist": 120, "angle": 0}
+            }
+        },
+        {
+            "name":"Erlenmeyer Flask",
+            "content": "Reagent Y",
+            "mediapath": "../resources/img/erlenmeyerFlask.png",
+            "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
+            "height": 250,
+            "readable": false,
+            "maxvolume": 250,
+            "actvolume": 50,
+            "chemformula":["Y(aq)"],
+            "chemmole":[0.005],
+            "transfer-type": "beaker",
+            "radius": 100,
+            "hitcircle": {
+                "radius":50,
+                "translation":{"dist": 120, "angle": 0}
+            }
+        },
+        {
+            "name":"Graduated Cylinder",
+            "content": "",
+            "mediapath": "../resources/img/graduatedCylinder.png",
+            "maskpath": "../resources/img/graduatedCylinder-mask.png",
+            "height": 350,
+            "readable": true,
+            "maxvolume": 250,
+            "actvolume": 50,
+            "chemformula":[],
+            "chemmole":[],
+            "transfer-type": "beaker",
+            "radius": 100,
+            "hitcircle": {
+                "radius":30,
+                "translation":{"dist": 200, "angle": 0}
+            }
+        },
+        {
+            "name":"Roundbottom",
+            "content": "Potion of Health",
+            "mediapath": "../resources/img/roundbottom.png",
+            "maskpath": "../resources/img/roundbottom-mask.png",
+            "height": 300,
+            "readable": false,
+            "maxvolume": 1000,
+            "actvolume": 500,
+            "chemformula":["HeAlTh(l)"],
+            "chemmole":[5],
+            "transfer-type": "beaker",
+            "radius": 100,
+            "hitcircle": {
+                "radius":30,
+                "translation":{"dist": 150, "angle": 0}
+            }
         }
-    },
-    {
-        "name":"Erlenmeyer Flask",
-        "content": "Reagent Y",
-        "mediapath": "../resources/img/erlenmeyerFlask.png",
-        "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
-        "height": 250,
-        "readable": false,
-        "maxvolume": 250,
-        "actvolume": 50,
-        "chemformula":["Y(aq)"],
-        "chemmole":[0.005],
-        "transfer-type": "beaker",
-        "radius": 100,
-        "hitcircle": {
-            "radius":50,
-            "translation":{"dist": 120, "angle": 0}
-        }
-    },
-    {
-        "name":"Graduated Cylinder",
-        "content": "",
-        "mediapath": "../resources/img/graduatedCylinder.png",
-        "maskpath": "../resources/img/graduatedCylinder-mask.png",
-        "height": 350,
-        "readable": true,
-        "maxvolume": 250,
-        "actvolume": 50,
-        "chemformula":[],
-        "chemmole":[],
-        "transfer-type": "beaker",
-        "radius": 100,
-        "hitcircle": {
-            "radius":30,
-            "translation":{"dist": 200, "angle": 0}
-        }
-    },
-    {
-        "name":"Roundbottom",
-        "content": "Potion of Health",
-        "mediapath": "../resources/img/roundbottom.png",
-        "maskpath": "../resources/img/roundbottom-mask.png",
-        "height": 300,
-        "readable": false,
-        "maxvolume": 1000,
-        "actvolume": 500,
-        "chemformula":["HeAlTh(l)"],
-        "chemmole":[5],
-        "transfer-type": "beaker",
-        "radius": 100,
-        "hitcircle": {
-            "radius":30,
-            "translation":{"dist": 150, "angle": 0}
-        }
-    }
+    ],
+    []
 ]
