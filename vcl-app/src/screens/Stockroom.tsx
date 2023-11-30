@@ -66,7 +66,10 @@ function Stockroom() {
         return (
             <div className="Stockroom-shelf" style={{"--shelfInd": buttonCount} as React.CSSProperties}>
                 <div className = "generator-button" onClick = {() => createEntity(e)}>{e.name}</div>
-                <div className="Stockroom-shelf-top"></div>
+                <div className="slab">
+                    <div className="slab-top"></div>
+                    <div className="slab-top-border"></div>
+                </div>
             </div>
         )
     });
@@ -75,20 +78,13 @@ function Stockroom() {
     return (
         <div className='Stockroom'>
             <div onClick={(e) => {setToScreen(1)}} className="stockroomToTabletop screenChangeButton"></div>
+            <div className="stockroomSupportGraphic stockroomSupportGraphic-leftFront"></div>
+            <div className="stockroomSupportGraphic stockroomSupportGraphic-rightFront"></div>
+            <div className="stockroomSupportGraphic stockroomSupportGraphic-leftMiddle"></div>
+            <div className="stockroomSupportGraphic stockroomSupportGraphic-rightMiddle"></div>
+            <div className="stockroomSupportGraphic stockroomSupportGraphic-leftBack"></div>
+            <div className="stockroomSupportGraphic stockroomSupportGraphic-rightBack"></div>
             {availableEntities}
-            
-            {/* <div className="Stockroom-shelf" style={{"--shelfInd": 2} as React.CSSProperties}>
-                <div className = "generator-button" onClick = {() => createEntity(glassware1)}>Flask of Water (H2O)</div>
-                <div className="Stockroom-shelf-top"></div>
-            </div>
-            <div className="Stockroom-shelf" style={{"--shelfInd": 3} as React.CSSProperties}>
-                <div className = "generator-button" onClick = {() => createEntity(glassware2)}>Flask of Juice (ZeStO)</div>
-                <div className="Stockroom-shelf-top"></div>
-            </div>
-            <div className="Stockroom-shelf" style={{"--shelfInd": 4} as React.CSSProperties}>
-                <div className = "generator-button" onClick = {() => createEntity(glassware3)}>Flask of Potion (HeAlTH)</div>
-                <div className="Stockroom-shelf-top"></div>
-            </div> */}
         </div>
     );
 }

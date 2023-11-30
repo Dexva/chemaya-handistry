@@ -8,8 +8,8 @@
     --color-EquipmentMarking:#898485;
     --color-Shadow:#4e515a;
     --color-Shadow-transparent:rgba(78, 81, 90, 0.4);
-    --color-Phenolic-Light:#737778;
-    --color-Phenolic-Shaded:#2D2C27;
+    --color-Phenolic-Light:#384049;
+    --color-Phenolic-Shaded:#181E26;
     --color-TextHighlight:#E12D78;
     --color-debug:#ff6f6f;
     /* this is a horrible line that hardcodes a noise image */
@@ -383,21 +383,27 @@ SCREEN TAGS
    the top shelf is shelf 1, the next shelf is shelf 2, 
    and the bottom shelf is shelf 3. */
 .Stockroom-shelf {
-    width:65vw;
-    height:120px;
+    width:75vw;
+    height:250px;
     position: absolute;
-    left: 50%;
+    left: calc(50% + 7.5vw);
     transform: translatex(-50%);
     /* these shelves should appear to be vertically centered and equally distributed across the screen. */
     /* shelves must be positioned so that they can have individual z-indexes. so vertical positioning
        is hardcoded. */
-    top: calc((var(--shelfInd) - 1) * 250px); 
+    top: calc((var(--shelfInd) - 1) * 250px + 120px); 
     /* z-index of the shelves (from top to bottom) must be decreasing. */
     /* z-index: calc((5 - var(--shelfInd)) * 10); */
     perspective:300px;
     perspective-origin:top; 
     pointer-events: none;
     justify-content: space-between;
+    justify-content:left;
+    display:flex;
+}
+.Stockroom-shelf .slab {
+    position:absolute;
+    bottom:0;
 }
 
 .Stockroom-shelf * {
@@ -412,6 +418,42 @@ SCREEN TAGS
     background: #e3e3e3;
     /* TODO: add gradient later */
     border-radius:5px;
+}
+.stockroomSupportGraphic {
+    width:15px;
+    height:calc(100vh);
+    background-image:linear-gradient(92deg, rgba(255,255,255,0.7) 0%, rgba(130,130,130,0) 50%, rgba(255,255,255,0.7) 100%);
+    background-color:rgb(170,170,170);
+    position:absolute;
+    border-radius:30px 30px 0 0;
+    left: calc(50% + 7.5vw);
+    top:200px;
+}
+.stockroomSupportGraphic-rightFront {
+    transform:translateX(calc(75vw/2 - 20px));
+    z-index:1;
+    top:195px;
+}
+.stockroomSupportGraphic-leftFront {
+    transform:translateX(calc(75vw/-2));
+    z-index:1;
+    top:195px;
+}
+.stockroomSupportGraphic-rightMiddle {
+    transform:translateX(calc(75vw/2 - 3.4vw));
+    top:160px;
+}
+.stockroomSupportGraphic-leftMiddle {
+    transform:translateX(calc(75vw/-2 + 2.5vw));
+    top:160px;
+}
+.stockroomSupportGraphic-rightBack {
+    transform:translateX(calc(75vw/2 - 5.8vw));
+    top:135px;
+}
+.stockroomSupportGraphic-leftBack {
+    transform:translateX(calc(75vw/-2 + 5.1vw));
+    top:135px;
 }
 
 /* eqpt. means equipment */
@@ -474,28 +516,40 @@ SCREEN TAGS
 .entity.state-hover {
     transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%)) scale(1.1);
 }
-.reactionTable {
+body .tabletopGraphic {
+    left:53.8%;
+    transform:translatex(-100%);
+    z-index:-1000;
     width:130vw;
+}
+.slab {
+    width:100%;
     height:200px;
     position:absolute;
     bottom:0;
-    left:53.8%;
-    transform:translatex(-100%);
     perspective:500px;
     perspective-origin:top;
-    z-index: -1000
 }
-.reactionTable-top {
+.slab-top {
     --rotation:30deg;
     width:100%;
     height:100px;
     transform:rotateX(var(--rotation)) translatey(-50%);
     border-radius:15px;
-    background-image:var(--img-noise);
+    background-image:var(--img-noise), radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0) 70%);
     filter: contrast(170%) brightness(100%);  
     background-color:var(--color-Phenolic-Light);
 }
-.reactionTable-top-border {
+.tabletopGraphic .slab-top-border {
+    top:46.5px;
+}
+.Stockroom-shelf .slab-top {
+    --rotation:50deg;
+}
+.Stockroom-shelf .slab-top-border {
+    height:25px;
+}
+.slab-top-border {
     width:calc(100% - 20px);
     height:30px;
     background-color:var(--color-Phenolic-Shaded);
@@ -507,7 +561,7 @@ SCREEN TAGS
     top:42.5px;
     z-index:-1;
 }
-.reactionTable-bottom {
+.slab-bottom {
     width:calc(100% - 100px);
     height:100%;background: rgb(255,255,255);
     background-image:linear-gradient(350deg, rgba(255,255,255,0) 0%, rgba(4, 1, 24, 0.6) 100%), url("../resources/img/texture-wood.jpg");
@@ -517,7 +571,7 @@ SCREEN TAGS
     top:50px;
     transform:rotateX(-2deg) translatex(-50%);
     z-index:-2;
-    filter:saturate(1.3);
+    filter:hue-rotate(-10deg) saturate(1);
 }
 /*-----------
 GESTURE DEMO TAGS
@@ -706,7 +760,7 @@ DEBUG TAGS
     box-shadow:0 5px 0 var(--color-TextHighlight),
                0 0 15px white;
     border-radius:5px;
-    position:absolute;
+    /* position:absolute; */
     z-index:100;
 }
 .generator-button:active {

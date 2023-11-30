@@ -34,10 +34,10 @@ function ScreenContainer(props : ScreenContainerProps) {
             <Screen index={2}>
                 <Stockroom/>
             </Screen>
-            <div className="reactionTable">
-                <div className="reactionTable-top"></div>
-                <div className="reactionTable-top-border"></div>
-                <div className="reactionTable-bottom"></div>
+            <div className="slab tabletopGraphic">
+                <div className="slab-top"></div>
+                <div className="slab-top-border"></div>
+                <div className="slab-bottom"></div>
             </div>
         </div>
     );
