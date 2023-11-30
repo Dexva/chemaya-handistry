@@ -45,7 +45,7 @@
             "height": 350,
             "readable": true,
             "maxvolume": 250,
-            "actvolume": 50,
+            "actvolume": 0,
             "chemformula":[],
             "chemmole":[],
             "transfer-type": "beaker",
@@ -58,6 +58,24 @@
         {
             "name":"Roundbottom",
             "content": "Potion of Health",
+            "mediapath": "../resources/img/roundbottom.png",
+            "maskpath": "../resources/img/roundbottom-mask.png",
+            "height": 300,
+            "readable": false,
+            "maxvolume": 1000,
+            "actvolume": 500,
+            "chemformula":["HeAlTh(l)"],
+            "chemmole":[5],
+            "transfer-type": "beaker",
+            "radius": 100,
+            "hitcircle": {
+                "radius":30,
+                "translation":{"dist": 150, "angle": 0}
+            }
+        },
+        {
+            "name":"Foam Cup",
+            "content": "",
             "mediapath": "../resources/img/roundbottom.png",
             "maskpath": "../resources/img/roundbottom-mask.png",
             "height": 300,

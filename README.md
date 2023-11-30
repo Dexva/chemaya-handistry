@@ -1,16 +1,25 @@
-# [Handistry](https://github.com/Dexva/handistry)
+# [Chemaya-Handistry](https://github.com/Dexva/chemaya-handistry)
 
-A browser-based hand gesture controlled virtual chemistry laboratory (VCL) integrating the [Google MediaPipe Hands Solution](https://google.github.io/mediapipe/solutions/hands.html).
 
-Made by Team Handistry (R2-K2-02) from PSHS-MC (Batch 2024).
+Chemaya is a browser-based hand gesture controlled virtual chemistry laboratory (VCL) integrating the [Google MediaPipe Gesture Recognizer solution](https://developers.google.com/mediapipe/solutions/vision/gesture_recognizer/web_js).
+
+This project is developed by Team Handistry (R3Y1-03 / R2K2-02) from Philippine Science High School - Main Campus (Batch 2024).
 
 ## Technologies Used
-- TypeScript
-- ReactJS
-- Google MediaPipe Hands Solution (GMHS)
-- Google MediaPipe Gesture Recognizer (GMGR)
-- Google MediaPipe Model Maker (GMMM)
-- OpenCV
+- [**React Framework**](https://react.dev/): for the VCL architecture
+- [**TypeScript**](https://www.typescriptlang.org/): for access to custom typings
+- [**HTML5 / CSS / Vanilla JS**](https://developer.mozilla.org/en-US/docs/Glossary/HTML5): for HGNUI architecture
+- [**Google MediaPipe**](https://developers.google.com/mediapipe)
+    - [**Gesture Recognizer (MPGR)**](https://developers.google.com/mediapipe/solutions/vision/gesture_recognizer): hand for landmark and gesture recognition
+    - [**Model Maker (MPMM)**](https://developers.google.com/mediapipe/solutions/model_maker): for creating custom gesture recognizer models
+- [**Python OpenCV**](https://opencv.org/): for training images sampling from in-house videos
+- [**Socket.io**](https://socket.io/): for parallel integration of VCL ahd HGNUI subsystems
+
+## Setting-up
+
+Run ``chmod +x start.sh`` to get shell permission.
+
+
 
 ## Developers
 |Developer|E-mail Address|GitHub Handle|

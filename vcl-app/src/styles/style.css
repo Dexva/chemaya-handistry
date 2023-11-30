@@ -697,10 +697,11 @@ BACKGROUND TAGS
     width:64px;
     height:64px;
     padding:10px;
-    left:30px;
+    left: auto;
+    right:auto;
     bottom:20px;
     margin:0;
-    z-index: 1000000;
+    background-color: #a68167;
     background-image:url("../resources/img/clear.png");
 }
 .screenChangeButton.tabletopToStockroom {
