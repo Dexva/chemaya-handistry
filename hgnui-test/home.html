@@ -81,8 +81,9 @@
           if(results.gestures.length > 0) {
             let gestureResult = results.gestures.at(0).at(0).categoryName;
             let landmarksResult = results.landmarks.at(0);
+            let handednessResult = results.handednesses.at(0);
             // console.log(results);
-            socket.emit('chat message', {"gesture": gestureResult, "landmarks": landmarksResult, "timeNow": Date.now()});
+            socket.emit('chat message', {"gesture": gestureResult, "landmarks": landmarksResult, "handedness": handednessResult, "timeNow": Date.now()});
         }
           // if (results.handedness)
           // socket.emit('chat message',results[0]);

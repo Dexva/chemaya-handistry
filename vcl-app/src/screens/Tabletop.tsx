@@ -60,7 +60,8 @@ function Tabletop() {
 
     setInterval(()=>{
         if (newMessage) {
-            EngineTimestep(newMessage.gesture, newMessage.landmarks);
+            EngineTimestep(newMessage.gesture, newMessage.landmarks, newMessage.handedness.at(0).displayName);
+            // console.log(newMessage.handedness);
             if (x<100000000) x += 1;
             else x = 0;
             setUpdate(x);
@@ -109,6 +110,7 @@ function Tabletop() {
     return (
         <div className="Tabletop">
             <div onClick={(e) => {setToScreen(2)}} className="tabletopToStockroom screenChangeButton"></div>
+            <div onClick={(e) => {EntityModel.clearInstances()}} className="clearTabletop screenChangeButton"></div>
             <EntityContainer> 
                 {entityElements}
             </EntityContainer>

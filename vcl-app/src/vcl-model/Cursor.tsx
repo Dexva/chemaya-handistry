@@ -1,4 +1,4 @@
-import {cursorX, cursorY, degrees, cursorState, isHolding} from './Engine';
+import {cursorX, cursorY, degrees, cursorState, isHolding, handedness} from './Engine';
 import React, {useState} from 'react';
 
 interface CursorData {
@@ -11,7 +11,8 @@ export default function Cursor() {
     const CursorStyle = {
         "--x": cursorX,
         "--y": cursorY,
-        "--rotate": degrees
+        "--rotate": degrees,
+        "--flip": handedness=="Left" ? 1 : -1
     } as React.CSSProperties;
 
     let CursorClass = "Cursor " + (isHolding ? "state-hold" : "state-" + cursorState);

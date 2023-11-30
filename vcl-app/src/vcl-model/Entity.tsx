@@ -61,6 +61,9 @@ export class Entity {
     }
 
     //----- GETTERS -----//
+    public static clearInstances() {
+        Entity.Instances = [];
+    }
     public static allInstances() {
         return Entity.Instances;
     }

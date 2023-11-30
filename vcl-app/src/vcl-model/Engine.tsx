@@ -13,6 +13,7 @@ export let cursorY: number = 0;
 export let degrees: number = 0;
 export let gesture: string = "None";
 export let isHolding: boolean | undefined = false;
+export let handedness: string = "Right";
 const windowWidth: number = window.innerWidth;
 const windowHeight: number = window.innerHeight;
 const gestureIsHold: Map<string, boolean> = new Map<string, boolean>();
@@ -50,7 +51,8 @@ export type InputData = {
     receiverEntity: Entity | undefined
 }
 
-export function EngineTimestep(rawGestureType: string, rawLandmarks: any[]) { 
+export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawHandedness: string) { 
+    handedness = rawHandedness;
     gesture = rawGestureType;
     // --------------------   
     // Interpreter --------

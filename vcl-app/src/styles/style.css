@@ -116,7 +116,7 @@ GRADUATION SIDEVIEW TAGS
     overflow:hidden;
     background-color:var(--color-EquipmentFill);
     box-shadow:0px 0px 5px rgba(0,0,0,0.5);
-    /* pointer-events: none; */
+    pointer-events: none;
     opacity:0;
 }
 .GraduatedSideview.state-display {
@@ -127,17 +127,21 @@ GRADUATION SIDEVIEW TAGS
     flex-direction:column;
     flex-grow:1;
     justify-content: space-around;
+    pointer-events: none;
 }
 .line {
     height:5px;
     background-color:var(--color-EquipmentMarking);
+    pointer-events: none;
 }
 .line { 
     width:50%;
+    pointer-events: none;
 }
 .markedLine {
     display:flex;
     align-items:center;
+    pointer-events: none;
 }
 .markedLine .line {
     flex-grow:1;
@@ -153,6 +157,7 @@ GRADUATION SIDEVIEW TAGS
     z-index:-1;
     background-color:orange;
     padding-top:30px;
+    pointer-events: none;
 }
 .GraduatedSideview-fill:before {
     content:"";
@@ -437,7 +442,9 @@ SCREEN TAGS
     width:100px;
     height:100px;
     transition:0.05s transform, 0.2s width, 0.2s border-radius;
-    transform:translate(calc((var(--x) * 1px) - 50%), calc((100vh - (var(--y) * 1px)) - 50%)) rotate(calc((var(--rotate) * 180deg/3.1415) + 90deg));
+    transform:  translate(calc((var(--x) * 1px) - 50%), calc((100vh - (var(--y) * 1px)) - 50%))
+                rotate(calc((var(--rotate) * 180deg/3.1415) + 90deg))
+                scaleY(calc(var(--flip)*-1));
     position:absolute;
     z-index:100000000;
     background-size:contain;
@@ -583,6 +590,17 @@ BACKGROUND TAGS
     transform:translatey(10px);
     box-shadow:0 0 0 transparent,
                0 0 15px white;
+}
+.screenChangeButton.clearTabletop {
+    position:absolute;
+    width:64px;
+    height:64px;
+    padding:10px;
+    left:30px;
+    bottom:20px;
+    margin:0;
+    z-index: 1000000;
+    background-image:url("../resources/img/clear.png");
 }
 .screenChangeButton.tabletopToStockroom {
     position:absolute;
