@@ -10,6 +10,8 @@
     --color-Shadow-transparent:rgba(78, 81, 90, 0.4);
     --color-Phenolic-Light:#384049;
     --color-Phenolic-Shaded:#181E26;
+    /* --color-Phenolic-Light:#9ea5ad;
+    --color-Phenolic-Shaded:#6d7785; */
     --color-TextHighlight:#E12D78;
     --color-debug:#ff6f6f;
     /* this is a horrible line that hardcodes a noise image */
@@ -244,6 +246,7 @@ GLASSWARE TAGS
     top:0;
     background-size:contain;
     filter:brightness(0.8);
+    /* filter:brightness(0.35) sepia(2) hue-rotate(210deg); */
     background-position:center;
 }
 .glassware-internalFillState {
