@@ -15,12 +15,6 @@ This project is developed by Team Handistry (R3Y1-03 / R2K2-02) from Philippine 
 - [**Python OpenCV**](https://opencv.org/): for training images sampling from in-house videos
 - [**Socket.io**](https://socket.io/): for parallel integration of VCL ahd HGNUI subsystems
 
-## Setting-up
-
-Run ``chmod +x start.sh`` to get shell permission.
-
-
-
 ## Developers
 |Developer|E-mail Address|GitHub Handle|
 |-----------|----------------|---------------|
