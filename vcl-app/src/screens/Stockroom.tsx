@@ -72,8 +72,8 @@ function Stockroom() {
             //----- VARIABLES & STATES ----//
             const glasswareStyle = {
                 "--tilt": "0", 
-                "--glasswareHeight": `200px`,
-                "--fillLevel": color ? 50 : 0,
+                "--glasswareHeight": `${e.height * 0.7}px`,
+                "--fillLevel": color ? Math.max(e.actvolume / e.maxvolume * 100,50) : 0,
                 "--color": color ? color : "",
             } as React.CSSProperties;
             return <div className="stockroomSpriteContainer">
@@ -83,7 +83,7 @@ function Stockroom() {
                 </div>
                 <div className="stockroomSpriteLabel">
                     <div className="stockroomSpriteLabel-title">{e.chemformula}</div>
-                    <div className="stockroomSpriteLabel-equipment">{e.name}</div>
+                    <div className="stockroomSpriteLabel-equipment">{`${e.maxvolume}ml ${e.name}`}</div>
                 </div>
             </div>
         })

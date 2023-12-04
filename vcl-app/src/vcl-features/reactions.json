@@ -22,5 +22,17 @@
         "Erxn": 0.005,    
         "Hrxn": 0,
         "Srxn": 0
+    },
+    {
+        "name": "Life Juice",
+        "reactants": ["ZeSTo(l)", "HeAlTh(l)"],
+        "reactantsStoich": [1, 1],
+        "products": ["Blood(l)"],
+        "productsStoich": [1],
+        "K": 1,
+        "Trxn": 298.15,
+        "Erxn": 0.005,    
+        "Hrxn": 0,
+        "Srxn": 0
     }
 ]

@@ -39,20 +39,42 @@ function Tooltip(props : TooltipProps) {
             multipleChemicals = true;
         }
 
+        const displayPhase = (phase: string) => {
+            if (phase == "l") return "Liquid, ";
+            else if (phase == "aq") return "Aqeuous Solution, ";
+            else return "Empty";
+        }
+
+        const displayMoles = (moles: number) => {
+            if (1 <= moles && moles < 100) return <p>{moles.toFixed(3)}</p>;
+
+
+            let expo_split: string[] = String(moles.toExponential(3)).split("e");
+            let a = window.structuredClone(expo_split.at(0));
+            let b = window.structuredClone(expo_split.at(1));
+
+            return <p>{a} x 10<sup>{b}</sup></p>;
+        }
+
+
         var mixtureElements : any[] = Array.from(glassware.getMixture().getChemicals(), (value, key) => { //not the cause of problem
-            return <p>{value[0] + ":" + value[1].moles}</p>
+            return <span><b>{value[0] + ": "}</b>{displayMoles(value[1].moles)} mol</span>;
         });
+        if (!mixtureElements) {
+            //@ts-ignore
+            mixtureElements.push(<p></p>);
+        }
 
         //----- RETURN -----//
         return (
             <div className="Tooltip styleGlassBox state-display">
                 <h2>{multipleChemicals ? firstChemical.name : "Mixture"}</h2>
-                <p className="extraInfo">{(firstChemical.phase == "l" ? "Liquid" : "Aqueous Solution") +
-                    ", " +
-                    (firstChemical.formula)}</p>
+                <p className="extraInfo">{displayPhase(firstChemical.phase) +
+                    (firstChemical.formula != undefined ? firstChemical.formula : "")}</p>
                 {mixtureElements}
-                <p>{"Temperature: " + glassware.getMixture().getTemperature()}</p>
-                <p>{Math.round(glassware.getMixture().getVolume()) + "mL within " + glassware.getName()}</p>
+                <p><b>{"Temperature: "}</b>{glassware.getMixture().getTemperature().toFixed(2) + " "}<sup>{"o"}</sup>{"C"}</p>
+                <p><b>{"Volume: "}</b>{glassware.getMixture().getVolume().toFixed(2) + " mL"}</p>
+                <p><i>{"contained in " + glassware.getMaxCap() + "-mL " + glassware.getName().toLowerCase()}</i></p>
             </div>
         );
     }

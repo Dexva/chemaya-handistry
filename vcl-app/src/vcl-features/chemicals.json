@@ -60,6 +60,16 @@
         "color": {"r":255, "g":50, "b":150, "a":0.5}
     },
     {
+        "name": "L. Blood",
+        "formula": "Blood(l)",
+        "phase": "l",
+        "molarMass": 40,
+        "charge": -4,
+        "enthalpyForm": -123.45,
+        "entropyForm": 12.34,
+        "color": {"r":180, "g":0, "b":50, "a":0.75}
+    },
+    {
         "name": "Aq. hydronium ion",
         "formula": "H+(aq)",
         "phase": "aq",
