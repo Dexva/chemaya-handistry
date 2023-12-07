@@ -5,6 +5,7 @@ import { Glassware } from './Glassware';
 import { Equipment } from './Equipment';
 import { randInt } from '../utilities/utility';
 import { EntityData } from './EntityData';
+import { PERFORMANCE_FACTOR } from '../utilities/custom_constants';
 
 
 interface Coordinate {
@@ -17,7 +18,7 @@ interface Coordinate {
     Represents a physical object on the Tabletop, ie. a Glassware, an Equipment 
 */
 export class Entity {
-    private static defaultInertiaFrames : number = 20;
+    private static defaultInertiaFrames : number = 20 * 1/PERFORMANCE_FACTOR;
     public static Instances : Entity[] = [];
     //----- FIELDS -----//
     public id: number;
