@@ -36,7 +36,6 @@ export class Entity {
         Entity.Instances.push(this);
     }
     private initializeStates() {
-        console.log("test");
         let states = new Map<string, number>();
         states.set("hover",0);
         states.set("held",0);
@@ -53,7 +52,6 @@ export class Entity {
                 classes += ` state-${stateName} `;
             }
         });
-        console.log(classes);
         return classes;
     }
     public isInState(stateName : string) {
