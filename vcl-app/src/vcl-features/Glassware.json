@@ -134,7 +134,7 @@
             "content": "",
             "mediapath": "../resources/img/beaker.png",
             "maskpath": "../resources/img/beaker-mask.png",
-            "height": 300,
+            "height": 320,
             "readable": false,
             "maxvolume": 500,
             "actvolume": 0,
