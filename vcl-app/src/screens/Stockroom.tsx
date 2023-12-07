@@ -82,8 +82,8 @@ function Stockroom() {
                     <div className="glassware-internalFillState"></div>
                 </div>
                 <div className="stockroomSpriteLabel">
-                    <div className="stockroomSpriteLabel-title">{e.chemformula}</div>
-                    <div className="stockroomSpriteLabel-equipment">{`${e.maxvolume}-mL ${e.name}`}</div>
+                    <div className="stockroomSpriteLabel-title">{e.spritename}</div>
+                    <div className="stockroomSpriteLabel-equipment">{`${e.maxvolume}-mL ${e.name.toLowerCase()}`}</div>
                 </div>
             </div>
         })

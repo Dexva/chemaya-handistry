@@ -18,7 +18,7 @@ interface Coordinate {
     Represents a physical object on the Tabletop, ie. a Glassware, an Equipment 
 */
 export class Entity {
-    private static defaultInertiaFrames : number = 20 * 1/PERFORMANCE_FACTOR;
+    private static defaultInertiaFrames : number = 20 * PERFORMANCE_FACTOR;
     public static Instances : Entity[] = [];
     //----- FIELDS -----//
     public id: number;

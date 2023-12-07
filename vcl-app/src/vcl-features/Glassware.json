@@ -4,6 +4,7 @@
         {
             "name":"Erlenmeyer Flask",
             "content": "Reagent X",
+            "spritename": "0.1M Reagent X",
             "mediapath": "../resources/img/erlenmeyerFlask.png",
             "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
             "height": 200,
@@ -22,6 +23,7 @@
         {
             "name":"Erlenmeyer Flask",
             "content": "Reagent Y",
+            "spritename": "0.1M Reagent Y",
             "mediapath": "../resources/img/erlenmeyerFlask.png",
             "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
             "height": 200,
@@ -40,6 +42,7 @@
         {
             "name":"Graduated Cylinder",
             "content": "",
+            "spritename": "",
             "mediapath": "../resources/img/graduatedCylinder.png",
             "maskpath": "../resources/img/graduatedCylinder-mask.png",
             "height": 275,
@@ -51,13 +54,14 @@
             "transfer-type": "beaker",
             "radius": 100,
             "hitcircle": {
-                "radius":30,
+                "radius":50,
                 "translation":{"dist": 200, "angle": 0}
             }
         },
         {
             "name":"Roundbottom",
             "content": "Potion of Health",
+            "spritename": "Potion of Health",
             "mediapath": "../resources/img/roundbottom.png",
             "maskpath": "../resources/img/roundbottom-mask.png",
             "height": 200,
@@ -76,6 +80,7 @@
         {
             "name":"Roundbottom",
             "content": "Orange Zesto",
+            "spritename": "Orange Zesto",
             "mediapath": "../resources/img/roundbottom.png",
             "maskpath": "../resources/img/roundbottom-mask.png",
             "height": 200,
@@ -96,6 +101,7 @@
         {
             "name":"Foam Cup",
             "content": "",
+            "spritename": "",
             "mediapath": "../resources/img/foamCup.png",
             "maskpath": "../resources/img/foamCup.png",
             "height": 250,
@@ -107,13 +113,14 @@
             "transfer-type": "beaker",
             "radius": 100,
             "hitcircle": {
-                "radius":30,
+                "radius":60,
                 "translation":{"dist": 150, "angle": 0}
             }
         },
         {
             "name":"Erlenmeyer Flask",
             "content": "",
+            "spritename": "",
             "mediapath": "../resources/img/erlenmeyerFlask.png",
             "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
             "height": 200,
@@ -121,7 +128,7 @@
             "maxvolume": 250,
             "actvolume": 0,
             "chemformula":[],
-            "chemmole":[0.005],
+            "chemmole":[],
             "transfer-type": "beaker",
             "radius": 100,
             "hitcircle": {
@@ -132,15 +139,15 @@
         {
             "name":"Beaker",
             "content": "",
+            "spritename": "",
             "mediapath": "../resources/img/beaker.png",
             "maskpath": "../resources/img/beaker-mask.png",
             "height": 250,
-            "height": 320,
             "readable": false,
-            "maxvolume": 500,
+            "maxvolume": 250,
             "actvolume": 0,
             "chemformula":[],
-            "chemmole":[0.005],
+            "chemmole":[],
             "transfer-type": "beaker",
             "radius": 100,
             "hitcircle": {
@@ -151,6 +158,7 @@
         {
             "name":"Erlenmeyer Flask",
             "content": "",
+            "spritename": "",
             "mediapath": "../resources/img/erlenmeyerFlask.png",
             "maskpath": "../resources/img/erlenmeyerFlask-mask.png",
             "height": 150,
@@ -158,7 +166,7 @@
             "maxvolume": 50,
             "actvolume": 0,
             "chemformula":[],
-            "chemmole":[0.005],
+            "chemmole":[],
             "transfer-type": "beaker",
             "radius": 100,
             "hitcircle": {

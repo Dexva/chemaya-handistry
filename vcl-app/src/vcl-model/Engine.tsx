@@ -192,7 +192,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawH
     // This includes the gesture type, pointer, degrees, invoker entity, and receiver entity. 
     let inputs: InputData = {
         isHold:isHold,
-        isPouring:(Math.abs(degrees) >= 1.4),
+        isPouring:(Math.abs(degrees) >= 1.2),
         pointer:pointer,
         degrees:degrees,
         invokerEntity:invokerEntity,
@@ -305,6 +305,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawH
                 receiverEntity.getData().getMixture().addListOfChemicals(movedChemicals);
                 //@ts-ignore
                 // console.log(receiverEntity.getData().getMixture());
+                //@ts-ignore
                 //@ts-ignore
                 receiverEntity.getData().getMixture().reactChemicalsComplete(receiverEntity.getData().getMixture().searchReactions());
                 //@ts-ignore
