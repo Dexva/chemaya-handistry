@@ -46,19 +46,19 @@ function Tooltip(props : TooltipProps) {
         }
 
         const displayMoles = (moles: number) => {
-            if (1 <= moles && moles < 100) return <p>{moles.toFixed(3)}</p>;
+            if (1 <= moles && moles < 100) return <span>{moles.toFixed(3)}</span>;
 
 
             let expo_split: string[] = String(moles.toExponential(3)).split("e");
             let a = window.structuredClone(expo_split.at(0));
             let b = window.structuredClone(expo_split.at(1));
 
-            return <p>{a} x 10<sup>{b}</sup></p>;
+            return <span>{a} x 10<sup>{b}</sup></span>;
         }
 
 
         var mixtureElements : any[] = Array.from(glassware.getMixture().getChemicals(), (value, key) => { //not the cause of problem
-            return <span><b>{value[0] + ": "}</b>{displayMoles(value[1].moles)} mol</span>;
+            return <p><b>{value[0] + ": "}</b>{displayMoles(value[1].moles)} mol</p>;
         });
         if (!mixtureElements) {
             //@ts-ignore
