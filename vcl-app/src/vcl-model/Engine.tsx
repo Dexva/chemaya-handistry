@@ -199,7 +199,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawH
         receiverEntity:receiverEntity
     }
 
-    const floorHeight = 300;
+    const floorHeight = 250;
 
     // Now that all entities have proper states, update everything accordingly
     Entity.Instances.forEach((entity)=>{
@@ -276,6 +276,10 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawH
         // console.log(invokerEntity.getData().getMixture());
     }
 
+          
+    //@ts-ignore
+    if (invokerEntity && receiverEntity) {receiverEntity.setState("transfer-receiver",true);}
+
     // STATE: ---- pour ----, exclusive
     if (isHold && invokerEntity && inputs.isPouring) {
         cursorState = "pour";
@@ -285,7 +289,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawH
 
         //@ts-ignore
         let initialVolume = invokerEntity.getData().getMixture().getVolume();
-        
+
         if (initialVolume > Mixture.POUR_RATE) {
             //@ts-ignore
             let movedChemicals = invokerEntity.getData().getMixture().partitionChemicals(Mixture.POUR_RATE / initialVolume);

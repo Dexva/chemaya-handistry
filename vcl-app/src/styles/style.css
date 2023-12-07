@@ -189,11 +189,11 @@ GLASSWARE TAGS
     -webkit-mask-repeat:no-repeat;
     -webkit-mask-size:contain;
 }
-.Glassware.styrofoamcup {
-    -webkit-mask-image:url(../resources/img/styrofoamCup.png);
+.Glassware.foamcup {
+    -webkit-mask-image:url(../resources/img/foamCup.png);
 }
-.Glassware.styrofoamcup .glassware-image {
-    background-image:url(../resources/img/styrofoamCup.png);
+.Glassware.foamcup .glassware-image {
+    background-image:url(../resources/img/foamCup.png);
 }
 .Glassware.graduatedcylinder {
     -webkit-mask-image:url(../resources/img/graduatedCylinder-mask.png);
@@ -429,7 +429,7 @@ SCREEN TAGS
 }
 body .Stockroom-shelf .stockroomStaticSprite { 
     z-index:1;
-    margin:0 50px;
+    margin:0 60px;
     pointer-events:all;
 }
 .stockroomSpriteContainer {

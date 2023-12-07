@@ -83,7 +83,7 @@ function Stockroom() {
                 </div>
                 <div className="stockroomSpriteLabel">
                     <div className="stockroomSpriteLabel-title">{e.chemformula}</div>
-                    <div className="stockroomSpriteLabel-equipment">{`${e.maxvolume}ml ${e.name}`}</div>
+                    <div className="stockroomSpriteLabel-equipment">{`${e.maxvolume}-mL ${e.name}`}</div>
                 </div>
             </div>
         })

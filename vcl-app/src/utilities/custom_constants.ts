@@ -1,7 +1,7 @@
 /*
 This file returns a dictionary of important constants
 */
-export let PERFORMANCE_FACTOR = 1; // changes per device; metric lies on interval (0,1]
+export let PERFORMANCE_FACTOR = 0.8; // changes per device; metric lies on interval (0,1]
 
 
 export let CONSTANTS = {
