@@ -199,7 +199,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawH
         receiverEntity:receiverEntity
     }
 
-    const floorHeight = 250;
+    const floorHeight = 300;
 
     // Now that all entities have proper states, update everything accordingly
     Entity.Instances.forEach((entity)=>{

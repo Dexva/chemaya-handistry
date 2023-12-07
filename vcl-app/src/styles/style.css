@@ -553,8 +553,8 @@ body .Stockroom-shelf .stockroomStaticSprite {
     pointer-events: all;
 }
 .Cursor {
-    width:100px;
-    height:100px;
+    width:75px;
+    height:75px;
     transition:0.05s transform, 0.2s width, 0.2s border-radius;
     transform:  translate(calc((var(--x) * 1px) - 50%), calc((100vh - (var(--y) * 1px)) - 50%))
                 rotate(calc((var(--rotate) * 180deg/3.1415) + 90deg))
