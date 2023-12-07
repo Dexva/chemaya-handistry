@@ -281,7 +281,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawH
         cursorState = "pour";
         // console.log("we pouring!!");
         //@ts-ignore
-        invokerEntity.setState("transfer-invoker");
+        invokerEntity.setState("transfer-invoker",true);
 
         //@ts-ignore
         let initialVolume = invokerEntity.getData().getMixture().getVolume();
@@ -294,7 +294,7 @@ export function EngineTimestep(rawGestureType: string, rawLandmarks: any[], rawH
             
             if (receiverEntity) {
                 //@ts-ignore
-                receiverEntity.setState("transfer-receiver");
+                receiverEntity.setState("transfer-receiver",true);
                 //@ts-ignore
                 receiverEntity.getData().getMixture().changeVolume(Mixture.POUR_RATE);
                 //@ts-ignore
