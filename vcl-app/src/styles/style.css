@@ -580,13 +580,16 @@ body .Stockroom-shelf .stockroomStaticSprite {
     height:110px;
 }
 .entity {
-    transform:translate(calc((var(--x) * 1px - 50%)),calc((100vh - (var(--y) * 1px)) - 50%))  rotate(calc(var(--r) * 180deg/3.1415));;
+    transform:translate(calc((var(--x) * 1px - 50%)),calc((100vh - (var(--y) * 1px)) - 50%)) rotate(calc(var(--r) * 180deg/3.1415));
     position:absolute;
     z-index:var(--z);
     transition:0.1s;
 }
 .entity.state-hover {
-    transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%)) scale(1.1);
+    transform:translate(calc((var(--x) * 1px) - 50%),calc((100vh - (var(--y) * 1px)) - 50%)) scale(1.1) rotate(calc(var(--r) * 180deg/3.1415));
+}
+.entity.state-transfer-receiver {
+    filter:drop-shadow(0 0 10px rgb(252, 214, 0));
 }
 body .tabletopGraphic {
     left:53.8%;

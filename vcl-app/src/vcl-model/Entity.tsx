@@ -50,9 +50,10 @@ export class Entity {
         let classes = "";
         this.states.forEach((_: number, stateName: string) => {
             if (this.isInState(stateName)) {
-                classes += `state-${stateName}`;
+                classes += ` state-${stateName} `;
             }
         });
+        console.log(classes);
         return classes;
     }
     public isInState(stateName : string) {
