@@ -250,7 +250,7 @@ export class Mixture {
         
         // updating mixture temperature
         //@ts-ignore
-        if (this.chemicals.get(reactant_formulas[limiting_index])?.moles <= 0.001) return;
+        // if (this.chemicals.get(reactant_formulas[limiting_index])?.moles <= 0.001) return;
         
         //@ts-ignore
         let moles_rxn: number = this.chemicals.get(reactant_formulas[limiting_index])?.moles / reactant_coeffs[limiting_index];
