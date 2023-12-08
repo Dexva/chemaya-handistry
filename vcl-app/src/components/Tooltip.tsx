@@ -39,9 +39,10 @@ function Tooltip(props : TooltipProps) {
             multipleChemicals = true;
         }
 
-        const displayPhase = (phase: string) => {
-            if (phase == "l") return "Liquid, ";
-            else if (phase == "aq") return "Aqeuous Solution, ";
+        const displayPhase = (chemicalCount: number, phase: string) => {
+            if (chemicalCount > 1) return "Multiple Substances";
+            if (phase == "l") return "Liquid";
+            else if (phase == "aq") return "Aqeuous Solution";
             else return "Empty";
         }
 
@@ -69,9 +70,10 @@ function Tooltip(props : TooltipProps) {
         return (
             <div className="Tooltip styleGlassBox state-display">
                 <h2>{multipleChemicals ? firstChemical.name : "Mixture"}</h2>
-                <p className="extraInfo">{displayPhase(firstChemical.phase) +
-                    (firstChemical.formula != undefined ? firstChemical.formula : "")}</p>
+                <p className="extraInfo">{displayPhase(glassware.getMixture().getChemicals().size, firstChemical.phase)}</p>
+                <p><b>Substance/s:</b></p>
                 {mixtureElements}
+                <br></br>
                 <p><b>{"Temperature: "}</b>{glassware.getMixture().getTemperature().toFixed(2) + " "}<sup>{"o"}</sup>{"C"}</p>
                 <p><b>{"Volume: "}</b>{glassware.getMixture().getVolume().toFixed(2) + " mL"}</p>
                 <p><i>{"contained in " + glassware.getMaxCap() + "-mL " + glassware.getName().toLowerCase()}</i></p>

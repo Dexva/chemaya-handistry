@@ -64,7 +64,7 @@ export class Mixture {
     private chemicals: Map<string, Chemical>;   // [Map] key = formula of chemical, value = Chemical instance
     private volume: number;                     // [number] Volume of the mixture in milliliters (mL)
     private temperature: number;
-    public static POUR_RATE : number = 0.01 * PERFORMANCE_FACTOR; // mL change per tick
+    public static POUR_RATE : number = 0.01 / PERFORMANCE_FACTOR; // mL change per tick
     public moles_transferred: number = 0;
 
     //----- CONSTRUCTOR -----//
@@ -125,6 +125,12 @@ export class Mixture {
     public calculateColor() {
         //// this code just gets the average of all colors without caring about ratios
         if (this.chemicals.size==0) return `rgba(0,0,0,0)`;
+        let dominantChemical = this.chemicals.entries().next().value[1];
+        this.chemicals.forEach((value, key)=>{
+            if (value.moles > dominantChemical.moles) {dominantChemical = value;}
+        });
+        // return`rgba(${dominantChemical.r},${dominantChemical.g},${dominantChemical.b},${dominantChemical.a})`;
+
         let firstColor = this.chemicals.entries().next().value[1].color;
         let ave = {
             r:firstColor.r,
@@ -213,8 +219,6 @@ export class Mixture {
         if (mixture_reaction == null) return;
         if (mixture_reaction.getProducts().size != 1) return;
 
-        console.log("Before",this);
-
         // setting up info
         let reactant_formulas: string[] = [];
         let reactant_coeffs: number[] = [];
@@ -245,22 +249,19 @@ export class Mixture {
                 min_product = window.structuredClone(test_product);
                 limiting_index = i;
             }
-        }
-        console.log("Limiting Reactant: " + reactant_formulas[limiting_index]);
-        
+        }        
         // updating mixture temperature
         //@ts-ignore
-        // if (this.chemicals.get(reactant_formulas[limiting_index])?.moles <= 0.001) return;
+        // if (this.chemicals.get(reactant_formulas[limiting_index])?.moles <= 0.000001) return;
         
         //@ts-ignore
         let moles_rxn: number = this.chemicals.get(reactant_formulas[limiting_index])?.moles / reactant_coeffs[limiting_index];
         //@ts-ignore
         this.moles_transferred += this.chemicals.get(reactant_formulas[limiting_index])?.moles;
         
-        console.log("moles of reaction:", moles_rxn);
+        console.log("moles of reaction:", this.moles_transferred);
         this.temperature += -1 * (moles_rxn * mixture_reaction.getH() * 1000) / (4.184 * this.volume);
         //assumptions: density of mixture is 1g/mL;
-
 
         // updating the reactants accordingly
         for (let i=0; i<reactant_formulas.length; i++) {
@@ -277,7 +278,7 @@ export class Mixture {
         added_product.moles += min_product;
         this.updateChemicals(added_product);
 
-        console.log("After",window.structuredClone(this));
+        // console.log("After",window.structuredClone(this));
     }
 
     // Propagates the mixture's chemical composition through a given reaction
@@ -365,6 +366,8 @@ export class Mixture {
     public getTemperature() { return this.temperature; }
     public changeVolume(dv: number) { 
         // console.log("we movin");
+        this.temperature = (this.volume * this.temperature + dv * 25)/(this.volume + dv);
+        //this.temperature * this.volume / (this.volume + dv);
         this.volume += dv; 
     }
 }
