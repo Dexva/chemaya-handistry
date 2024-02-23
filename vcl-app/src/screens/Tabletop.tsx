@@ -58,15 +58,20 @@ function Tabletop() {
         newMessage = msg;
     }); 
 
-    setInterval(()=>{
+    // setInterval(()=>{
+    
+    function run() {
         if (newMessage) {
             EngineTimestep(newMessage.gesture, newMessage.landmarks, newMessage.handedness.at(0).displayName);
             // console.log(newMessage.handedness);
-            if (x<100000000) x += 1;
+            if (x<10000) x += 1;
             else x = 0;
             setUpdate(x);
         }
-    },30);
+        window.requestAnimationFrame(run);
+    }
+    window.requestAnimationFrame(run);
+    // },30);
 
     //----- VARIABLES & STATES -----//
 

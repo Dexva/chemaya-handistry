@@ -64,7 +64,7 @@ export class Mixture {
     private chemicals: Map<string, Chemical>;   // [Map] key = formula of chemical, value = Chemical instance
     private volume: number;                     // [number] Volume of the mixture in milliliters (mL)
     private temperature: number;
-    public static POUR_RATE : number = 0.01 / PERFORMANCE_FACTOR; // mL change per tick
+    public static POUR_RATE : number = 0.0008 / PERFORMANCE_FACTOR; // mL change per tick
     public moles_transferred: number = 0;
 
     //----- CONSTRUCTOR -----//
