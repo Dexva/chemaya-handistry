@@ -259,7 +259,7 @@ export class Mixture {
         //@ts-ignore
         this.moles_transferred += this.chemicals.get(reactant_formulas[limiting_index])?.moles;
         
-        console.log("moles of reaction:", this.moles_transferred);
+        // console.log("moles of reaction:", this.moles_transferred);
         this.temperature += -1 * (moles_rxn * mixture_reaction.getH() * 1000) / (4.184 * this.volume);
         //assumptions: density of mixture is 1g/mL;
 
