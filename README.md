@@ -1,5 +1,7 @@
 # [Chemaya-Handistry](https://github.com/Dexva/chemaya-handistry)
 
+![Chemaya.gif](./chemaya-gif.gif)
+
 Chemaya is a browser-based hand gesture controlled virtual chemistry laboratory (VCL) integrating the [Google MediaPipe Gesture Recognizer solution](https://developers.google.com/mediapipe/solutions/vision/gesture_recognizer/web_js).
 
 This project is developed by Team Handistry (R3Y1-03 / R2K2-02) from Philippine Science High School - Main Campus (Batch 2024).
